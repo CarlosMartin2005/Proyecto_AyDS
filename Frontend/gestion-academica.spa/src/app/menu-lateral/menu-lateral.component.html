@@ -1,0 +1,25 @@
+<div class="dashboard">
+  <aside class="sidebar">
+    <div class="profile">
+      <img src="assets/profile.jpg" alt="Perfil">
+      <h2>Nombre de Usuario</h2>
+    </div>
+    <nav>
+      <ul>
+        <li><a routerLink="home" routerLinkActive="active">Inicio</a></li>
+        <li><a routerLink="report" routerLinkActive="active">Reportes</a></li>
+        <li><a href="#">Ajustes</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main class="content">
+    <header class="topbar">
+      <input type="text" placeholder="Buscar...">
+      <button>Buscar</button>
+    </header>
+    <section class="workspace">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>
+
