@@ -1,37 +1,38 @@
 <div class="card">
-  <div class="card-header">
-    <i class="fas fa-users me-1"></i> Reporte de
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span class="current-date ml-2">{{ currentDate }}</span>
+    <h2 class="table-title mx-auto">{{ reportTitle }}</h2>
+    <button class="btn btn-add ml-auto" (click)="abrirModal(null)">Agregar</button>
   </div>
   <div class="card-body">
-    <div class="row">
-      <div class="col-12">
-        <button class="btn btn-success" (click)="abrirModal(null)">Agregar</button>
-      </div>
-    </div>
-    <hr />
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">Nombres</th>
-          <th scope="col">Apellidos</th>
-          <th scope="col">Clave</th>
-          <th scope="col">Activo</th>
-          <th scope="col">Acciones</th>
+          <th *ngFor="let column of columnConfig" scope="col">{{ column.label }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let element of pagedItems">
-          <td>{{ element.nombres }}</td>
-          <td>{{ element.apellidos }}</td>
-          <td>{{ element.clave }}</td>
-          <td><span [class]="getBadgeClass(element)">{{ element.activo ? 'Si' : 'No' }}</span></td>
-          <td>
-            <button mat-icon-button color="primary" (click)="editar(element)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="eliminar(element)">
-              <mat-icon>delete</mat-icon>
-            </button>
+        <tr *ngFor="let element of pagedItems; let i = index">
+          <td *ngFor="let column of columnConfig">
+            <ng-container [ngSwitch]="column.key">
+              <ng-container *ngSwitchCase="'index'">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</ng-container>
+              <ng-container *ngSwitchCase="'nombres'">{{ element.nombres }}</ng-container>
+              <ng-container *ngSwitchCase="'apellidos'">{{ element.apellidos }}</ng-container>
+              <ng-container *ngSwitchCase="'clave'">{{ element.clave }}</ng-container>
+              <ng-container *ngSwitchCase="'activo'">
+                <span [class]="getBadgeClass(element)">{{ element.activo ? 'Si' : 'No' }}</span>
+              </ng-container>
+              <ng-container *ngSwitchCase="'acciones'">
+                <button mat-icon-button color="primary" (click)="editar(element)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="eliminar(element)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </ng-container>
+              <!-- Añadir más casos para otras columnas dinámicas -->
+              <ng-container *ngSwitchDefault>{{ element[column.key] }}</ng-container>
+            </ng-container>
           </td>
         </tr>
       </tbody>

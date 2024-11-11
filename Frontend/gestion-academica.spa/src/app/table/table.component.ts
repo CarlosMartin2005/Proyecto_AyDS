@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +17,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
+  @Input() reportTitle!: string;
+  @Input() columnConfig: any[] = [];
+
   displayedColumns: string[] = ['nombres', 'apellidos', 'clave', 'activo', 'acciones'];
   dataSource = [
     { nombres: 'Juan', apellidos: 'Pérez', clave: '12345', activo: true },
@@ -68,6 +71,8 @@ export class TableComponent implements OnInit {
     { nombres: 'Julio', apellidos: 'Flores', clave: '90131', activo: true }
   ];
 
+  currentDate: string = '';
+
   currentPage = 1;
   itemsPerPage = 10;
   pagedItems: any[] = [];
@@ -78,6 +83,8 @@ export class TableComponent implements OnInit {
     this.totalPages = Math.ceil(this.dataSource.length / this.itemsPerPage);
     this.pages = Array.from({ length: this.totalPages }, (v, k) => k + 1);
     this.setPage(1);
+
+    this.currentDate = new Date().toLocaleDateString();
   }
 
   setPage(page: number) {
