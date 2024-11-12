@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TableComponent } from '../../../table/table.component';
+import { TableComponent } from './table/table.component';
 import { RouterModule, RouterLink } from '@angular/router';
 
 @Component({
@@ -12,8 +12,10 @@ import { RouterModule, RouterLink } from '@angular/router';
 export class Report03Component {
   ProgramReportColumns = [
     { key: 'index', label: 'Indice' },
-    { key: 'nombres', label: 'Nombre' },
+    { key: 'programas', label: 'Programas' },
+    { key: 'cursos', label: 'Cursos' },
+    { key: 'horarios', label: 'Horarios' },
     { key: 'activo', label: 'Activo' },
-    { key: 'acciones', label: 'Acciones' },
+    { key: 'acciones', label: 'Acciones' }
   ];
 }

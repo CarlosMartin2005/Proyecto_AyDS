@@ -1,0 +1,60 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span class="current-date ml-2">{{ currentDate }}</span>
+    <h2 class="table-title mx-auto">{{ reportTitle }}</h2>
+    <button class="btn btn-add ml-auto" (click)="abrirModal(null)">Agregar</button>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columnConfig" scope="col">{{ column.label }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let element of pagedItems; let i = index">
+          <td *ngFor="let column of columnConfig">
+            <ng-container [ngSwitch]="column.key">
+              <ng-container *ngSwitchCase="'index'">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</ng-container>
+              <ng-container *ngSwitchCase="'nombres'">{{ element.nombres }}</ng-container>
+              <ng-container *ngSwitchCase="'apellidos'">{{ element.apellidos }}</ng-container>
+              <ng-container *ngSwitchCase="'clave'">{{ element.clave }}</ng-container>
+              <ng-container *ngSwitchCase="'activo'">
+                <span [class]="getBadgeClass(element)">{{ element.activo ? 'Si' : 'No' }}</span>
+              </ng-container>
+              <ng-container *ngSwitchCase="'acciones'">
+                <button mat-icon-button color="primary" (click)="editar(element)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="eliminar(element)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </ng-container>
+              <!-- Añadir más casos para otras columnas dinámicas -->
+              <ng-container *ngSwitchDefault>{{ element[column.key] }}</ng-container>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <nav>
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="setPage(1)">Primero</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="prevPage()">Anterior</a>
+        </li>
+        <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+          <a class="page-link" (click)="setPage(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="nextPage()">Siguiente</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="setPage(totalPages)">Último</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
