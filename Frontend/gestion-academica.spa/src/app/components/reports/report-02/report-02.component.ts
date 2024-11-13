@@ -14,8 +14,10 @@ export class Report02Component {
     { key: 'index', label: 'Indice' },
     { key: 'nombres', label: 'Nombres' },
     { key: 'apellidos', label: 'Apellidos' },
-    { key: 'clave', label: 'Clave' },
-    { key: 'activo', label: 'Activo' },
-    { key: 'acciones', label: 'Acciones' },
+    { key: 'clave', label: 'Clase' },
+    { key: 'activo', label: 'Correo' },
+    { key: 'activo', label: 'Telefono' },
+    { key: 'activo', label: 'Direccion' },
+    { key: 'acciones', label: '' },
   ];
 }
