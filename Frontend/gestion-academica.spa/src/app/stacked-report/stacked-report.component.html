@@ -1,0 +1,53 @@
+<mat-card>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span class="current-date">{{ currentDate }}</span>
+    <div class="title-container">
+      <h2 class="table-title">{{ reportTitle }}</h2>
+    </div>
+    <img src="../../assets/Nota-sol-logo-oroginal-Pequeña.png" class="logo" alt="Nota Musical">
+  </div>
+  <mat-card-content>
+    <div class="report-grid">
+      <div class="info-column">
+        <div class="info-row">
+          <div class="info-item">
+            <h3>Total de Alumnos</h3>
+            <p>{{ totalAlumnos }}</p>
+          </div>
+          <div class="info-item">
+            <h3>Total de Alumnos por Programa</h3>
+            <p>{{ totalPorPrograma }}</p>
+          </div>
+        </div>
+
+        <h3>Total de Alumnos por Curso</h3>
+        <div class="cursos">
+          <div>
+            <h4>Curso 1</h4>
+            <p>{{ totalCurso1 }}</p>
+          </div>
+          <div>
+            <h4>Curso 2</h4>
+            <p>{{ totalCurso2 }}</p>
+          </div>
+          <div>
+            <h4>Curso 3</h4>
+            <p>{{ totalCurso3 }}</p>
+          </div>
+          <div>
+            <h4>Curso 4</h4>
+            <p>{{ totalCurso4 }}</p>
+          </div>
+        </div>
+
+        <!-- Botón centrado -->
+        <div class="button-container">
+          <button class="more-detail-button">Más Detalle</button>
+        </div>
+      </div>
+      <div class="chart-column">
+        <app-pie-chart [data]="[totalCurso1, totalCurso2, totalCurso3, totalCurso4]" [labels]="['Curso 1', 'Curso 2', 'Curso 3', 'Curso 4']"></app-pie-chart>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
