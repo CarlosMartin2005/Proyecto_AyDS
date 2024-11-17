@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StackedReportComponent } from './stacked-report.component';
+import { RadarChartComponent } from './radar-chart.component';
 
-describe('StackedReportComponent', () => {
-  let component: StackedReportComponent;
-  let fixture: ComponentFixture<StackedReportComponent>;
+describe('RadarChartComponent', () => {
+  let component: RadarChartComponent;
+  let fixture: ComponentFixture<RadarChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StackedReportComponent]
+      imports: [RadarChartComponent]
     })
     .compileComponents();
-
-    fixture = TestBed.createComponent(StackedReportComponent);
+    
+    fixture = TestBed.createComponent(RadarChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

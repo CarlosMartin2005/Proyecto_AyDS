@@ -1,0 +1,98 @@
+/* Estilo del encabezado */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #D69A77; /* Color Primario */
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.title-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.current-date {
+  margin-left: 8px;
+  font-size: 16px; /* Tamaño de la fuente para la fecha */
+  color: #361F18; /* Cuaternario */
+  font-family: 'Arial', sans-serif; /* Fuente bonita */
+}
+
+.table-title {
+  margin: 0;
+  font-size: 24px; /* Tamaño de la fuente para el título */
+  font-weight: bold;
+  color: #361F18; /* Cuaternario */
+  font-family: 'Arial', sans-serif; /* Fuente bonita */
+  text-align: center;
+}
+
+.logo {
+  margin-left: auto;
+  width: 50px; /* Tamaño de la imagen del logo */
+  height: auto;
+}
+
+/* Estilo del cuerpo del reporte */
+.report-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Mitad para información y mitad para gráfica */
+  gap: 16px;
+  padding: 20px;
+  background-color: #EFEFEF; /* Fondo casi blanco similar al de la tabla */
+  border-radius: 8px;
+}
+
+.info-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra los elementos en la columna */
+}
+
+.info-item {
+  width: 100%;
+  font-size: 18px; /* Tamaño de fuente para las secciones principales */
+  color: #F44336; /* Cuaternario */
+  font-family: 'Arial', sans-serif; /* Fuente bonita */
+  text-align: center; /* Centra el texto en los elementos */
+}
+
+.info-item h3 {
+  font-size: 20px; /* Tamaño de fuente para los títulos de las secciones */
+  color: #361F18; /* Quinto Color */
+  margin-bottom: 8px;
+}
+
+.cursos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas por fila */
+  gap: 16px; /* Ajusta el espacio entre los elementos */
+  width: 100%; /* Asegura que los cursos ocupen el ancho completo */
+}
+
+.cursos div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cursos div p:first-child {
+  font-size: 16px; /* Tamaño de fuente para los títulos de los cursos */
+  color: #361F18; /* Color complementario para subtítulos */
+}
+
+.cursos div p:last-child {
+  font-size: 18px; /* Tamaño de fuente para los valores dinámicos */
+  color: #F44336; /* Color de los valores */
+}
+
+.chart-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 16px;
+}

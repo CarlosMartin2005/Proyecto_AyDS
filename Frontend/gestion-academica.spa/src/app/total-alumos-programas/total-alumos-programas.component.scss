@@ -39,17 +39,55 @@
 /* Estilo del cuerpo del reporte */
 .report-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Columna para espacio y columna para gráfica */
+  grid-template-columns: 1fr 1fr; /* Mitad para información y mitad para gráfica */
   gap: 16px;
   padding: 20px;
   background-color: #EFEFEF; /* Fondo casi blanco similar al de la tabla */
   border-radius: 8px;
 }
 
-.empty-column {
+.info-column {
   display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra los elementos en la columna */
+}
+
+.info-item {
+  width: 100%;
+  font-size: 18px; /* Tamaño de fuente para las secciones principales */
+  color: #F44336; /* Cuaternario */
+  font-family: 'Arial', sans-serif; /* Fuente bonita */
+  text-align: center; /* Centra el texto en los elementos */
+}
+
+.info-item h3 {
+  font-size: 20px; /* Tamaño de fuente para los títulos de las secciones */
+  color: #361F18; /* Quinto Color */
+  margin-bottom: 8px;
+}
+
+.cursos {
+  display: grid;
+  grid-template-columns: 1fr; /* Una columna por fila */
+  gap: 16px; /* Ajusta el espacio entre los elementos */
+  width: 100%; /* Asegura que los programas ocupen el ancho completo */
+}
+
+.cursos div {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.cursos div p:first-child {
+  font-size: 16px; /* Tamaño de fuente para los títulos de los programas */
+  color: #361F18; /* Color complementario para subtítulos */
+}
+
+.cursos div p:last-child {
+  font-size: 18px; /* Tamaño de fuente para los valores dinámicos */
+  color: #F44336; /* Color de los valores */
 }
 
 .chart-column {

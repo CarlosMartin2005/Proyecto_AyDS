@@ -46,15 +46,52 @@
   border-radius: 8px;
 }
 
-.empty-column {
+.info-column {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start; /* Ajuste para subir el contenido */
   align-items: center;
+  height: 100%;
+  padding-top: 10%; /* Bajar un poco más el "Total de Estudiantes" */
 }
 
+.info-row.middle {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px; /* Ajustar el espacio entre los totales */
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Arial', sans-serif; /* Fuente bonita */
+  color: #361F18; /* Cuaternario */
+}
+
+.info-item.total {
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.info-item.aprobados-reprobados {
+  align-items: center;
+  margin-top: 24px; /* Ajuste adicional para bajarlos */
+}
+
+/* Estilo para la barra de carga */
 .chart-column {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 16px;
+  padding: 16px;
+}
+
+canvas {
+  width: 100% !important;
+  max-width: 600px;
 }

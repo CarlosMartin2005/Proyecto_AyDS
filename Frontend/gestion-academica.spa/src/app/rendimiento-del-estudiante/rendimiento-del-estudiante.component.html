@@ -1,0 +1,33 @@
+<mat-card>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span class="current-date">{{ currentDate }}</span>
+    <div class="title-container">
+      <h2 class="table-title">{{ reportTitle }}</h2>
+    </div>
+    <img src="../../assets/Nota-sol-logo-oroginal-Pequeña.png" class="logo" alt="Nota Musical">
+  </div>
+  <mat-card-content>
+    <div class="report-grid">
+      <div class="info-column">
+        <div class="info-item">
+          <p><strong>Nombre Completo:</strong> {{ studentInfo.nombreCompleto }}</p>
+          <p><strong>No. Cuenta:</strong> {{ studentInfo.numeroCuenta }}</p>
+          <p><strong>Edad:</strong> {{ studentInfo.edad }}</p>
+        </div>
+        <div class="info-item">
+          <h3>Características que forman al estudiante:</h3>
+          <p><strong>Rendimiento Académico:</strong> {{ getLabel(studentCharacteristics.rendimientoAcademico) }}</p>
+          <p><strong>Manejo de instrumentos:</strong> {{ getLabel(studentCharacteristics.manejoInstrumentos) }}</p>
+          <p><strong>Interpretación:</strong> {{ getLabel(studentCharacteristics.interpretacion) }}</p>
+          <p><strong>Creatividad:</strong> {{ getLabel(studentCharacteristics.creatividad) }}</p>
+          <p><strong>Trabajo en equipo:</strong> {{ getLabel(studentCharacteristics.trabajoEquipo) }}</p>
+        </div>
+      </div>
+      <div class="chart-column">
+        <div style="position: relative; width: 100%; height: 400px;">
+          <app-radar-chart [data]="chartData" [labels]="chartLabels"></app-radar-chart>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,32 @@
+<mat-card>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span class="current-date">{{ currentDate }}</span>
+    <div class="title-container">
+      <h2 class="table-title">{{ reportTitle }}</h2>
+    </div>
+    <img src="../../assets/Nota-sol-logo-oroginal-Pequeña.png" class="logo" alt="Nota MusicaEsl">
+  </div>
+  <mat-card-content>
+    <div class="report-grid">
+      <div class="info-column">
+        <div class="info-item total">
+          <strong>Total de Estudiantes:</strong>
+          <p>{{ totalEstudiantes }}</p>
+        </div>
+        <div class="info-row middle">
+          <div class="info-item">
+            <strong>Total de Estudiantes Aprobados:</strong>
+            <p>{{ totalAprobados }}</p>
+          </div>
+          <div class="info-item">
+            <strong>Total de Estudiantes Reprobados:</strong>
+            <p>{{ totalReprobados }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="chart-column">
+        <canvas id="progressChart"></canvas>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
