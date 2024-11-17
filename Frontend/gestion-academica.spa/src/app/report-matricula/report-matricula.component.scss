@@ -1,0 +1,64 @@
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #D69A77;
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.title-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.current-date {
+  margin-left: 8px;
+  font-size: 16px;
+  color: #361F18;
+  font-family: 'Arial', sans-serif;
+}
+
+.table-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #361F18;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+.logo {
+  margin-left: auto;
+  width: 50px;
+  height: auto;
+}
+
+.info-grid {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  background-color: #EFEFEF;
+  border-radius: 8px;
+}
+
+.info-item {
+  margin: 0 20px;
+}
+
+.table th {
+  background-color: #A36750;
+  color: white;
+}
+
+.table td {
+  background-color: #EFEFEF;
+  color: #361F18;
+}
+
+.page-item.active .page-link {
+  background-color: #007bff;
+  color: white;
+}

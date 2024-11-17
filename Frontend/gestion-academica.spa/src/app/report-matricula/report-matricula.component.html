@@ -1,0 +1,44 @@
+<div class="card-header d-flex justify-content-between align-items-center">
+  <span class="current-date">{{ currentDate }}</span>
+  <div class="title-container">
+    <h2 class="table-title">{{ reportTitle }}</h2>
+  </div>
+  <img src="../../assets/Nota-sol-logo-oroginal-Pequeña.png" class="logo" alt="Nota Musical">
+</div>
+<div class="info-grid">
+  <div class="info-item"><strong>Nombre completo:</strong> {{ nombreCompleto }}</div>
+  <div class="info-item"><strong>No de identidad:</strong> {{ numeroIdentidad }}</div>
+  <div class="info-item"><strong>Fecha:</strong> {{ currentDate }}</div>
+  <div class="info-item"><strong>Programas:</strong>
+    <select [(ngModel)]="selectedPrograma" (change)="onProgramaChange()">
+      <option *ngFor="let programa of programas" [value]="programa">{{ programa }}</option>
+    </select>
+  </div>
+</div>
+<div class="card-body">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Curso</th>
+        <th>Sección</th>
+        <th>Hora</th>
+        <th>Día</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let curso of cursosFiltrados">
+        <td>{{ curso.curso }}</td>
+        <td>{{ curso.seccion }}</td>
+        <td>{{ curso.hora }}</td>
+        <td>{{ curso.dia }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <nav *ngIf="programas.length > 1">
+    <ul class="pagination">
+      <li *ngFor="let programa of programas" (click)="onProgramaClick(programa)" class="page-item" [class.active]="programa === selectedPrograma">
+        <a class="page-link">{{ programa }}</a>
+      </li>
+    </ul>
+  </nav>
+</div>
