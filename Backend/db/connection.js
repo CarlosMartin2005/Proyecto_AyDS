@@ -1,13 +1,14 @@
 import mysql from 'mysql2';
+import 'dotenv/config';
 
 // mysql.connect(process.env.MYSQL_URI)
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306, // reemplazar con el puerto de la base de datos
-    user: 'root', // reemplazar con el usuario de la base de datos
-    password: 'Proyectoayds3PAC.', // contraseña del usuario de la base de datos
-    database: 'Proy_AyDS', // reemplazar con el nombre de la base de datos
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT, 
+    user: process.env.DB_USER, 
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME, 
 });
 
 connection.connect((error) => {
