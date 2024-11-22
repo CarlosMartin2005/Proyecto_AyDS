@@ -1,58 +1,92 @@
 import { Routes } from '@angular/router';
-import { TableComponent } from './table/table.component';
-import { HomeComponent } from './home/home.component';
-import { MenuLateralComponent } from './menu-lateral/menu-lateral.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard',
-    component: MenuLateralComponent,
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+
+  {
+    path: '',
+    loadComponent: () => import('./components/layout/layout.component').then(m => m.LayoutComponent),
     children: [
-    { path: '', component: HomeComponent },
-    { path: 'home', component: HomeComponent },
-
-    {
-        path: 'reports',
-        loadComponent: () => import('./components/reports/reports.component').then(m => m.ReportsComponent),
-
-        // Sub-routes de Reports
-
-        children: [
-          { path: 'tabla', component: TableComponent },
-          {
-            path: 'report1',
-            loadComponent: () => import('./components/reports/report-01/report-01.component').then(m => m.Report01Component)
-          },
-          {
-            path: 'report2',
-            loadComponent: () => import('./components/reports/report-02/report-02.component').then(m => m.Report02Component)
-          },
-          {
-            path: 'report3',
-            loadComponent: () => import('./components/reports/report-03/report-03.component').then(m => m.Report03Component)
-          },
-          {
-            path: 'report4',
-            loadComponent: () => import('./components/reports/report-04/report-04.component').then(m => m.Report04Component)
-          },
-          {
-            path: 'report5',
-            loadComponent: () => import('./components/reports/report-05/report-05.component').then(m => m.Report05Component)
-          },
-          {
-            path: 'report6',
-            loadComponent: () => import('./components/reports/report-06/report-06.component').then(m => m.Report06Component)
-          },
-          {
-            path: 'report7',
-            loadComponent: () => import('./components/reports/report-07/report-07.component').then(m => m.Report07Component)
-          },
-          {
-            path: 'report8',
-            loadComponent: () => import('./components/reports/report-08/report-08.component').then(m => m.Report08Component)
-          },
-        ]
+      {
+        path: 'home',
+        loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent)
+      },
+      {
+        path: 'matricula',
+        loadComponent: () => import('./components/matricula/matricula.component').then(m => m.MatriculaComponent)
+      },
+      {
+        path: 'login',
+        loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)
       }
+    ]
+  },
 
-  ]},
+  {
+    path: 'campus',
+    loadComponent: () => import('./components/login/components/layout/navbar/navbar.component').then(m => m.NavbarComponent),
+    children: [
+      {
+        path: 'inicio',
+        loadComponent: () => import('./components/login/components/dashboard/dashboard.component').then(m => m.DashboardComponent)
+      },
+      {
+        path: 'estudiantes',
+        loadComponent: () => import('./components/login/components/estudiantes/estudiantes.component').then(m => m.EstudiantesComponent)
+      },
+      {
+        path: 'docentes',
+        loadComponent: () => import('./components/login/components/docentes/docentes.component').then(m => m.DocentesComponent)
+      },
+      {
+        path: 'matricula',
+        loadComponent: () => import('./components/login/components/matricula/matricula.component').then(m => m.MatriculaComponent)
+      },
+      {
+        path: 'programas',
+        loadComponent: () => import('./components/login/components/programas/programas.component').then(m => m.ProgramasComponent)
+      },
+      {
+        path: 'reportes',
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./components/login/components/reports/reports.component').then(m => m.ReportsComponent)
+          },
+          {
+            path: 'docentes',
+            loadComponent: () => import('./components/login/components/reports/vistas/reporte-docentes/reporte-docentes.component').then(m => m.ReporteDocentesComponent)
+          },
+          {
+            path: 'estudiantes',
+            loadComponent: () => import('./components/login/components/reports/vistas/reporte-estudiantes/reporte-estudiantes.component').then(m => m.ReporteEstudiantesComponent)
+          },
+          {
+            path: 'programas-cursos',
+            loadComponent: () => import('./components/login/components/reports/vistas/reporte-programas-cursos/reporte-programas-cursos.component').then(m => m.ReporteProgramasCursosComponent)
+          },
+          {
+            path: 'seguimiento',
+            loadComponent: () => import('./components/login/components/reports/vistas/reporte-seguimiento/reporte-seguimiento.component').then(m => m.ReporteSeguimientoComponent)
+          },
+          {
+            path: 'estudiantes-curso',
+            loadComponent: () => import('./components/login/components/reports/vistas/reporte-estudiantes-curso/reporte-estudiantes-curso.component').then(m => m.ReporteEstudiantesCursoComponent)
+          },
+          {
+            path: 'matricula',
+            loadComponent: () => import('./components/login/components/reports/vistas/reporte-matricula/reporte-matricula.component').then(m => m.ReporteMatriculaComponent)
+          },
+          {
+            path: 'rendimiento',
+            loadComponent: () => import('./components/login/components/reports/vistas/reporte-rendimiento-estudiante/reporte-rendimiento-estudiante.component').then(m => m.ReporteRendimientoEstudianteComponent)
+          },
+          {
+            path: 'programas',
+            loadComponent: () => import('./components/login/components/reports/vistas/reporte-programas/reporte-programas.component').then(m => m.ReporteProgramasComponent)
+          }
+        ]
+      },
+    ]
+  }
 ];

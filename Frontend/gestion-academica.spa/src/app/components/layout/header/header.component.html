@@ -1,0 +1,17 @@
+<header class="bg-primary-proyect text-white p-4 flex flex-col sm:flex-row justify-between items-center">
+  <div class="flex justify-between items-center w-full sm:w-auto sm:mb-0">
+    <div class="flex items-center">
+      <img src="assets/logo.png" alt="Logo" class="h-8 sm:h-12 mr-2">
+    </div>
+    <button class="sm:hidden text-white focus:outline-none" (click)="isOpen = !isOpen">
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
+  </div>
+  <nav [ngClass]="{'block': isOpen || screenLarge, 'hidden': !isOpen && !screenLarge}" class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+    <a [routerLink]="'home'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="homePage-nav-button px-3 py-2 rounded" [ngClass]="{'font-bold': isActive('home')}">Inicio</a>
+    <a [routerLink]="'matricula'" routerLinkActive="active" class="homePage-nav-button px-3 py-2 rounded" [ngClass]="{'font-bold': isActive('matricula')}">Matricula</a>
+    <a [routerLink]="'login'" routerLinkActive="active" class="homePage-nav-button px-3 py-2 rounded" [ngClass]="{'font-bold': isActive('login')}">Login</a>
+  </nav>
+</header>

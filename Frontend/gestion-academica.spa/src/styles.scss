@@ -1,15 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Tailwind CSS
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities;
+// Tailwind CSS no tocar
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Bootstrap CSS */
+// @import 'bootstrap/dist/css/bootstrap.min.css';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.bg-success { background-color: #A56B4E !important; /* Quinto Color */ }
-.bg-danger { background-color: #361F18 !important; /* Cuaternario */ }
+.bg-success-proyect { background-color: #A56B4E !important; /* Quinto Color */ }
+.bg-danger-proyect { background-color: #361F18 !important; /* Cuaternario */ }
+.bg-primary-proyect { background-color: #A36750 !important; /* Color Primario */ }
 
 .btn-success {
   background-color: #DCC07C !important; /* Quinto Color */
@@ -43,6 +47,57 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: #A59287 !important; /* Terciario para desactivados */
 }
 
+.homePage-nav-button {
+  background-color: #A36750 !important; /* Quinto Color */
+  border-color: #A36750 !important;
+  color: white !important;
+  // quitar del a la linea de abajo
+  text-decoration: none !important;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.homePage-nav-button:hover {
+  background-color: #A56B4E !important; /* Sexto Color */
+  border-color: #A56B4E !important;
+  color: white !important;
+}
+
+.campus-bg-principal {
+  background-color: #A59287; /* Color Primario */
+  color: white;
+}
+
+.campus-bg-principal a {
+  background-color: #A59287; /* Color Primario */
+  color: white;
+  text-decoration: none;
+}
+
+.campus-bg-principal a:hover {
+  background-color: #c0aa9d; /* Color Primario */
+  color: #A36750;
+  text-decoration: none;
+}
+
+.campus-bg-principal a:hover svg:hover{
+  background-color: #c0aa9d; /* Color Primario */
+  color: #A36750;
+  text-decoration: none;
+}
+
+.campus-bg-principal button:hover {
+  background-color: #c0aa9d; /* Color Primario */
+  color: #A36750;
+  text-decoration: none;
+}
+
+.campus-bg-principal button:hover svg:hover{
+  background-color: #c0aa9d; /* Color Primario */
+  color: #A36750;
+  text-decoration: none;
+}
+
+
+
+
+
+
