@@ -1,24 +1,7 @@
-import cors from 'cors'
+import cors from 'cors';
 
-export const corsMiddleware = () => cors({
-    origin: (origin, callback) => {
-
-        const accesos_permitidos = [
-            '*',
-        ]
-
-        if (accesos_permitidos.includes(origin)) {
-            callback(null, true)
-            return
-        }
-
-        if (!origin) {
-            callback(null, true)
-            return
-        }
-
-        callback(new Error('Acceso denegado'))
-
-    },
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-})
+// export const corsMiddleware = cors({
+//     origin: 'http://localhost:4200', // Permite solicitudes solo desde http://localhost:4200
+//     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization']
+// });

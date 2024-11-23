@@ -1,23 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ButtonGoBackComponent } from '../button-go-back/button-go-back.component';
-import { TableComponent } from '../table/table.component';
+import { TableComponent } from './table/table.component';
 
 @Component({
   selector: 'app-reporte-docentes',
   standalone: true,
-  imports: [ButtonGoBackComponent, TableComponent],
+  imports: [HttpClientModule, ButtonGoBackComponent, TableComponent],
   templateUrl: './reporte-docentes.component.html',
-  styleUrl: './reporte-docentes.component.scss'
+  styleUrl: './reporte-docentes.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ReporteDocentesComponent {
+export class ReporteDocentesComponent implements OnInit {
   userReportColumns = [
     { key: 'index', label: 'Indice' },
     { key: 'nombres', label: 'Nombres' },
     { key: 'apellidos', label: 'Apellidos' },
-    { key: 'clave', label: 'Cursos Impartidos' },
-    { key: 'activo', label: 'Correo ' },
-    { key: 'clave', label: 'Telefono' },
+    { key: 'email', label: 'Correo' },
+    { key: 'especialidad', label: 'Curso Impartido' },
+    { key: 'activo', label: 'Estado' },
     { key: 'acciones', label: '' },
   ];
 
+  docentes: any[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get('http://localhost:3000/reportes/docentes').subscribe((data: any) => {
+      this.docentes = data.map((docente: any) => {
+        return {
+          ...docente,
+          activo: docente.status === 'A' ? 'A' : 'I'
+        };
+      });
+    });
+  }
 }

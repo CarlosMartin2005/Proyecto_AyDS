@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ReporteDocentesComponent } from './vistas/reporte-docentes/reporte-docentes.component';
+
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ReporteDocentesComponent],
   templateUrl: './reports.component.html',
-  styleUrl: './reports.component.scss'
+  styleUrl: './reports.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ReportsComponent {
   constructor() {}
@@ -14,7 +17,7 @@ export class ReportsComponent {
     {
       image: 'assets/icons-reports/docente.png',
       title: 'Reporte de Docentes',
-      ruta: 'docentes'
+      ruta: 'docentes',
     },
     {
       image: 'assets/icons-reports/estudiantes.png',

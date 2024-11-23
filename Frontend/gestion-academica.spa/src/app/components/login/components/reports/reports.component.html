@@ -1,14 +1,13 @@
 <main>
-  <div class=" px-4">
+  <div class="px-4">
     <div class="py-8">
       <div>
         <h2 class="text-3xl font-semibold leading-tight">Reportes</h2>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 "
-      >
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         <!-- Reportes -->
         <div class="contents" *ngFor="let reporte of reportes">
-          <a [routerLink]="reporte.ruta"
+          <a [routerLink]="['/campus/reportes', reporte.ruta]"
             class="card my-2 mx-auto block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 no-underline hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
             <div class="bg-success-proyect border rounded-lg flex justify-center items-center">
               <div class="py-3 px-auto">
@@ -21,5 +20,4 @@
       </div>
     </div>
   </div>
-
 </main>
