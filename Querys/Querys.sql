@@ -1,6 +1,6 @@
-create database Proy_AyDS;
+-- create database Proy_AyDS;
 
-use Proy_AyDS;
+-- use Proy_AyDS
 
 DROP TABLE IF EXISTS accounts;
 
@@ -17,26 +17,80 @@ create table accounts(
     constraint pkAccountsID primary key (id)
 );
 
+
 CREATE TABLE usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id CHAR(36) PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    username VARCHAR(50),
+    password_hash VARCHAR(255) NOT NULL,
+    rol ENUM('Super', 'Docente', 'Alumno') NOT NULL,
+    status CHAR(1) DEFAULT 'A',
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Por si hacemos la lógica del único usuario SUPER desde la base de datos (no creo)
+-- ALTER TABLE usuarios 
+-- ADD CONSTRAINT unico_super CHECK (rol != 'Super' OR id = (SELECT id FROM usuarios WHERE rol = 'Super' LIMIT 1));
+
+
+CREATE TABLE programas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT
+);
+
+
+CREATE TABLE alumnos (
+    id_usuario CHAR(36) PRIMARY KEY,
     lugar_nacimiento VARCHAR(100),
-    fecha_nacimiento DATE,
+    fecha_nacimiento DATE NOT NULL,
     direccion VARCHAR(255),
     identidad VARCHAR(20) UNIQUE NOT NULL,
     telefono VARCHAR(15),
     institucion_procedencia VARCHAR(100),
-    correo VARCHAR(100) NOT NULL UNIQUE,
-    contraseña VARCHAR(100) NOT NULL,
     instrumento VARCHAR(50),
     programa_id INT,
-    curso_id INT,
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (programa_id) REFERENCES programas(id)
 );
 
-INSERT INTO usuarios (nombre, lugar_nacimiento, fecha_nacimiento, direccion, identidad, telefono, institucion_procedencia, correo, contraseña, instrumento, programa_id, curso_id) 
-VALUES 
-('Juan Pérez', 'Tegucigalpa', '1990-01-01', '123 Calle Principal', '0801199000011', '9999-9999', 'Instituto Nacional', 'juan.perez@example.com', '1234', 'Guitarra', NULL, NULL),
-('Maria García', 'San Pedro Sula', '1988-05-12', '456 Avenida Secundaria', '0801198800022', '8888-8888', 'Escuela Secundaria', 'maria.garcia@example.com', '5678', 'Piano', NULL, NULL);
 
-select * from usuarios
+CREATE TABLE docentes (
+    id_usuario CHAR(36) PRIMARY KEY,
+    especialidad VARCHAR(100),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
+
+CREATE TABLE cursos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    horario VARCHAR(50) NOT NULL, -- Ejemplo: "Lunes a Viernes, 8:00 - 12:00"
+    programa_id INT NOT NULL,
+    docente_id CHAR(36) NULL,
+    FOREIGN KEY (programa_id) REFERENCES programas(id) ON DELETE CASCADE,
+    FOREIGN KEY (docente_id) REFERENCES usuarios(id) ON DELETE SET NULL
+);
+
+
+-- Un alumno puede estar matriculado a varios cursos
+CREATE TABLE alumnos_cursos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    alumno_id CHAR(36) NOT NULL,
+    curso_id INT NOT NULL,
+    FOREIGN KEY (alumno_id) REFERENCES alumnos(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE CASCADE
+);
+
+
+-- Un docente puede dominar varios instrumentos, por lo tanto, ser elegible para más cursos
+CREATE TABLE docentes_cursos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    docente_id CHAR(36) NOT NULL,
+    curso_id INT NOT NULL,
+    FOREIGN KEY (docente_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE CASCADE
+);

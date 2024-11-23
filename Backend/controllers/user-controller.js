@@ -1,4 +1,6 @@
 import connection from '../db/connection.js';
+import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from 'uuid';
 
 export class UserController {
 
@@ -28,9 +30,16 @@ export class UserController {
 
     static async getUserporId(req, res) {
         const { id } = req.params;
-        const consulta = `SELECT * FROM usuarios WHERE id = ${id}`;
+        const consulta = `SELECT * FROM usuarios WHERE id = ?`;
         try {
-            connection.query(consulta, (error, result) => {
+            connection.query(consulta, [id], (error, result) => {
+
+                if(!id) {
+                    return res.status(400).json({
+                        error: true,
+                        message: "El id es requerido"
+                    })
+                }
                 if (error) {
                     return res.status(400).json({
                         error: true,
@@ -51,59 +60,92 @@ export class UserController {
     }
 
     static async createUser(req, res) {
-        const { nombre, lugar_nacimiento, fecha_nacimiento, direccion, identidad, telefono, institucion_procedencia, correo, contraseña, instrumento, programa_id, curso_id } = req.body;
-        const consulta = `INSERT INTO usuarios (nombre, lugar_nacimiento, fecha_nacimiento, direccion, identidad, telefono, institucion_procedencia, correo, contraseña, instrumento, programa_id, curso_id) VALUES ('${nombre}', '${lugar_nacimiento}', '${fecha_nacimiento}', '${direccion}', '${identidad}', '${telefono}', '${institucion_procedencia}', '${correo}', '${contraseña}', '${instrumento}', '${programa_id}', '${curso_id}')`;
+        const { id, nombre, apellido, email, username, password, rol } = req.body;
+        const saltRounds = 10;
+
+        if (!id || !nombre || !apellido || !email || !username || !password || !rol) {
+            return res.status(400).json({
+                error: true,
+                message: "Todos los campos son obligatorios"
+            });
+        }
+
         try {
-            connection.query(consulta, (error, result) => {
+            const id = uuidv4();
+            const password_hash = await bcrypt.hash(password, saltRounds);
+
+            const consulta = `INSERT INTO usuarios (id, nombre, apellido, email, username, password_hash, rol) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+            connection.query(consulta, [id, nombre, apellido, email, username, password_hash, rol], (error, result) => {
                 if (error) {
                     return res.status(400).json({
                         error: true,
                         message: "Ocurrió un error al crear el usuario: " + error
-                    })
+                    });
                 }
                 return res
                     .header('Content-Type', 'application/json')
                     .status(200)
-                    .json(result)
-            })
+                    .json(result);
+            });
         } catch (error) {
             return res.status(400).json({
                 error: true,
-                message: "Ocurrió un error al crear el usuario"
-            })
+                message: "Ocurrió un error al crear el usuario: " + error
+            });
         }
     }
 
     static async updateUser(req, res) {
         const { id } = req.params;
-        const { nombre, lugar_nacimiento, fecha_nacimiento, direccion, identidad, telefono, institucion_procedencia, correo, contraseña, instrumento, programa_id, curso_id } = req.body;
-        const consulta = `UPDATE usuarios SET nombre = '${nombre}', lugar_nacimiento = '${lugar_nacimiento}', fecha_nacimiento = '${fecha_nacimiento}', direccion = '${direccion}', identidad = '${identidad}', telefono = '${telefono}', institucion_procedencia = '${institucion_procedencia}', correo = '${correo}', contraseña = '${contraseña}', instrumento = '${instrumento}', programa_id = '${programa_id}', curso_id = '${curso_id}' WHERE id = ${id}`;
+        const { nombre, apellido, email, username, password, rol } = req.body;
+        const saltRounds = 10;
+
+        if (!id || !nombre || !apellido || !email || !username || !rol) {
+            return res.status(400).json({
+                error: true,
+                message: "Todos los campos son obligatorios"
+            });
+        }
+
         try {
-            connection.query(consulta, (error, result) => {
+            let password_hash = null;
+            if (password) {
+                password_hash = await bcrypt.hash(password, saltRounds);
+            }
+
+            const consulta = `UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, username = ?, password_hash = ?, rol = ? WHERE id = ?`;
+            connection.query(consulta, [nombre, apellido, email, username, password_hash, rol, id], (error, result) => {
                 if (error) {
                     return res.status(400).json({
                         error: true,
                         message: "Ocurrió un error al actualizar el usuario: " + error
-                    })
+                    });
                 }
                 return res
                     .header('Content-Type', 'application/json')
                     .status(200)
-                    .json(result)
-            })
+                    .json(result);
+            });
         } catch (error) {
             return res.status(400).json({
                 error: true,
-                message: "Ocurrió un error al actualizar el usuario"
-            })
+                message: "Ocurrió un error al actualizar el usuario: " + error
+            });
         }
     }
 
     static async deleteUser(req, res) {
         const { id } = req.params;
-        const consulta = `DELETE FROM usuarios WHERE id = ${id}`;
+        const consulta = `DELETE FROM usuarios WHERE id = ?`;
         try {
-            connection.query(consulta, (error, result) => {
+            connection.query(consulta, [id], (error, result) => {
+                
+                if (!id) {
+                    return res.status(400).json({
+                        error: true,
+                        message: "El id es requerido"
+                    })
+                }
                 if (error) {
                     return res.status(400).json({
                         error: true,
