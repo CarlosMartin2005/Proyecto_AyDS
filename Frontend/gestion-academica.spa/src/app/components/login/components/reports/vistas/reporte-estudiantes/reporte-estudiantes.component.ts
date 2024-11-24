@@ -18,8 +18,8 @@ export class ReporteEstudiantesComponent implements OnInit {
     { key: 'identidad', label: 'Identidad' },
     { key: 'fecha_de_nacimiento', label: 'Fecha de nacimiento' },
     { key: 'email', label: 'Correo' },
-    { key: 'programa', label: 'Programa' },
-    { key: 'curso', label: 'Curso' },
+    { key: 'programa', label: 'Programas' },
+    { key: 'curso', label: 'Cursos' },
     { key: 'horario', label: 'Horario' },
     { key: 'activo', label: 'Estado' },
   ];
@@ -29,14 +29,19 @@ export class ReporteEstudiantesComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get('http://localhost:3000/reportes/estudiantes').subscribe((data: any) => {
-      this.estudiantes = data.map((estudiante: any, index: number) => {
-        return {
-          index: index + 1,
-          ...estudiante,
-          activo: estudiante.activo === 'A' ? 'A' : 'I'
-        };
-      });
+    this.http.get('http://localhost:3000/reportes/estudiantes').subscribe({
+      next: (data: any) => {
+        this.estudiantes = data.map((estudiante: any, index: number) => {
+          return {
+            index: index + 1,
+            ...estudiante,
+            activo: estudiante.activo === 'A' ? 'Activo' : 'Inactivo'
+          };
+        });
+      },
+      error: (error) => {
+        console.error('Error al cargar los datos de estudiantes:', error);
+      }
     });
   }
 }

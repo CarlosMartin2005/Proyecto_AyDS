@@ -46,3 +46,11 @@ INSERT INTO alumnos_cursos (alumno_id, curso_id, nota) VALUES
 ('3', 2, 90.00),
 ('4', 3, 88.75),
 ('4', 4, 92.00);
+
+
+-- Insertar registros en la tabla alumnos_programas
+INSERT INTO alumnos_programas (alumno_id, programa_id) VALUES
+('3', 1),
+('3', 2),
+('4', 1),
+('4', 2);

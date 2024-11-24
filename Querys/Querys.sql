@@ -89,3 +89,13 @@ CREATE TABLE docentes_cursos (
     FOREIGN KEY (docente_id) REFERENCES usuarios(id) ON DELETE CASCADE,
     FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE CASCADE
 );
+
+DROP TABLE IF EXISTS alumnos_programas;
+-- Un alumno puede estar matriculado a varios programas
+CREATE TABLE alumnos_programas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    alumno_id CHAR(36) NOT NULL,
+    programa_id INT NOT NULL,
+    FOREIGN KEY (alumno_id) REFERENCES alumnos(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (programa_id) REFERENCES programas(id) ON DELETE CASCADE
+);

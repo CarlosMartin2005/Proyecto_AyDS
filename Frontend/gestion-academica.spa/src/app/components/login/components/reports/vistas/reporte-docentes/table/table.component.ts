@@ -21,6 +21,9 @@ export class TableComponent implements OnInit {
   @Input() columnConfig: any[] = [];
   @Input() data: any[] = []
 
+  displayedColumns: string[] = [];
+  dataSource: any[] = [];
+
   currentDate: string = '';
 
   currentPage = 1;
@@ -30,6 +33,8 @@ export class TableComponent implements OnInit {
   totalPages!: number;
 
   ngOnInit() {
+    this.displayedColumns = this.columnConfig.map(col => col.key);
+    this.dataSource = this.data;
     this.updatePagination();
     this.currentDate = new Date().toLocaleDateString();
   }
@@ -75,6 +80,6 @@ export class TableComponent implements OnInit {
   }
 
   getBadgeClass(element: any): string {
-    return element.activo === 'A' ? 'badge bg-success' : 'badge bg-danger'; 
+    return element.activo ? 'badge bg-success' : 'badge bg-danger'; 
   }
 }

@@ -19,7 +19,6 @@ export class ReporteDocentesComponent implements OnInit {
     { key: 'email', label: 'Correo' },
     { key: 'especialidad', label: 'Curso Impartido' },
     { key: 'activo', label: 'Estado' },
-    { key: 'acciones', label: '' },
   ];
 
   docentes: any[] = [];
@@ -28,10 +27,11 @@ export class ReporteDocentesComponent implements OnInit {
 
   ngOnInit() {
     this.http.get('http://localhost:3000/reportes/docentes').subscribe((data: any) => {
-      this.docentes = data.map((docente: any) => {
+      this.docentes = data.map((docente: any, index: number) => {
         return {
+          index: index + 1,
           ...docente,
-          activo: docente.status === 'A' ? 'A' : 'I'
+          activo: docente.status === 'A' ? 'Activo' : 'Inactivo'
         };
       });
     });

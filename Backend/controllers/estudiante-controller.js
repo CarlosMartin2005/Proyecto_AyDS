@@ -10,24 +10,26 @@ export class EstudianteController {
                 u.email, 
                 a.identidad, 
                 a.fecha_nacimiento AS fecha_de_nacimiento, 
-                p.nombre AS programa, 
-                GROUP_CONCAT(c.nombre SEPARATOR ', ') AS curso, 
-                GROUP_CONCAT(c.horario SEPARATOR ', ') AS horario,
+                GROUP_CONCAT(DISTINCT p.nombre SEPARATOR ', ') AS programa, 
+                GROUP_CONCAT(DISTINCT c.nombre SEPARATOR ', ') AS curso, 
+                GROUP_CONCAT(DISTINCT c.horario SEPARATOR ', ') AS horario,
                 u.status AS activo
             FROM 
                 usuarios u
             JOIN 
                 alumnos a ON u.id = a.id_usuario
             LEFT JOIN 
+                alumnos_programas ap ON a.id_usuario = ap.alumno_id
+            LEFT JOIN 
+                programas p ON ap.programa_id = p.id
+            LEFT JOIN 
                 alumnos_cursos ac ON a.id_usuario = ac.alumno_id
             LEFT JOIN 
                 cursos c ON ac.curso_id = c.id
-            LEFT JOIN 
-                programas p ON a.programa_id = p.id
             WHERE 
                 u.rol = 'Alumno'
             GROUP BY 
-                u.id, u.nombre, u.apellido, u.email, a.identidad, a.fecha_nacimiento, p.nombre, u.status
+                u.id, u.nombre, u.apellido, u.email, a.identidad, a.fecha_nacimiento, u.status
         `;
         try {
             connection.query(consulta, (error, result) => {
