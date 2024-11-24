@@ -96,6 +96,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   text-decoration: none;
 }
 
+.mensaje-error {
+  --mdc-snackbar-container-color: rgba(201, 0, 0, 0.67);
+  --mat-snack-bar-button-color: #5a3a2d;
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+.mensage-exito {
+  --mdc-snackbar-container-color: rgba(0, 143, 0, 0.67);
+  --mat-snack-bar-button-color: #5a3a2d;
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+
 
 
 

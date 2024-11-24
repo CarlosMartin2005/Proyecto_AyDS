@@ -4,6 +4,7 @@ import 'dotenv/config';
 import { validateRegister } from '../schemas/auth.schema.js';
 import crypto from 'node:crypto';
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from 'uuid';
 
 export class AuthController {
     static login(req, res) {
@@ -16,8 +17,8 @@ export class AuthController {
             })
         }
 
-        const query = `SELECT id, email, password_hash, role, status 
-                        FROM accounts WHERE email = ? `
+        const query = `SELECT id, email, password_hash, rol, status 
+                        FROM usuarios WHERE email = ? `
 
         try {
             connection.query(query, [email], (error, results) => {
@@ -36,21 +37,24 @@ export class AuthController {
                     })
                 }
 
-                const { id, email, password_hash, role, status } = results[0] // extraigo los datos necesarios
+                const { id, email, password_hash, rol, status, nombre, apellido } = results[0] // extraigo los datos necesarios
 
                 bcrypt.compare(password, password_hash, function (err, result) {
                     if (!result) {
-                        return res.status(400).json({
+                        return res.status(401).json({
                             error: true,
-                            message: "Ocurrió un error al comparar las contraseñas"
+                            message: "Usuario o contraseña incorrectos"
                         })
                     }
 
-                    const token = jwt.sign({ id, email, role, status }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    const data = { id, email, rol, status, nombre, apellido };
+
+                    const token = jwt.sign({ id, email, rol, status }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
                     return res.status(200).json({
                         error: false,
                         message: "Bienvenido",
+                        data: data,
                         token: token,
                         duration: 3600
                     })
@@ -65,11 +69,14 @@ export class AuthController {
         }
     }
 
-    static register(req, res) {
+    static async register(req, res) {
         const data = req.body;
+
+        const { nombre, apellido, email, username, password, rol } = req.body;
         const { success, error } = validateRegister(data);
-        const queryCheckEmail = `SELECT email FROM accounts WHERE email = ?`;
-        const queryInsert = `INSERT INTO accounts (id, email, firstName, lastName, username, password_hash, must_change_password, role, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const queryCheckEmail = `SELECT email FROM usuarios WHERE email = ?`;
+        const consulta = `INSERT INTO usuarios (id, nombre, apellido, email, username, password_hash, rol, status, fecha_creacion, fecha_actualizacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
 
         if (!success) {
             res.status(400).json({
@@ -78,19 +85,10 @@ export class AuthController {
         }
 
         try {
-            const { 
-                email, 
-                password, 
-                firstName,
-                lastName,
-                username,
-                must_change_password,
-                role, 
-                status 
-            } = data;
-            const id = crypto.randomUUID()
-            const created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
-            const password_hash = bcrypt.hashSync(password, 10)
+            const id = uuidv4();
+            const password_hash = await bcrypt.hash(password, 10);
+            // const id = crypto.randomUUID()
+            const fecha_creacion = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
             // consulta para verificar si el correo ya está registrado
             connection.query(queryCheckEmail, [email], (error, results) => {
@@ -108,8 +106,11 @@ export class AuthController {
                     });
                 }
 
+                // si el rol es Super, status debe ser A sino será I
+                const status = rol === 'Super' ? 'A' : 'I';
+
                 // consulta para insertar el usuario
-                connection.query(queryInsert, [id, email, firstName, lastName, username, password_hash, must_change_password ?? 1, role ?? 'alumno', status ?? 'inactivo', created_at, created_at], (error, results) => {
+                connection.query(consulta, [id, nombre, apellido, email,  username, password_hash, rol ?? 'Alumno', status ?? 'I', fecha_creacion, fecha_creacion], (error, results) => {
                     if (error) {
                         return res.status(400).json({
                             error: true,

@@ -62,6 +62,9 @@ export class UserController {
     static async createUser(req, res) {
         const { id, nombre, apellido, email, username, password, rol } = req.body;
         const saltRounds = 10;
+        const queryCheckEmail = `SELECT email FROM accounts WHERE email = ?`;
+        const consulta = `INSERT INTO usuarios (id, nombre, apellido, email, username, password_hash, rol) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
 
         if (!id || !nombre || !apellido || !email || !username || !password || !rol) {
             return res.status(400).json({

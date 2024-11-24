@@ -13,14 +13,13 @@ export const RegisterSchema = z.object(
             message: "El nombre debe tener al menos 3 caracteres"
         }).optional(),
         "password": z.string().trim(),
-        "firstName": z.string(),
-        "lastName": z.string(),
-        "role": z.enum(['admin', 'docente', 'alumno']).default('alumno'),
+        "nombre": z.string(),
+        "apellido": z.string(),
+        "rol": z.enum(['Super', 'Docente', 'Alumno']).default('Alumno'),
         "email": z.string().email({
             message: "El email no es válido"
         }),
-        "must_change_password": z.number().min(0).max(1).default(1).optional(),
-        "status": z.enum(['activo', 'inactivo']).optional(),
+        "status": z.enum(['A', 'I']).optional(),
     },
 )
 
