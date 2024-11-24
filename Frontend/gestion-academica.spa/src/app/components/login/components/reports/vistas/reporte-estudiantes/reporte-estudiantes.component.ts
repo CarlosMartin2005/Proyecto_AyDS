@@ -1,22 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ButtonGoBackComponent } from '../button-go-back/button-go-back.component';
-import { TableComponent } from '../table/table.component';
+import { TableComponent } from './table/table.component';
 @Component({
   selector: 'app-reporte-estudiantes',
   standalone: true,
-  imports: [ButtonGoBackComponent, TableComponent],
+  imports: [HttpClientModule, ButtonGoBackComponent, TableComponent],
   templateUrl: './reporte-estudiantes.component.html',
-  styleUrl: './reporte-estudiantes.component.scss'
+  styleUrl: './reporte-estudiantes.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ReporteEstudiantesComponent {
+export class ReporteEstudiantesComponent implements OnInit {
   userReportColumns = [
     { key: 'index', label: 'Indice' },
     { key: 'nombres', label: 'Nombres' },
     { key: 'apellidos', label: 'Apellidos' },
-    { key: 'clave', label: 'Clase' },
-    { key: 'activo', label: 'Correo' },
-    { key: 'activo', label: 'Telefono' },
-    { key: 'activo', label: 'Direccion' },
-    { key: 'acciones', label: '' },
+    { key: 'identidad', label: 'Identidad' },
+    { key: 'fecha_de_nacimiento', label: 'Fecha de nacimiento' },
+    { key: 'email', label: 'Correo' },
+    { key: 'programa', label: 'Programa' },
+    { key: 'curso', label: 'Curso' },
+    { key: 'horario', label: 'Horario' },
+    { key: 'activo', label: 'Estado' },
   ];
+
+  estudiantes: any[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get('http://localhost:3000/reportes/estudiantes').subscribe((data: any) => {
+      this.estudiantes = data.map((estudiante: any, index: number) => {
+        return {
+          index: index + 1,
+          ...estudiante,
+          activo: estudiante.activo === 'A' ? 'A' : 'I'
+        };
+      });
+    });
+  }
 }

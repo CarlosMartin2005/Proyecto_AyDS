@@ -4,19 +4,17 @@
 
 DROP TABLE IF EXISTS accounts;
 
-create table accounts(
-	id char(36) not null,
-    firstName varchar(50) not null,
-    lastName varchar(50) not null,
-    email VARCHAR(50) not null,
-    username varchar(100) null,
-    password_hash varchar(255) not null,
-    must_change_password varchar(255),
-    status char(1),
-
-    constraint pkAccountsID primary key (id)
+CREATE TABLE accounts(
+    id CHAR(36) NOT NULL,
+    firstName VARCHAR(50) NOT NULL,
+    lastName VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    username VARCHAR(100) NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    must_change_password VARCHAR(255),
+    status CHAR(1),
+    CONSTRAINT pkAccountsID PRIMARY KEY (id)
 );
-
 
 CREATE TABLE usuarios (
     id CHAR(36) PRIMARY KEY,
@@ -30,18 +28,14 @@ CREATE TABLE usuarios (
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Por si hacemos la lógica del único usuario SUPER desde la base de datos (no creo)
--- ALTER TABLE usuarios 
--- ADD CONSTRAINT unico_super CHECK (rol != 'Super' OR id = (SELECT id FROM usuarios WHERE rol = 'Super' LIMIT 1));
-
-
+DROP TABLE IF EXISTS programas;
 CREATE TABLE programas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT
 );
 
-
+DROP TABLE IF EXISTS alumnos;
 CREATE TABLE alumnos (
     id_usuario CHAR(36) PRIMARY KEY,
     lugar_nacimiento VARCHAR(100),
@@ -56,36 +50,37 @@ CREATE TABLE alumnos (
     FOREIGN KEY (programa_id) REFERENCES programas(id)
 );
 
-
+DROP TABLE IF EXISTS docentes;
 CREATE TABLE docentes (
     id_usuario CHAR(36) PRIMARY KEY,
     especialidad VARCHAR(100),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
 
-
+DROP TABLE IF EXISTS cursos;
 CREATE TABLE cursos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
-    horario VARCHAR(50) NOT NULL, -- Ejemplo: "Lunes a Viernes, 8:00 - 12:00"
+    horario VARCHAR(50) NOT NULL,
     programa_id INT NOT NULL,
     docente_id CHAR(36) NULL,
     FOREIGN KEY (programa_id) REFERENCES programas(id) ON DELETE CASCADE,
     FOREIGN KEY (docente_id) REFERENCES usuarios(id) ON DELETE SET NULL
 );
 
-
+DROP TABLE IF EXISTS alumnos_cursos;
 -- Un alumno puede estar matriculado a varios cursos
 CREATE TABLE alumnos_cursos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     alumno_id CHAR(36) NOT NULL,
     curso_id INT NOT NULL,
+    nota DECIMAL(5, 2),
     FOREIGN KEY (alumno_id) REFERENCES alumnos(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE CASCADE
 );
 
-
+DROP TABLE IF EXISTS docentes_cursos;
 -- Un docente puede dominar varios instrumentos, por lo tanto, ser elegible para más cursos
 CREATE TABLE docentes_cursos (
     id INT AUTO_INCREMENT PRIMARY KEY,
