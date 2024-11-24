@@ -1,7 +1,7 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ButtonGoBackComponent } from '../button-go-back/button-go-back.component';
-import { TableComponent } from './table/table.component';
+import { TableComponent } from '../table/table.component';
 @Component({
   selector: 'app-reporte-estudiantes',
   standalone: true,
