@@ -76,7 +76,7 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
           {
             label: 'Excelencia Académica',
             data: [0, this.excellencePercentage],
-            backgroundColor: '#4CAF50', // Color para excelencia académica
+            backgroundColor: '#fab174' , // Color para excelencia académica
             barThickness: 35, // Aumentar un poco más la altura de la barra
             categoryPercentage: 1.0 // Mantener el ancho completo de la categoría
           }
