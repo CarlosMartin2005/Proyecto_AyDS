@@ -13,11 +13,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 })
 export class ReportAprobadoReprobadoComponent implements OnInit {
   currentDate = new Date().toLocaleDateString();
-<<<<<<< HEAD
   reportTitle = 'Reporte de aprobados y reprobados'; // Título del reporte
-=======
-  reportTitle = 'Reporte de Aprobación y Reprobación';
->>>>>>> d77bc2bba76ad1ffb49cac59138ce77277c867b6
 
   // Datos dinámicos para los totales
   totalEstudiantes = 0;
@@ -40,7 +36,7 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
       this.renderChart();
     });
   }
-  
+
   // Cálculo de porcentajes
   get approvedPercentage() {
     return (this.totalAprobados / this.totalEstudiantes) * 100;
