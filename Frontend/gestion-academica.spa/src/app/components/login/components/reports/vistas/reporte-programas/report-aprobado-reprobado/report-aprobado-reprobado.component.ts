@@ -1,24 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Chart, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-report-aprobado-reprobado',
   standalone: true,
-  imports: [MatCardModule],
+  imports: [MatCardModule, HttpClientModule],
   templateUrl: './report-aprobado-reprobado.component.html',
   styleUrls: ['./report-aprobado-reprobado.component.scss']
 })
 export class ReportAprobadoReprobadoComponent implements OnInit {
   currentDate = new Date().toLocaleDateString();
-  reportTitle = 'Reporte de Programas';
+  reportTitle = 'Reporte de Aprobación y Reprobación';
 
   // Datos dinámicos para los totales
-  totalEstudiantes = 40; // Ejemplo de dato dinámico
-  totalAprobados = 33; // Ejemplo de dato dinámico
-  totalReprobados = 7; // Ejemplo de dato dinámico
+  totalEstudiantes = 0;
+  totalAprobados = 0;
+  totalReprobados = 0;
+  totalExcelencia = 0;
 
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
+    this.http.get('http://localhost:3000/reportes/aprobado-reprobado').subscribe((data: any) => {
+      this.totalEstudiantes = data.totalEstudiantes;
+      this.totalAprobados = data.totalAprobados;
+      this.totalReprobados = data.totalReprobados;
+      this.totalExcelencia = data.totalExcelencia;
+      this.renderChart();
+    });
+  }
+  
   // Cálculo de porcentajes
   get approvedPercentage() {
     return (this.totalAprobados / this.totalEstudiantes) * 100;
@@ -28,8 +46,8 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
     return (this.totalReprobados / this.totalEstudiantes) * 100;
   }
 
-  ngOnInit() {
-    this.renderChart();
+  get excellencePercentage() {
+    return (this.totalExcelencia / this.totalEstudiantes) * 100;
   }
 
   renderChart() {
@@ -39,7 +57,7 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Estudiantes'],
+        labels: ['Estudiantes', 'Excelencia Académica'],
         datasets: [
           {
             label: 'Aprobados',
@@ -52,6 +70,13 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
             label: 'Reprobados',
             data: [this.failedPercentage],
             backgroundColor: '#A36750', // Nuevo color para reprobados
+            barThickness: 35, // Aumentar un poco más la altura de la barra
+            categoryPercentage: 1.0 // Mantener el ancho completo de la categoría
+          },
+          {
+            label: 'Excelencia Académica',
+            data: [0, this.excellencePercentage],
+            backgroundColor: '#4CAF50', // Color para excelencia académica
             barThickness: 35, // Aumentar un poco más la altura de la barra
             categoryPercentage: 1.0 // Mantener el ancho completo de la categoría
           }
@@ -99,7 +124,9 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
             font: {
               size: 16
             },
-            formatter: (value: number) => `${value.toFixed(2)}%`
+            formatter: (value: number) => {
+              return value === 0 ? '' : `${value.toFixed(2)}%`;
+            }
           }
         }
       }

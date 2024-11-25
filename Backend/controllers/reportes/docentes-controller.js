@@ -1,35 +1,27 @@
-import connection from '../db/connection.js';
+import connection from '../../db/connection.js';
 
-export class EstudianteController {
-    static async getAllEstudiantes(req, res) {
+export class DocentesController {
+    static async getAllDocentes(req, res){
         const consulta = `
             SELECT 
                 u.id, 
                 u.nombre AS nombres, 
                 u.apellido AS apellidos, 
                 u.email, 
-                a.identidad, 
-                a.fecha_nacimiento AS fecha_de_nacimiento, 
-                GROUP_CONCAT(DISTINCT p.nombre SEPARATOR ', ') AS programa, 
-                GROUP_CONCAT(DISTINCT c.nombre SEPARATOR ', ') AS curso, 
-                GROUP_CONCAT(DISTINCT c.horario SEPARATOR ', ') AS horario,
-                u.status AS activo
+                d.especialidad, 
+                GROUP_CONCAT(c.nombre SEPARATOR ', ') AS cursos
             FROM 
                 usuarios u
             JOIN 
-                alumnos a ON u.id = a.id_usuario
+                docentes d ON u.id = d.id_usuario
             LEFT JOIN 
-                alumnos_programas ap ON a.id_usuario = ap.alumno_id
+                docentes_cursos dc ON d.id_usuario = dc.docente_id
             LEFT JOIN 
-                programas p ON ap.programa_id = p.id
-            LEFT JOIN 
-                alumnos_cursos ac ON a.id_usuario = ac.alumno_id
-            LEFT JOIN 
-                cursos c ON ac.curso_id = c.id
+                cursos c ON dc.curso_id = c.id
             WHERE 
-                u.rol = 'Alumno'
+                u.rol = 'Docente'
             GROUP BY 
-                u.id, u.nombre, u.apellido, u.email, a.identidad, a.fecha_nacimiento, u.status
+                u.id, u.nombre, u.apellido, u.email, d.especialidad
         `;
         try {
             connection.query(consulta, (error, result) => {

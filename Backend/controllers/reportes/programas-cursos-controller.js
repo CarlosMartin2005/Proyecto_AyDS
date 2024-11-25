@@ -1,4 +1,4 @@
-import connection from '../db/connection.js';
+import connection from '../../db/connection.js';
 
 export class ProgramasCursosController {
     static async getAllProgramasCursos(req, res) {
