@@ -14,6 +14,9 @@ reportesrouter.get('/estudiantes', EstudianteController.getAllEstudiantes);
 reportesrouter.get('/programas-cursos', ProgramasCursosController.getAllProgramasCursos);
 reportesrouter.get('/seguimiento', SeguimientoController.getAllSeguimiento);
 reportesrouter.get('/estudiantes-cursos', EstudiantesCursosController.getEstudiantesCursos);
+reportesrouter.get('/matricula', MatriculaController.getAllMatricula);
+reportesrouter.get('/programas', ProgramasCursosController.getAllProgramas);
+reportesrouter.get('/cursos', ProgramasCursosController.getAllCursos);
 reportesrouter.get('/rendimiento-estudiante/:id', RendimientoEstudianteController.getRendimiento);
 
 export default reportesrouter;
