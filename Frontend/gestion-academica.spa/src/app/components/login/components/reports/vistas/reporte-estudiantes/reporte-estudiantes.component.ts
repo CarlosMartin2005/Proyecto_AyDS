@@ -2,6 +2,7 @@ import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ButtonGoBackComponent } from '../button-go-back/button-go-back.component';
 import { TableComponent } from '../table/table.component';
+import { FormateadorService } from '../../../../../../services/otros/formateador/formateador.service';
 @Component({
   selector: 'app-reporte-estudiantes',
   standalone: true,
@@ -26,16 +27,19 @@ export class ReporteEstudiantesComponent implements OnInit {
 
   estudiantes: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private formateador: FormateadorService) {}
 
   ngOnInit() {
     this.http.get('http://localhost:3000/reportes/estudiantes').subscribe({
       next: (data: any) => {
         this.estudiantes = data.map((estudiante: any, index: number) => {
+          const fecha = this.formateador.convertirFechaMySQLaStandarWeb(estudiante.fecha_de_nacimiento)
+          const fechaFormateada = fecha[3] + '/' + fecha[2] + '/' + fecha[1];
           return {
             index: index + 1,
             ...estudiante,
-            activo: estudiante.activo === 'A' ? 'Activo' : 'Inactivo'
+            activo: estudiante.activo === 'A' ? 'Activo' : 'Inactivo',
+            fecha_de_nacimiento: fechaFormateada
           };
         });
       },

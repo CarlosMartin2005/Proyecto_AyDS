@@ -10,6 +10,8 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
   isDropdownOpen: boolean = false;
+  nombre = localStorage.getItem('nombre') + ' ' + localStorage.getItem('apellido');
+  email = localStorage.getItem('email');
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;

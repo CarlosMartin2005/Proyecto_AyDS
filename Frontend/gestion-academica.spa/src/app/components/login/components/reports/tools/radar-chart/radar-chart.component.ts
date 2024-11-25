@@ -11,6 +11,8 @@ export class RadarChartComponent implements OnInit {
   @Input() data: number[] = [];
   @Input() labels: string[] = [];
 
+  private chart: Chart | undefined;
+
   constructor() {
     Chart.register(...registerables);
   }
@@ -26,7 +28,7 @@ export class RadarChartComponent implements OnInit {
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     if (!ctx) return;
 
-    new Chart(ctx as ChartItem, {
+    this.chart = new Chart(ctx as ChartItem, {
       type: 'radar',
       data: {
         labels: this.labels,
@@ -76,5 +78,13 @@ export class RadarChartComponent implements OnInit {
         }
       }
     });
+  }
+
+  updateChart(): void {
+    if (this.chart) {
+      this.chart.data.labels = this.labels;
+      this.chart.data.datasets[0].data = this.data;
+      this.chart.update();
+    }
   }
 }
