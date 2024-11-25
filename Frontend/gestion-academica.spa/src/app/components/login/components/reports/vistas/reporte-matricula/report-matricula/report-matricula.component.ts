@@ -10,6 +10,8 @@ import { ButtonGoBackComponent } from '../../button-go-back/button-go-back.compo
 import { TableComponent } from '../../table/table.component';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { EstudiantesService } from '../../../../../../../services/estudiantes/estudiantes.service';
+import { SearchBarComponent } from '../../../../../../../otros/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-report-matricula',
@@ -22,8 +24,7 @@ import autoTable from 'jspdf-autotable';
     MatBadgeModule,
     MatIconModule,
     MatCardModule,
-    ButtonGoBackComponent,
-    TableComponent
+    SearchBarComponent
   ],
   templateUrl: './report-matricula.component.html',
   styleUrls: ['./report-matricula.component.scss'],
@@ -34,6 +35,11 @@ export class ReportMatriculaComponent implements OnInit {
   reportTitle = 'Reporte de Matrícula';
 
   alumnos: any[] = [];
+  columsNamesAlumnos = {
+    'nombre_completo': 'Nombre Completo',
+    'numero_identidad': 'No. de Identidad',
+    'programas': 'Programas'
+  };
   filteresAlumnos: any[] = [];
   selectedAlumno: any = null;
   searchQuery: string = '';
@@ -51,7 +57,9 @@ export class ReportMatriculaComponent implements OnInit {
     { key: 'programas', label: 'Programas' }
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private estudiantesService: EstudiantesService
+  ) {}
 
   ngOnInit() {
     this.loadAlumnos();
@@ -59,12 +67,28 @@ export class ReportMatriculaComponent implements OnInit {
   }
 
   loadAlumnos() {
-    this.http.get('http://localhost:3000/reportes/matricula').subscribe((data: any) => {
-      this.alumnos = data;
-      console.log('Alumnos cargados:', this.alumnos);
-      if (this.alumnos.length > 0) {
-        this.selectedAlumno = this.alumnos[0];
-        this.loadCursos();
+    // this.http.get('http://localhost:3000/reportes/matricula').subscribe((data: any) => {
+    //   this.alumnos = data;
+    //   console.log('Alumnos cargados:', this.alumnos);
+    //   if (this.alumnos.length > 0) {
+    //     this.selectedAlumno = this.alumnos[0];
+    //     this.loadCursos();
+    //   }
+    // });
+
+    this.estudiantesService.getEstudiantes().subscribe({
+      next: (data: any) => {
+        this.alumnos = data.map((estudiante: any, index: number) => {
+          return {
+            id: estudiante.id,
+            nombre_completo: estudiante.nombres + ' ' + estudiante.apellidos,
+            numero_identidad: estudiante.identidad,
+            programas: estudiante.programa
+          };
+        });
+      },
+      error: (error) => {
+        console.error('Error al cargar los datos de estudiantes:', error);
       }
     });
   }
@@ -211,6 +235,15 @@ export class ReportMatriculaComponent implements OnInit {
 
     // Abrir el PDF en una nueva pestaña
     window.open(doc.output('bloburl'));
+  }
+
+  onRowSelected(row: any) {
+    this.selectedAlumno = row;
+    this.filterCursos();
+  }
+
+  mostrarCard(): boolean {
+    return this.selectedAlumno ? true : false;
   }
 
 

@@ -1,3 +1,4 @@
+<app-search-bar [datosExternos]="alumnos" [columnasMostrar]="columsNamesAlumnos" (rowSelected)="onRowSelected($event)"></app-search-bar>
 <div class="card-header d-flex justify-content-between align-items-center">
   <span class="current-date">{{ currentDate }}</span>
   <div class="title-container">
@@ -5,43 +6,49 @@
   </div>
   <img src="../../assets/Nota-sol-logo-oroginal-Pequeña.png" class="logo" alt="Nota Musical">
 </div>
-<div class="info-grid" *ngIf="selectedAlumno">
-  <div class="info-item"><strong>ID:</strong><br>{{ selectedAlumno.id_alumno }}</div>
-  <div class="info-item"><strong>Nombre completo:</strong><br>{{ selectedAlumno.nombre_completo }}</div>
-  <div class="info-item"><strong>No de identidad:</strong><br>{{ selectedAlumno.numero_identidad }}</div>
-  <div class="info-item">
-    <strong>Programas:</strong><br>
-    <select [(ngModel)]="selectedPrograma" (change)="onProgramaChange()">
-      <option *ngFor="let programa of programas" [value]="programa">{{ programa }}</option>
-    </select>
+@if(mostrarCard()){
+  <div class="info-grid" *ngIf="selectedAlumno">
+    <!-- <div class="info-item"><strong>ID:</strong><br>{{ selectedAlumno.id_alumno }}</div> -->
+    <div class="info-item"><strong>Nombre completo:</strong><br>{{ selectedAlumno.nombre_completo }}</div>
+    <div class="info-item"><strong>No de identidad:</strong><br>{{ selectedAlumno.numero_identidad }}</div>
+    <div class="info-item">
+      <strong>Programas:</strong><br>
+      <select [(ngModel)]="selectedPrograma" (change)="onProgramaChange()">
+        <option *ngFor="let programa of programas" [value]="programa">{{ programa }}</option>
+      </select>
+    </div>
   </div>
-</div>
-<div class="card-body py-2">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Curso</th>
-        <th>Docente</th>
-        <th>Horario</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let curso of cursosFiltrados">
-        <td>{{ curso.nombre }}</td>
-        <td>{{ curso.docente }}</td>
-        <td>{{ curso.horario }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="d-flex justify-content-between align-items-center">
-    <nav *ngIf="programas.length > 1">
-      <ul class="pagination">
-        <li *ngFor="let programa of programas" (click)="onProgramaClick(programa)" class="page-item" [class.active]="programa === selectedPrograma">
-          <a class="page-link">{{ programa }}</a>
-        </li>
-      </ul>
-    </nav>
-    <!-- Botón para imprimir el reporte -->
-    <button class="btn print-btn" (click)="imprimirReporte()">Imprimir Reporte</button>
+  <div class="card-body py-2">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Curso</th>
+          <th>Docente</th>
+          <th>Horario</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let curso of cursosFiltrados">
+          <td>{{ curso.nombre }}</td>
+          <td>{{ curso.docente }}</td>
+          <td>{{ curso.horario }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-between align-items-center">
+      <nav *ngIf="programas.length > 1">
+        <ul class="pagination">
+          <li *ngFor="let programa of programas" (click)="onProgramaClick(programa)" class="page-item" [class.active]="programa === selectedPrograma">
+            <a class="page-link">{{ programa }}</a>
+          </li>
+        </ul>
+      </nav>
+      <!-- Botón para imprimir el reporte -->
+      <button class="btn print-btn" (click)="imprimirReporte()">Imprimir Reporte</button>
+    </div>
   </div>
-</div>
+} @else {
+  <div class="info-grid m-auto p-20">
+    <h3 class="font-bold">Seleccione un alumno para ver su matrícula</h3>
+  </div>
+}
