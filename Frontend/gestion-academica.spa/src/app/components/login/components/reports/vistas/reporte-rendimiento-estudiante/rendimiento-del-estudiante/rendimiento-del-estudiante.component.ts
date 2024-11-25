@@ -3,24 +3,54 @@ import { MatCardModule } from '@angular/material/card';
 import { RadarChartComponent } from '../../../tools/radar-chart/radar-chart.component';
 import { ReporteRendimientoService } from '../../../../../../../services/reports/reporte-rendimiento/reporte-rendimiento.service';
 import { FormateadorService } from '../../../../../../../services/otros/formateador/formateador.service';
+import { SearchBarComponent } from '../../../../../../../otros/search-bar/search-bar.component';
+import { EstudiantesService } from '../../../../../../../services/estudiantes/estudiantes.service';
 
 @Component({
   selector: 'app-rendimiento-del-estudiante',
   standalone: true,
-  imports: [MatCardModule, RadarChartComponent],
+  imports: [MatCardModule, RadarChartComponent, SearchBarComponent],
   templateUrl: './rendimiento-del-estudiante.component.html',
   styleUrls: ['./rendimiento-del-estudiante.component.scss']
 })
 export class RendimientoDelEstudianteComponent {
+  estudiantes: any[] = [];
+  columnsNamesEstudiantes = {
+    'nombre': 'Nombre',
+    'identidad': 'Identidad',
+    'email': 'Correo',
+    'curso': 'Curso',
+    'programa': 'Programa'
+  };
+  estudianteSeleccionado: any;
 
   @ViewChild(RadarChartComponent) radarChartComponent!: RadarChartComponent;
 
   currentDate = new Date().toLocaleDateString();
   reportTitle = 'Reporte de Rendimiento del Estudiante';
 
-  constructor(private reporteRendimientoService: ReporteRendimientoService, private formateador: FormateadorService) {
-    this.dataChart();
+  constructor(private reporteRendimientoService: ReporteRendimientoService, private formateador: FormateadorService, private estudiantesService: EstudiantesService) {
+    this.estudiantesService.getEstudiantes().subscribe({
+      next: (data: any) => {
+        this.estudiantes = data.map((estudiante: any, index: number) => {
+          const nombreEnd = estudiante.nombres + ' ' + estudiante.apellidos;
+          return {
+            id: estudiante.id,
+            nombre: nombreEnd,
+            identidad: estudiante.identidad,
+            email: estudiante.email,
+            curso: estudiante.curso,
+            programa: estudiante.programa
+          };
+        });
+        console.log(this.estudiantes);
+      },
+      error: (error) => {
+        console.error('Error al cargar los datos de estudiantes:', error);
+      }
+    });
   }
+
 
   // Información del estudiante
   studentInfo = {
@@ -52,13 +82,13 @@ export class RendimientoDelEstudianteComponent {
     return labels[value];
   }
 
-  dataChart() {
-    this.reporteRendimientoService.getInfo(3).subscribe(
+  dataChart(id: any) {
+    this.reporteRendimientoService.getInfo(id).subscribe(
       (data: any) => {
         // this.studentInfo = data.estudiante;
         // this.studentCharacteristics = data.caracteristicas;
         // this.chartData = Object.values(this.studentCharacteristics);
-        console.log(data);
+        // console.log(data);
         this.studentCharacteristics = {
           rendimientoAcademico: data.promedio_rendimiento_academico,
           manejoInstrumentos: data.promedio_manejo_instrumentos,
@@ -88,5 +118,17 @@ export class RendimientoDelEstudianteComponent {
       this.radarChartComponent.labels = this.chartLabels;
       this.radarChartComponent.updateChart();
     }
+  }
+
+  onRowSelected(row: any) {
+    console.log('Fila seleccionada:', row.id);
+    this.estudianteSeleccionado = row.id;
+    this.dataChart(this.estudianteSeleccionado);
+
+    // Aquí puedes manejar la fila seleccionada como desees
+  }
+
+  mostrarCard(): boolean {
+    return this.estudianteSeleccionado ? true : false;
   }
 }

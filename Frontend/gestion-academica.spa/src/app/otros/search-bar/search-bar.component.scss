@@ -1,0 +1,20 @@
+table {
+  width: 100%;
+}
+
+.fila:hover {
+  background-color: rgba(0, 0, 0, 0.2); // Cambiado a un color más oscuro
+  cursor: pointer;
+}
+
+.input-btn {
+  background-color: #A56B4E !important; /* Quinto Color */
+  color: white !important;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.input-btn:hover {
+  background-color: #361F18 !important; /* Cuaternario */
+}
