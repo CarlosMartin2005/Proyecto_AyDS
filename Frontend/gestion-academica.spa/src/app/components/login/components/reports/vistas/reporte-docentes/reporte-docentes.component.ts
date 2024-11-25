@@ -8,7 +8,7 @@ import { TableComponent } from '../table/table.component';
   standalone: true,
   imports: [HttpClientModule, ButtonGoBackComponent, TableComponent],
   templateUrl: './reporte-docentes.component.html',
-  styleUrl: './reporte-docentes.component.scss',
+  styleUrls: ['./reporte-docentes.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ReporteDocentesComponent implements OnInit {
@@ -36,4 +36,5 @@ export class ReporteDocentesComponent implements OnInit {
       });
     });
   }
+  logoUrl = '../../../../../../assets/logo.png';
 }
