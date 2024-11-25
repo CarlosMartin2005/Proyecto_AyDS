@@ -17,7 +17,7 @@ export class AuthController {
             })
         }
 
-        const query = `SELECT id, email, password_hash, rol, status 
+        const query = `SELECT id, email, password_hash, rol, status, nombre, apellido 
                         FROM usuarios WHERE email = ? `
 
         try {

@@ -19,8 +19,6 @@
   font-family: 'Arial', sans-serif; /* Fuente bonita */
 }
 
-
-
 .table th {
   background-color: #A36750; /* Color Primario */
   color: white;
@@ -37,4 +35,22 @@
 
 .badge.bg-danger {
   background-color: #361F18; /* Cuaternario */
+}
+
+.print-btn {
+  background-color: #A56B4E; /* Quinto Color */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.print-btn:hover {
+  background-color: #361F18; /* Cuaternario */
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
