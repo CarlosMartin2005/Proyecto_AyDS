@@ -12,7 +12,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 })
 export class ReportAprobadoReprobadoComponent implements OnInit {
   currentDate = new Date().toLocaleDateString();
-  reportTitle = 'Reporte de Programas';
+  reportTitle = 'Reporte de aprobados y reprobados'; // Título del reporte
 
   // Datos dinámicos para los totales
   totalEstudiantes = 40; // Ejemplo de dato dinámico

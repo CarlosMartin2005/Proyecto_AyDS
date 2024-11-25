@@ -18,7 +18,7 @@
   margin-left: 8px;
   font-size: 16px; /* Tamaño de la fuente para la fecha */
   color: #361F18; /* Cuaternario */
-  font-family: 'Arial', sans-serif; /* Fuente bonita */
+  font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
 }
 
 .table-title {
@@ -26,7 +26,7 @@
   font-size: 24px; /* Tamaño de la fuente para el título */
   font-weight: bold;
   color: #361F18; /* Cuaternario */
-  font-family: 'Arial', sans-serif; /* Fuente bonita */
+  font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
   text-align: center;
 }
 
@@ -54,12 +54,13 @@
   background-color: #FFFFFF; /* Fondo blanco */
   padding: 16px;
   border-radius: 8px;
+  font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
 }
 
 .info-item {
   font-size: 18px; /* Tamaño de fuente para las secciones principales */
   color: #361F18; /* Color de texto */
-  font-family: 'Arial', sans-serif; /* Fuente bonita */
+  font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
   text-align: left; /* Alinea el texto a la izquierda */
 }
 
@@ -67,6 +68,7 @@
   font-size: 20px; /* Tamaño de fuente para los títulos de las secciones */
   color: #A36750; /* Quinto Color */
   margin-bottom: 8px;
+  text-align: center !important; /* Centra el subtítulo */
 }
 
 .chart-column {

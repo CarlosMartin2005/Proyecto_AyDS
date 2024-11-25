@@ -51,7 +51,7 @@ export class ReportsComponent {
     },
     {
       image: 'assets/icons-reports/programas.png',
-      title: 'Reporte de Programas',
+      title: 'Reporte de aprobados y reprobados',
       ruta: 'programas'
     },
   ]

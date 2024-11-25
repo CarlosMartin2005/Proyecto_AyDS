@@ -18,7 +18,7 @@
   margin-left: 8px;
   font-size: 16px; /* Tamaño de la fuente para la fecha */
   color: #361F18; /* Cuaternario */
-  font-family: 'Arial', sans-serif; /* Fuente bonita */
+  font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
 }
 
 .table-title {
@@ -26,7 +26,7 @@
   font-size: 24px; /* Tamaño de la fuente para el título */
   font-weight: bold;
   color: #361F18; /* Cuaternario */
-  font-family: 'Arial', sans-serif; /* Fuente bonita */
+  font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
   text-align: center;
 }
 
@@ -54,6 +54,7 @@
   align-items: center;
   height: 100%;
   padding-top: 10%; /* Bajar un poco más el "Total de Estudiantes" */
+  font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
 }
 
 .info-row.middle {
@@ -69,7 +70,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Arial', sans-serif; /* Fuente bonita */
   color: #361F18; /* Cuaternario */
 }
 
