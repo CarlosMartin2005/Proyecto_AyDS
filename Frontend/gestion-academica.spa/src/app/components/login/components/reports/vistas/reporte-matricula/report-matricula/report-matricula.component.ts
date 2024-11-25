@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { ButtonGoBackComponent } from '../../button-go-back/button-go-back.component';
+import { TableComponent } from '../../table/table.component';
 
 @Component({
   selector: 'app-report-matricula',
@@ -12,37 +15,75 @@ import { MatCardModule } from '@angular/material/card';
   imports: [
     CommonModule,
     FormsModule, // Añádelo aquí
+    HttpClientModule,
     MatButtonModule,
     MatBadgeModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    ButtonGoBackComponent,
+    TableComponent
   ],
   templateUrl: './report-matricula.component.html',
-  styleUrls: ['./report-matricula.component.scss']
+  styleUrls: ['./report-matricula.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ReportMatriculaComponent implements OnInit {
   currentDate = new Date().toLocaleDateString();
   reportTitle = 'Reporte de Matrícula';
 
   // Información del usuario
-  nombreCompleto = 'Juan Pérez';
-  numeroIdentidad = '123456789';
+  alumnos: any[] = [];
+  filteresAlumnos: any[] = [];
+  selectedAlumno: any = null;
+  searchQuery: string = '';
 
   // Programas disponibles
-  programas = ['Programa 1', 'Programa 2'];
-  selectedPrograma = this.programas[0];
+  programas: string[] = [];
+  selectedPrograma: string = '';
 
-  // Datos para la tabla
-  cursos = [
-    { programa: 'Programa 1', curso: 'Curso A', seccion: 'Sección 1', hora: '8:00 AM', dia: 'Lunes' },
-    { programa: 'Programa 1', curso: 'Curso B', seccion: 'Sección 2', hora: '10:00 AM', dia: 'Martes' },
-    { programa: 'Programa 2', curso: 'Curso C', seccion: 'Sección 1', hora: '2:00 PM', dia: 'Miércoles' },
-    { programa: 'Programa 2', curso: 'Curso D', seccion: 'Sección 3', hora: '4:00 PM', dia: 'Jueves' }
+  // Datos para la tabla de cursos
+  cursos: any[] = [];
+  cursosFiltrados: any[] = [];
+
+  // Datos para el reporte de matrícula
+  MatriculaReportColumns = [
+    { key: 'id_alumno', label: 'ID del Alumno' },
+    { key: 'nombre_completo', label: 'Nombre Completo' },
+    { key: 'numero_identidad', label: 'No. de Identidad' },
+    { key: 'fecha', label: 'Fecha' },
+    { key: 'programas', label: 'Programas' }
   ];
-  cursosFiltrados = this.cursos.filter(curso => curso.programa === this.selectedPrograma);
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.filterCursos();
+    this.loadAlumnos();
+    this.loadProgramas();
+  }
+
+  loadAlumnos() {
+    this.http.get('http://localhost:3000/reportes/matricula').subscribe((data: any) => {
+      this.alumnos = data;
+      if (this.alumnos.length > 0) {
+        this.selectedAlumno = this.alumnos[0];
+        this.loadCursos();
+      }
+    });
+  }
+
+  loadProgramas() {
+    this.http.get('http://localhost:3000/reportes/programas').subscribe((data: any) => {
+      this.programas = data.map((programa: any) => programa.nombre);
+      this.selectedPrograma = this.programas[0];
+      this.loadCursos();
+    });
+  }
+
+  loadCursos() {
+    this.http.get('http://localhost:3000/reportes/cursos').subscribe((data: any) => {
+      this.cursos = data;
+      this.filterCursos();
+    });
   }
 
   onProgramaChange() {
@@ -55,6 +96,8 @@ export class ReportMatriculaComponent implements OnInit {
   }
 
   filterCursos() {
-    this.cursosFiltrados = this.cursos.filter(curso => curso.programa === this.selectedPrograma);
+    if (this.selectedAlumno) {
+      this.cursosFiltrados = this.cursos.filter(curso => curso.programa === this.selectedPrograma);
+    }
   }
 }
