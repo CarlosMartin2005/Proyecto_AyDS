@@ -9,29 +9,21 @@
   <mat-card-content>
     <div class="report-grid">
       <div class="info-column">
-        <div class="info-item">
+        <div class="info-item my-auto">
           <h3>Total de Alumnos</h3>
           <p>{{ totalAlumnos }}</p>
         </div>
 
         <h3>Total de Alumnos por Programa</h3>
         <div class="cursos">
-          <div>
-            <h4>Programa 1</h4>
-            <p>{{ programa1 }}</p>
-          </div>
-          <div>
-            <h4>Programa 2</h4>
-            <p>{{ programa2 }}</p>
-          </div>
-          <div>
-            <h4>Programa 3</h4>
-            <p>{{ programa3 }}</p>
+          <div *ngFor="let programa of data">
+            <h4>{{ programa.nombre }}</h4>
+            <p>{{ programa.cantidad_alumno }}</p>
           </div>
         </div>
       </div>
       <div class="chart-column">
-        <app-pie-chart [data]="chartData" [labels]="chartLabels"></app-pie-chart>
+        <app-pie-chart [data]="chartData" [labels]="chartLabels" [chartId]="chartId"></app-pie-chart>
       </div>
     </div>
   </mat-card-content>

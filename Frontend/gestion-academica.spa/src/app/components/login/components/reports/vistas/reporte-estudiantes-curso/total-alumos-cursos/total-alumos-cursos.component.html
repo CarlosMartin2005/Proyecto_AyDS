@@ -8,34 +8,19 @@
   </div>
   <mat-card-content>
     <div class="report-grid">
-      <div class="info-column">
-        <div class="info-item">
-          <h3>Total de Alumnos</h3>
-          <p>{{ totalAlumnos }}</p>
-        </div>
+      <div class="info-column my-auto">
 
         <h3>Total de Alumnos por Curso</h3>
         <div class="cursos">
-          <div>
-            <h4>Curso 1</h4>
-            <p>{{ totalCurso1 }}</p>
+          <div *ngFor="let curso of data">
+            <h4>{{ curso.nombre }}</h4>
+            <p>{{ curso.cantidad_alumno }}</p>
           </div>
-          <div>
-            <h4>Curso 2</h4>
-            <p>{{ totalCurso2 }}</p>
-          </div>
-          <div>
-            <h4>Curso 3</h4>
-            <p>{{ totalCurso3 }}</p>
-          </div>
-          <div>
-            <h4>Curso 4</h4>
-            <p>{{ totalCurso4 }}</p>
-          </div>
+
         </div>
       </div>
       <div class="chart-column">
-        <app-pie-chart [data]="chartData" [labels]="chartLabels"></app-pie-chart>
+        <app-pie-chart [data]="chartData" [labels]="chartLabels" [chartId]="chartId"></app-pie-chart>
       </div>
     </div>
   </mat-card-content>
