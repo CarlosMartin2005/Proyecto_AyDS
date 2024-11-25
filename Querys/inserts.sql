@@ -9,6 +9,11 @@ VALUES
 ('6', 'Juan', 'Pérez', 'juan.mario@example.com', 'juanperez', 'hashed_password_1', 'Docente', 'A'),
 ('7', 'María', 'González', 'maria.peres@example.com', 'mariagonzalez', 'hashed_password_2', 'Docente', 'A');
 
+INSERT INTO usuarios (id, nombre, apellido, email, username, password_hash, rol, status)
+VALUES 
+('8', 'Pedro', 'Ramírez', 'pedro.ramirez@example.com', 'pedroramirez', 'hashed_password_6', 'Alumno', 'A'),
+('9', 'Lucía', 'Fernández', 'lucia.fernandez@example.com', 'luciafernandez', 'hashed_password_7', 'Alumno', 'A');
+
 -- Insertar registros en la tabla docentes
 INSERT INTO docentes (id_usuario, especialidad) VALUES
 ('1', 'Guitarra'),
@@ -39,6 +44,10 @@ VALUES
 ('3', 'Ciudad A', '2000-01-01', 'Calle Falsa 123', '1234567890', '555-1234', 'Instituto A', 'Piano', 1),
 ('4', 'Ciudad B', '2001-02-02', 'Avenida Siempre Viva 742', '0987654321', '555-5678', 'Instituto B', 'Violín', 2);
 
+INSERT INTO alumnos (id_usuario, lugar_nacimiento, fecha_nacimiento, direccion, identidad, telefono, institucion_procedencia, instrumento, programa_id)
+VALUES
+('8', 'Ciudad C', '2002-03-03', 'Calle Nueva 456', '1122334455', '555-7890', 'Instituto C', 'Guitarra', 1),
+('9', 'Ciudad D', '2003-04-04', 'Avenida Central 123', '6677889900', '555-4321', 'Instituto D', 'Flauta', 2);
 
 -- Insertar registros en la tabla alumnos_cursos
 INSERT INTO alumnos_cursos (alumno_id, curso_id, nota) VALUES
@@ -47,6 +56,11 @@ INSERT INTO alumnos_cursos (alumno_id, curso_id, nota) VALUES
 ('4', 3, 88.75),
 ('4', 4, 92.00);
 
+INSERT INTO alumnos_cursos (alumno_id, curso_id, nota) VALUES
+('8', 1, 45.00),
+('8', 2, 50.00),
+('9', 3, 55.00),
+('9', 4, 40.00);
 
 -- Insertar registros en la tabla alumnos_programas
 INSERT INTO alumnos_programas (alumno_id, programa_id) VALUES
