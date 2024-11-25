@@ -16,8 +16,8 @@ export class ReporteProgramasCursosComponent implements OnInit {
     { key: 'index', label: 'Indice' },
     { key: 'programa', label: 'Programa' },
     { key: 'curso', label: 'Curso' },
-    { key: 'horario', label: 'Horario' },
-    { key: 'docente', label: 'Docente' }
+    { key: 'docente', label: 'Docente' },
+    { key: 'horario', label: 'Horario' }
   ];
 
   programasCursos: any[] = [];
