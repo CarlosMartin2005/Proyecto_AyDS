@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, ArcElement, PieController, Tooltip, Legend } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -12,18 +12,34 @@ Chart.register(PieController, ArcElement, Tooltip, Legend, ChartDataLabels);
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss']
 })
-export class PieChartComponent implements AfterViewInit {
+export class PieChartComponent implements AfterViewInit, OnDestroy {
   @Input() data: number[] = [];
   @Input() labels: string[] = [];
+  @Input() chartId: string = 'pieChart';
+  private chart: Chart | undefined;
 
   ngAfterViewInit(): void {
     this.renderChart();
   }
 
+  ngOnDestroy(): void {
+    this.destroyChart();
+  }
+
   renderChart(): void {
+    this.destroyChart(); // Destruye el gráfico existente si lo hay
+
+    const canvas = document.getElementById(this.chartId) as HTMLCanvasElement;
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+      console.error('Failed to acquire context for canvas with ID:', this.chartId);
+      return;
+    }
+
     console.log('Rendering Chart with data:', this.data, 'and labels:', this.labels);
 
-    new Chart('pieChart', {
+    this.chart = new Chart(context, {
       type: 'pie',
       data: {
         labels: this.labels,
@@ -80,5 +96,12 @@ export class PieChartComponent implements AfterViewInit {
       },
       plugins: [ChartDataLabels]
     });
+  }
+
+  private destroyChart(): void {
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = undefined;
+    }
   }
 }

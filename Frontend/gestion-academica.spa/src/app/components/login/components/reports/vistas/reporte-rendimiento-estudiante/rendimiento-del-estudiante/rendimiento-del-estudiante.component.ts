@@ -16,7 +16,7 @@ export class RendimientoDelEstudianteComponent {
   // Información del estudiante
   studentInfo = {
     nombreCompleto: 'Juan Pérez',
-    numeroCuenta: '20220001',
+    // numeroCuenta: '20220001',
     edad: 21,
   };
 

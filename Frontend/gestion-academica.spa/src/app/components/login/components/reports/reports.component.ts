@@ -36,7 +36,7 @@ export class ReportsComponent {
     },
     {
       image: 'assets/icons-reports/estudiantes-cursos.png',
-      title: 'Reporte de Estudiantes por Curso',
+      title: 'Reporte de Estudiantes por Programas y Curso',
       ruta: 'estudiantes-curso'
     },
     {
