@@ -54,6 +54,11 @@ export class ReportsComponent {
       title: 'Reporte de aprobados y reprobados',
       ruta: 'programas'
     },
+    {
+      image: 'assets/icons-reports/programas.png',
+      title: 'Reporte de Excelencia Académica',
+      ruta: 'excelencia'
+    },
   ]
 
 }

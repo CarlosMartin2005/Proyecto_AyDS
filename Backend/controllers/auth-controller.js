@@ -72,7 +72,7 @@ export class AuthController {
     static async register(req, res) {
         const data = req.body;
 
-        const { nombre, apellido, email, username, password, rol } = req.body;
+        const { nombre, apellido, email, username, password, rol, status } = req.body;
         const { success, error } = validateRegister(data);
         const queryCheckEmail = `SELECT email FROM usuarios WHERE email = ?`;
         const consulta = `INSERT INTO usuarios (id, nombre, apellido, email, username, password_hash, rol, status, fecha_creacion, fecha_actualizacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -107,7 +107,7 @@ export class AuthController {
                 }
 
                 // si el rol es Super, status debe ser A sino será I
-                const status = rol === 'Super' ? 'A' : 'I';
+                // const status = rol === 'Super' ? 'A' : 'I';
 
                 // consulta para insertar el usuario
                 connection.query(consulta, [id, nombre, apellido, email,  username, password_hash, rol ?? 'Alumno', status ?? 'I', fecha_creacion, fecha_creacion], (error, results) => {

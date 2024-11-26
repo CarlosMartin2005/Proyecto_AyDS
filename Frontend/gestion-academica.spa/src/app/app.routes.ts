@@ -84,6 +84,10 @@ export const routes: Routes = [
           {
             path: 'programas',
             loadComponent: () => import('./components/login/components/reports/vistas/reporte-programas/reporte-programas.component').then(m => m.ReporteProgramasComponent)
+          },
+          {
+            path: 'excelencia',
+            loadComponent: () => import('./components/login/components/reports/vistas/reporte-excelencia/reporte-excelencia.component').then(m => m.ReporteExcelenciaComponent)
           }
         ]
       },

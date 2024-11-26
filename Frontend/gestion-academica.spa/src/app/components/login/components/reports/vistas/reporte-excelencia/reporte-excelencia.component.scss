@@ -1,0 +1,121 @@
+.student-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  .color-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+  }
+}
+
+/* Estilo del encabezado */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #D69A77; /* Color Primario */
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.title-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.current-date {
+  margin-left: 8px;
+  font-size: 16px; /* Tamaño de la fuente para la fecha */
+  color: #361F18; /* Cuaternario */
+  font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
+}
+
+.table-title {
+  margin: 0;
+  font-size: 24px; /* Tamaño de la fuente para el título */
+  font-weight: bold;
+  color: #361F18; /* Cuaternario */
+  font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
+  text-align: center;
+}
+
+.logo {
+  margin-left: auto;
+  width: 50px; /* Tamaño de la imagen del logo */
+  height: auto;
+}
+
+/* Estilo del cuerpo del reporte */
+.report-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Columna para espacio y columna para gráfica */
+  // gap: 16px;
+  padding: 40px 20px;
+  background-color: #EFEFEF; /* Fondo casi blanco similar al de la tabla */
+  border-radius: 8px;
+}
+
+.info-column {
+  display: flex;
+  flex-direction: column;
+  // gap: 16px;
+  justify-content: center; /* Cambiado de flex-start a center */
+  align-items: center;
+  margin: auto;
+  height: 100%;
+  font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
+}
+
+.info-row.middle {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px; /* Ajustar el espacio entre los totales */
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #361F18; /* Cuaternario */
+}
+
+.info-item.total {
+  align-items: center;
+  // margin-bottom: 24px;
+}
+
+.info-item.aprobados-reprobados {
+  align-items: center;
+  margin-top: 24px; /* Ajuste adicional para bajarlos */
+}
+
+/* Estilo para la barra de carga */
+.chart-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+canvas {
+  width: 100% !important;
+  max-width: 600px;
+}
