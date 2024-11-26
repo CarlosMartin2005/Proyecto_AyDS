@@ -151,12 +151,11 @@ export class ReportMatriculaComponent implements OnInit {
     doc.setFontSize(20);
     doc.text("Conservatorio Sampedrano de las Artes", doc.internal.pageSize.width / 2, 30, { align: 'center' });
 
-    if (this.alumnos.length > 0) {
-      const firstAlumno = this.alumnos[0];
+    if (this.selectedAlumno) {
       const MatriculaReportColumnsWithoutDate = this.MatriculaReportColumns.filter(col => col.key !== 'fecha');
 
       // Generar la tabla apilada sin celdas internas
-      const stackedTableBody = MatriculaReportColumnsWithoutDate.map(col => [`${col.label}:`, firstAlumno[col.key]]);
+      const stackedTableBody = MatriculaReportColumnsWithoutDate.map(col => [`${col.label}:`, this.selectedAlumno[col.key]]);
 
       // Renderizar el encabezado de la tabla con el título y la fecha
       autoTable(doc, {
@@ -192,10 +191,12 @@ export class ReportMatriculaComponent implements OnInit {
       let currentY = 100; // Desplazar unos píxeles más abajo
       stackedTableBody.forEach(row => {
         const [key, value] = row;
-        doc.setFontSize(10);
-        doc.text(key, padding, currentY);
-        doc.text(value, padding + 150, currentY); // Ajustar posición del valor
-        currentY += lineHeight;
+        if (key && value) { // Asegurarse de que key y value no sean indefinidos o nulos
+          doc.setFontSize(10);
+          doc.text(key, padding, currentY);
+          doc.text(value, padding + 150, currentY); // Ajustar posición del valor
+          currentY += lineHeight;
+        }
       });
 
       const stackedTableHeight = currentY + 10; // Añadir margen inferior
@@ -236,6 +237,7 @@ export class ReportMatriculaComponent implements OnInit {
     // Abrir el PDF en una nueva pestaña
     window.open(doc.output('bloburl'));
   }
+
 
   onRowSelected(row: any) {
     this.selectedAlumno = row;
