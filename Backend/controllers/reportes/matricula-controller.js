@@ -52,15 +52,18 @@ export class MatriculaController {
                 c.horario,
                 c.programa_id,
                 p.nombre AS programa,
-                GROUP_CONCAT(ac.alumno_id) AS alumnos
+                GROUP_CONCAT(ac.alumno_id) AS alumnos,
+                CONCAT(u.nombre, ' ', u.apellido) AS docente
             FROM 
                 cursos c
             JOIN 
                 programas p ON c.programa_id = p.id
             LEFT JOIN 
                 alumnos_cursos ac ON c.id = ac.curso_id
+            LEFT JOIN 
+                usuarios u ON c.docente_id = u.id
             GROUP BY 
-                c.id, c.nombre, c.descripcion, c.horario, c.programa_id, p.nombre
+                c.id, c.nombre, c.descripcion, c.horario, c.programa_id, p.nombre, u.nombre, u.apellido
         `;
         try {
             connection.query(consulta, (error, result) => {
