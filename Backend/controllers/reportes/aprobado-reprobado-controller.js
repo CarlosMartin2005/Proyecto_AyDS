@@ -4,10 +4,9 @@ export class AprobadoReprobadoController {
     static async getAprobadoReprobado(req, res) {
         const consulta = `
             SELECT 
-                COUNT(*) AS totalEstudiantes,
-                SUM(CASE WHEN ac.nota >= 60 THEN 1 ELSE 0 END) AS totalAprobados,
-                SUM(CASE WHEN ac.nota < 60 THEN 1 ELSE 0 END) AS totalReprobados,
-                SUM(CASE WHEN ac.nota >= 90 THEN 1 ELSE 0 END) AS totalExcelencia
+                COUNT(DISTINCT ac.alumno_id) AS totalEstudiantes,
+                COUNT(DISTINCT CASE WHEN ac.nota >= 60 THEN ac.alumno_id ELSE NULL END) AS totalAprobados,
+                COUNT(DISTINCT CASE WHEN ac.nota < 60 THEN ac.alumno_id ELSE NULL END) AS totalReprobados
             FROM 
                 alumnos_cursos ac
         `;
