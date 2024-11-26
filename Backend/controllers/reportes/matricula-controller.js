@@ -42,4 +42,44 @@ export class MatriculaController {
             });
         }
     }
+
+    static async getAllCursos(req, res) {
+        const consulta = `
+            SELECT 
+                c.id,
+                c.nombre,
+                c.descripcion,
+                c.horario,
+                c.programa_id,
+                p.nombre AS programa,
+                GROUP_CONCAT(ac.alumno_id) AS alumnos
+            FROM 
+                cursos c
+            JOIN 
+                programas p ON c.programa_id = p.id
+            LEFT JOIN 
+                alumnos_cursos ac ON c.id = ac.curso_id
+            GROUP BY 
+                c.id, c.nombre, c.descripcion, c.horario, c.programa_id, p.nombre
+        `;
+        try {
+            connection.query(consulta, (error, result) => {
+                if (error) {
+                    return res.status(400).json({
+                        error: true,
+                        message: "Ocurrió un error al obtener los datos: " + error
+                    });
+                }
+                return res
+                    .header('Content-Type', 'application/json')
+                    .status(200)
+                    .json(result);
+            });
+        } catch (error) {
+            return res.status(400).json({
+                error: true,
+                message: "Ocurrió un error al obtener los datos " + error
+            });
+        }
+    }
 }

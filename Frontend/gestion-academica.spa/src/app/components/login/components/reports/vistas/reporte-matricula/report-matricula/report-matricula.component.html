@@ -6,9 +6,8 @@
   </div>
   <img src="../../assets/Nota-sol-logo-oroginal-Pequeña.png" class="logo" alt="Nota Musical">
 </div>
-@if(mostrarCard()){
+<div *ngIf="mostrarCard()">
   <div class="info-grid" *ngIf="selectedAlumno">
-    <!-- <div class="info-item"><strong>ID:</strong><br>{{ selectedAlumno.id_alumno }}</div> -->
     <div class="info-item"><strong>Nombre completo:</strong><br>{{ selectedAlumno.nombre_completo }}</div>
     <div class="info-item"><strong>No de identidad:</strong><br>{{ selectedAlumno.numero_identidad }}</div>
     <div class="info-item">
@@ -47,8 +46,7 @@
       <button class="btn print-btn" (click)="imprimirReporte()">Imprimir Reporte</button>
     </div>
   </div>
-} @else {
-  <div class="info-grid m-auto p-20">
-    <h3 class="font-bold">Seleccione un alumno para ver su matrícula</h3>
-  </div>
-}
+</div>
+<div *ngIf="!mostrarCard()" class="info-grid m-auto p-20">
+  <h3 class="font-bold">Seleccione un alumno para ver su matrícula</h3>
+</div>

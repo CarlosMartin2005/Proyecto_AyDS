@@ -63,19 +63,9 @@ export class ReportMatriculaComponent implements OnInit {
 
   ngOnInit() {
     this.loadAlumnos();
-    this.loadProgramas();
   }
 
   loadAlumnos() {
-    // this.http.get('http://localhost:3000/reportes/matricula').subscribe((data: any) => {
-    //   this.alumnos = data;
-    //   console.log('Alumnos cargados:', this.alumnos);
-    //   if (this.alumnos.length > 0) {
-    //     this.selectedAlumno = this.alumnos[0];
-    //     this.loadCursos();
-    //   }
-    // });
-
     this.estudiantesService.getEstudiantes().subscribe({
       next: (data: any) => {
         this.alumnos = data.map((estudiante: any, index: number) => {
@@ -83,7 +73,7 @@ export class ReportMatriculaComponent implements OnInit {
             id: estudiante.id,
             nombre_completo: estudiante.nombres + ' ' + estudiante.apellidos,
             numero_identidad: estudiante.identidad,
-            programas: estudiante.programa
+            programas: estudiante.programa.split(', ')
           };
         });
       },
@@ -94,12 +84,11 @@ export class ReportMatriculaComponent implements OnInit {
   }
 
   loadProgramas() {
-    this.http.get('http://localhost:3000/reportes/programas').subscribe((data: any) => {
-      this.programas = data.map((programa: any) => programa.nombre);
-      console.log('Programas cargados:', this.programas);
+    if (this.selectedAlumno) {
+      this.programas = this.selectedAlumno.programas;
       this.selectedPrograma = this.programas[0];
       this.loadCursos();
-    });
+    }
   }
 
   loadCursos() {
@@ -123,8 +112,16 @@ export class ReportMatriculaComponent implements OnInit {
 
   filterCursos() {
     if (this.selectedAlumno) {
-      this.cursosFiltrados = this.cursos.filter(curso => curso.programa === this.selectedPrograma);
-      console.log('Cursos filtrados:', this.cursosFiltrados);
+      console.log('Selected Alumno:', this.selectedAlumno);
+      console.log('Selected Programa:', this.selectedPrograma);
+      console.log('Cursos:', this.cursos);
+  
+      this.cursosFiltrados = this.cursos.filter(curso => 
+        curso.programa === this.selectedPrograma && 
+        curso.alumnos && curso.alumnos.split(',').includes(this.selectedAlumno.id)
+      );
+  
+      console.log('Cursos Filtrados:', this.cursosFiltrados);
     }
   }
 
@@ -238,15 +235,12 @@ export class ReportMatriculaComponent implements OnInit {
     window.open(doc.output('bloburl'));
   }
 
-
   onRowSelected(row: any) {
     this.selectedAlumno = row;
-    this.filterCursos();
+    this.loadProgramas(); // Cargar programas del alumno seleccionado
   }
 
   mostrarCard(): boolean {
     return this.selectedAlumno ? true : false;
   }
-
-
 }
