@@ -7,6 +7,7 @@ import { SeguimientoController } from '../controllers/reportes/seguimiento-contr
 import { MatriculaController } from '../controllers/reportes/matricula-controller.js';
 import { RendimientoEstudianteController } from '../controllers/reportes/rendimiento-estudiante-controller.js';
 import { AprobadoReprobadoController } from '../controllers/reportes/aprobado-reprobado-controller.js'
+import { ExcelenciaController } from '../controllers/reportes/excelencia-controller.js';
 
 const reportesrouter = Router();
 
@@ -20,5 +21,6 @@ reportesrouter.get('/programas', ProgramasCursosController.getAllProgramas);
 reportesrouter.get('/cursos', MatriculaController.getAllCursos);
 reportesrouter.get('/rendimiento-estudiante/:id', RendimientoEstudianteController.getRendimiento);
 reportesrouter.get('/aprobado-reprobado', AprobadoReprobadoController.getAprobadoReprobado);
+reportesrouter.get('/excelencia', ExcelenciaController.getEstudiantesExcelencia);
 
 export default reportesrouter;

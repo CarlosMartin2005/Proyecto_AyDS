@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ButtonGoBackComponent } from '../button-go-back/button-go-back.component';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -11,27 +11,30 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
   standalone: true,
   imports: [ButtonGoBackComponent, CommonModule, MatCardModule, HttpClientModule],
   templateUrl: './reporte-excelencia.component.html',
-  styleUrl: './reporte-excelencia.component.scss'
+  styleUrls: ['./reporte-excelencia.component.scss']
 })
-export class ReporteExcelenciaComponent {
+export class ReporteExcelenciaComponent implements OnInit {
   currentDate = new Date().toLocaleDateString();
   reportTitle = 'Reporte de Excelencia Académica'; // Título del reporte
 
   colores = ['#fab174', '#f7b5a1', '#f3c1c9', '#f0c7f0', '#c7c7f0']; // Colores para los estudiantes
 
-  estudiantes = [
-    { nombre: 'Juan Pérez', promedio: 9.5, identidad: '12345678' },
-    { nombre: 'María López', promedio: 9.8, identidad: '87654321' },
-    { nombre: 'María López', promedio: 9.8, identidad: '87654321' },
-    { nombre: 'María López', promedio: 9.8, identidad: '87654321' },
-    // Agregar más estudiantes según sea necesario
-  ].sort((a, b) => b.promedio - a.promedio).map((estudiante, index) => ({
-    ...estudiante,
-    color: this.colores[index % this.colores.length]
-  })); // Ordenar por promedio de mayor a menor y asignar colores
+  estudiantes: any[] = [];
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.generateChart();
+    this.loadEstudiantes();
+  }
+
+  loadEstudiantes() {
+    this.http.get('http://localhost:3000/reportes/excelencia').subscribe((data: any) => {
+      this.estudiantes = data.sort((a: any, b: any) => b.promedio - a.promedio).map((estudiante: any, index: number) => ({
+        ...estudiante,
+        color: this.colores[index % this.colores.length]
+      }));
+      this.generateChart();
+    });
   }
 
   // Función para generar el gráfico de barras
