@@ -19,7 +19,6 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
   totalEstudiantes = 0;
   totalAprobados = 0;
   totalReprobados = 0;
-  totalExcelencia = 0;
 
   constructor(private http: HttpClient) {}
 
@@ -32,7 +31,6 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
       this.totalEstudiantes = data.totalEstudiantes;
       this.totalAprobados = data.totalAprobados;
       this.totalReprobados = data.totalReprobados;
-      this.totalExcelencia = data.totalExcelencia;
       this.renderChart();
     });
   }
@@ -46,10 +44,6 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
     return (this.totalReprobados / this.totalEstudiantes) * 100;
   }
 
-  get excellencePercentage() {
-    return (this.totalExcelencia / this.totalEstudiantes) * 100;
-  }
-
   renderChart() {
     Chart.register(...registerables, ChartDataLabels); // Registra todos los componentes necesarios, incluido el plugin
 
@@ -57,7 +51,7 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Estudiantes', 'Excelencia Académica'],
+        labels: ['Estudiantes'],
         datasets: [
           {
             label: 'Aprobados',
@@ -70,13 +64,6 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
             label: 'Reprobados',
             data: [this.failedPercentage],
             backgroundColor: '#A36750', // Nuevo color para reprobados
-            barThickness: 35, // Aumentar un poco más la altura de la barra
-            categoryPercentage: 1.0 // Mantener el ancho completo de la categoría
-          },
-          {
-            label: 'Excelencia Académica',
-            data: [0, this.excellencePercentage],
-            backgroundColor: '#fab174' , // Color para excelencia académica
             barThickness: 35, // Aumentar un poco más la altura de la barra
             categoryPercentage: 1.0 // Mantener el ancho completo de la categoría
           }

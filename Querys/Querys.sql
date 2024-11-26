@@ -45,7 +45,6 @@ CREATE TABLE alumnos (
     telefono VARCHAR(15),
     institucion_procedencia VARCHAR(100),
     instrumento VARCHAR(50),
-    programa_id INT,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
     FOREIGN KEY (programa_id) REFERENCES programas(id)
 );
@@ -99,3 +98,15 @@ CREATE TABLE alumnos_programas (
     FOREIGN KEY (alumno_id) REFERENCES alumnos(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (programa_id) REFERENCES programas(id) ON DELETE CASCADE
 );
+
+-- Modificar la tabla usuarios para permitir la inserción de fechas de creación manualmente
+ALTER TABLE usuarios
+MODIFY COLUMN fecha_creacion TIMESTAMP NULL DEFAULT NULL;
+
+-- Modificar la tabla programas para permitir la inserción de fechas de creación manualmente
+ALTER TABLE programas
+ADD COLUMN fecha_creacion TIMESTAMP NULL DEFAULT NULL;
+
+-- Modificar la tabla cursos para permitir la inserción de fechas de creación manualmente
+ALTER TABLE cursos
+ADD COLUMN fecha_creacion TIMESTAMP NULL DEFAULT NULL;
