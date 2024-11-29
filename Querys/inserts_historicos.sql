@@ -149,3 +149,18 @@ INSERT INTO rendimiento_estudiante (id, id_usuario, rendimiento_academico, manej
 ('38', '38', 3, 2, 4, 3, 2),
 ('39', '39', 4, 3, 5, 4, 3),
 ('40', '40', 5, 4, 3, 5, 4);
+
+use Proy_AyDS;
+
+INSERT INTO docentes_cursos (docente_id, curso_id) VALUES
+('21', 5),  -- Juan Pérez (Guitarra) - Guitarra Básica
+('21', 6),  -- Juan Pérez (Guitarra) - Guitarra Avanzada
+('22', 3),  -- María González (Violín) - Violín Básico
+('22', 4),  -- María González (Violín) - Violín Avanzado
+('22', 9),  -- María González (Violín) - Batería Básica
+('22', 10), -- María González (Violín) - Batería Avanzada
+('25', 1),  -- Luis Rodríguez (Piano) - Piano Básico
+('25', 2),  -- Luis Rodríguez (Piano) - Piano Avanzado
+('21', 7),  -- Juan Pérez (Guitarra) - Flauta Básica
+('21', 8);  -- Juan Pérez (Guitarra) - Flauta Avanzada
+
