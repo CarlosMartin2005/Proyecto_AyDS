@@ -110,3 +110,6 @@ ADD COLUMN fecha_creacion TIMESTAMP NULL DEFAULT NULL;
 -- Modificar la tabla cursos para permitir la inserción de fechas de creación manualmente
 ALTER TABLE cursos
 ADD COLUMN fecha_creacion TIMESTAMP NULL DEFAULT NULL;
+
+
+ALTER TABLE alumnos_cursos MODIFY COLUMN fecha_matricula TIMESTAMP NULL DEFAULT NULL;

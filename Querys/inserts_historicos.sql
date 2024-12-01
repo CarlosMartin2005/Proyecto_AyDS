@@ -164,3 +164,13 @@ INSERT INTO docentes_cursos (docente_id, curso_id) VALUES
 ('21', 7),  -- Juan Pérez (Guitarra) - Flauta Básica
 ('21', 8);  -- Juan Pérez (Guitarra) - Flauta Avanzada
 
+
+
+-- Insertar registros en la tabla alumnos_cursos con fechas de matrícula en enero de 2023
+INSERT INTO alumnos_cursos (alumno_id, curso_id, nota, fecha_matricula) VALUES
+('3', 1, 85.50, '2023-01-05 10:00:00'), -- Carlos López
+('3', 2, 90.00, '2023-01-10 10:00:00'), -- Carlos López
+('4', 3, 88.75, '2023-01-15 10:00:00'), -- Ana Martínez
+('4', 4, 92.00, '2023-01-20 10:00:00'), -- Ana Martínez
+('8', 5, 45.00, '2023-01-25 10:00:00'), -- Pedro Ramírez
+('8', 6, 50.00, '2023-01-30 10:00:00'); -- Pedro Ramírez

@@ -8,7 +8,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 @Component({
   selector: 'app-date-range-picker',
   standalone: true,
-  imports: [MatDatepickerModule, MatFormFieldModule, MatInputModule, FormsModule, MatNativeDateModule], // Proveer el adaptador de fecha nativo
+  imports: [MatDatepickerModule, MatFormFieldModule, MatInputModule, FormsModule, MatNativeDateModule],
   templateUrl: './date-range-picker.component.html',
   styleUrls: ['./date-range-picker.component.scss']
 })

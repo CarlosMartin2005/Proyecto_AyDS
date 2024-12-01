@@ -2,7 +2,8 @@ import connection from '../../db/connection.js';
 
 export class EstudianteController {
     static async getAllEstudiantes(req, res) {
-        const consulta = `
+        const { startDate, endDate } = req.query;
+        let consulta = `
             SELECT 
                 u.id, 
                 u.nombre AS nombres, 
@@ -13,7 +14,9 @@ export class EstudianteController {
                 GROUP_CONCAT(DISTINCT p.nombre SEPARATOR ', ') AS programa, 
                 GROUP_CONCAT(DISTINCT c.nombre SEPARATOR ', ') AS curso, 
                 GROUP_CONCAT(DISTINCT c.horario SEPARATOR ', ') AS horario,
-                u.status AS activo
+                u.status AS activo,
+                MIN(u.fecha_creacion) AS fecha_creacion,
+                MIN(ac.fecha_matricula) AS fecha_matricula
             FROM 
                 usuarios u
             JOIN 
@@ -28,9 +31,17 @@ export class EstudianteController {
                 cursos c ON ac.curso_id = c.id
             WHERE 
                 u.rol = 'Alumno'
+        `;
+
+        if (startDate && endDate) {
+            consulta += ` AND (u.fecha_creacion BETWEEN '${startDate}' AND '${endDate}' OR ac.fecha_matricula BETWEEN '${startDate}' AND '${endDate}')`;
+        }
+
+        consulta += `
             GROUP BY 
                 u.id, u.nombre, u.apellido, u.email, a.identidad, a.fecha_nacimiento, u.status
         `;
+
         try {
             connection.query(consulta, (error, result) => {
                 if (error) {
