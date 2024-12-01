@@ -174,3 +174,28 @@ INSERT INTO alumnos_cursos (alumno_id, curso_id, nota, fecha_matricula) VALUES
 ('4', 4, 92.00, '2023-01-20 10:00:00'), -- Ana Martínez
 ('8', 5, 45.00, '2023-01-25 10:00:00'), -- Pedro Ramírez
 ('8', 6, 50.00, '2023-01-30 10:00:00'); -- Pedro Ramírez
+
+
+-- Insertar registros en la tabla programas con fechas de creación y finalización manuales
+INSERT INTO programas (nombre, descripcion, fecha_creacion, fecha_fin)
+VALUES 
+('Pequeños artistas', 'Programa para niños pequeños', '2023-01-01 10:00:00', '2023-06-01 10:00:00'),
+('Programa Juvenil', 'Programa para jóvenes', '2023-01-02 11:00:00', '2023-06-02 11:00:00'),
+('Cursos libres', 'Cursos abiertos para todos', '2023-01-03 12:00:00', '2023-06-03 12:00:00'),
+('Pequeños artistas', 'Programa para niños pequeños', '2023-07-01 10:00:00', '2023-12-01 10:00:00'),
+('Programa Juvenil', 'Programa para jóvenes', '2023-07-02 11:00:00', '2023-12-02 11:00:00'),
+('Cursos libres', 'Cursos abiertos para todos', '2023-07-03 12:00:00', '2023-12-03 12:00:00');
+
+-- Insertar registros en la tabla cursos con fechas de creación y finalización manuales
+INSERT INTO cursos (nombre, descripcion, horario, programa_id, docente_id, fecha_creacion, fecha_fin)
+VALUES 
+('Piano Básico', 'Curso de piano para principiantes', 'Lunes a Viernes, 8:00 - 10:00', 1, '21', '2023-01-01 10:00:00', '2023-06-01 10:00:00'),
+('Piano Avanzado', 'Curso de piano avanzado', 'Lunes a Viernes, 10:00 - 12:00', 1, '21', '2023-01-01 10:00:00', '2023-06-01 10:00:00'),
+('Violín Básico', 'Curso de violín para principiantes', 'Lunes a Viernes, 8:00 - 10:00', 2, '22', '2023-01-02 11:00:00', '2023-06-02 11:00:00'),
+('Violín Avanzado', 'Curso de violín avanzado', 'Lunes a Viernes, 10:00 - 12:00', 2, '22', '2023-01-02 11:00:00', '2023-06-02 11:00:00'),
+('Guitarra Básica', 'Curso de guitarra para principiantes', 'Lunes a Viernes, 8:00 - 10:00', 3, '25', '2023-01-03 12:00:00', '2023-06-03 12:00:00'),
+('Guitarra Avanzada', 'Curso de guitarra avanzado', 'Lunes a Viernes, 10:00 - 12:00', 3, '25', '2023-01-03 12:00:00', '2023-06-03 12:00:00'),
+('Flauta Básica', 'Curso de flauta para principiantes', 'Lunes a Viernes, 8:00 - 10:00', 4, '21', '2023-07-01 10:00:00', '2023-12-01 10:00:00'),
+('Flauta Avanzada', 'Curso de flauta avanzado', 'Lunes a Viernes, 10:00 - 12:00', 4, '21', '2023-07-01 10:00:00', '2023-12-01 10:00:00'),
+('Batería Básica', 'Curso de batería para principiantes', 'Lunes a Viernes, 8:00 - 10:00', 5, '22', '2023-07-02 11:00:00', '2023-12-02 11:00:00'),
+('Batería Avanzada', 'Curso de batería avanzado', 'Lunes a Viernes, 10:00 - 12:00', 5, '22', '2023-07-02 11:00:00', '2023-12-02 11:00:00');

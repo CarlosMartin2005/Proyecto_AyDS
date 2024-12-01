@@ -113,3 +113,11 @@ ADD COLUMN fecha_creacion TIMESTAMP NULL DEFAULT NULL;
 
 
 ALTER TABLE alumnos_cursos MODIFY COLUMN fecha_matricula TIMESTAMP NULL DEFAULT NULL;
+
+-- Modificar la tabla programas para agregar la columna fecha_fin
+ALTER TABLE programas
+ADD COLUMN fecha_fin TIMESTAMP NULL DEFAULT NULL;
+
+-- Modificar la tabla cursos para agregar la columna fecha_fin
+ALTER TABLE cursos
+ADD COLUMN fecha_fin TIMESTAMP NULL DEFAULT NULL;
