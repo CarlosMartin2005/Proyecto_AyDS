@@ -4,8 +4,8 @@ import cors from 'cors';
 import userRouter from './router/users.js';
 import authRouter from './router/auth.js';
 import reportesrouter from './router/reportes.js';
-// import dotenv from 'dotenv';
-// import connection from './db/connection.js';
+import 'dotenv/config';
+import authMiddleware from './middlewares/authMiddleware.js';
 
 const app = express();
 
@@ -23,7 +23,11 @@ app.use(express.urlencoded({ extended: false }));
 // Rutas
 app.use('/users', userRouter);
 app.use('/auth', authRouter);
+app.use('/auth', authMiddleware, (req, res) => {
+    res.json({ message: 'Acceso concedido', rol: req.rol });
+})
 app.use('/reportes', reportesrouter);
+app.use('/reportes', authMiddleware, reportesrouter);
 
 // Middleware para manejo de rutas inexistentes
 app.use((req, res) => {

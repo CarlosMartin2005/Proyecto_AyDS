@@ -1,12 +1,11 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ReporteDocentesComponent } from './vistas/reporte-docentes/reporte-docentes.component';
 
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [CommonModule, RouterLink, ReporteDocentesComponent],
+  imports: [CommonModule, RouterLink],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

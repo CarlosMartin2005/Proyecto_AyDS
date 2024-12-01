@@ -1,8 +1,9 @@
 import connection from '../../db/connection.js';
 
 export class DocentesController {
-    static async getAllDocentes(req, res){
-        const consulta = `
+    static async getAllDocentes(req, res) {
+        const { startDate, endDate } = req.query;
+        let consulta = `
             SELECT 
                 u.id, 
                 u.nombre AS nombres, 
@@ -21,9 +22,17 @@ export class DocentesController {
                 cursos c ON dc.curso_id = c.id
             WHERE 
                 u.rol = 'Docente'
+        `;
+
+        if (startDate && endDate) {
+            consulta += ` AND u.fecha_creacion BETWEEN '${startDate}' AND '${endDate}'`;
+        }
+
+        consulta += `
             GROUP BY 
                 u.id, u.nombre, u.apellido, u.email, d.especialidad
         `;
+
         try {
             connection.query(consulta, (error, result) => {
                 if (error) {
