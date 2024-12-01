@@ -2,7 +2,8 @@ import connection from '../../db/connection.js';
 
 export class SeguimientoController {
     static async getAllSeguimiento(req, res) {
-        const consulta = `
+        const { startDate, endDate } = req.query;
+        let consulta = `
             SELECT DISTINCT
                 u.id,
                 u.nombre AS nombres, 
@@ -11,7 +12,8 @@ export class SeguimientoController {
                 p.nombre AS programa, 
                 c.nombre AS curso, 
                 ac.nota, 
-                u.status AS activo
+                u.status AS activo,
+                c.fecha_fin
             FROM 
                 usuarios u
             JOIN 
@@ -27,6 +29,16 @@ export class SeguimientoController {
             WHERE 
                 u.rol = 'Alumno'
         `;
+
+        if (startDate && endDate) {
+            consulta += ` AND c.fecha_fin BETWEEN '${startDate}' AND '${endDate}'`;
+        }
+
+        consulta += `
+            GROUP BY 
+                u.id, u.nombre, u.apellido, u.email, p.nombre, c.nombre, ac.nota, u.status, c.fecha_fin
+        `;
+
         try {
             connection.query(consulta, (error, result) => {
                 if (error) {

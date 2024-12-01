@@ -1,4 +1,6 @@
 <div class="p-4">
   <app-button-go-back></app-button-go-back>
+  <app-date-range-picker (dateRangeSelected)="onDateRangeSelected($event)"></app-date-range-picker>
+  <button mat-raised-button color="primary" (click)="filterByDate()">Filtrar</button>
   <app-table [reportTitle]="'Reporte de Seguimiento Académico'" [columnConfig]="FollowReportColumns" [data]="seguimiento"></app-table>
 </div>
