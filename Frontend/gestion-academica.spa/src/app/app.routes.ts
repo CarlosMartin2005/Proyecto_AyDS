@@ -13,7 +13,20 @@ export const routes: Routes = [
       },
       {
         path: 'matricula',
-        loadComponent: () => import('./components/matricula/matricula.component').then(m => m.MatriculaComponent)
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./components/matricula/matricula.component').then(m => m.MatriculaComponent),
+          },
+          {
+            path: 'registro',
+            loadComponent: () => import('./components/matricula/formulario-registro/formulario-registro.component').then(m => m.FormularioRegistroComponent)
+          },
+          {
+            path: 'registro-exitoso',
+            loadComponent: () => import('./components/matricula/registro-exitoso/registro-exitoso.component').then(m => m.RegistroExitosoComponent)
+          }
+        ]
       },
       {
         path: 'login',

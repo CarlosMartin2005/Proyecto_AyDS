@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterModule, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-matricula',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './matricula.component.html',
   styleUrl: './matricula.component.scss'
 })

@@ -1,1 +1,100 @@
-<p>matricula works!</p>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .card:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="max-w-96 mx-auto mt-4">
+      <button [routerLink]="'registro'" class="w-full text-white custom-login-button focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+        Matriculate
+      </button>
+    </div>
+    <div class="w-full mx-auto flex justify-center">
+      <div class="grid grid-cols-3 gap-4">
+
+        <!-- Pequeños Artistas -->
+        <div class="card m-4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <a [routerLink]="'registro'" class="no-underline">
+            <img class="rounded-t-lg max-h-80 w-full object-cover" src="assets/pequenos.png" alt="" />
+          </a>
+          <div class="p-4">
+            <a [routerLink]="'registro'" class="no-underline">
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Pequeños Artistas</h5>
+            </a>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <span class="font-bold">
+                Niños y niñas de 3 a 10 años
+              </span><br>
+              Proveer técnicas a los niños para desarrollar
+              sus competencias musicales y aquellas que contribuyan a su formación integral, ponderando la autonomía
+              personal, la autogestión emocional, el trabajo cooperativo y la socialización.
+            </p>
+          </div>
+        </div>
+
+        <!-- Programa Juvenil -->
+        <div class="card m-4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <a [routerLink]="'registro'" class="no-underline">
+            <img class="rounded-t-lg max-h-80 w-full object-cover" src="assets/juvenil.jpg" alt="" />
+          </a>
+          <div class="p-4">
+            <a [routerLink]="'registro'" class="no-underline">
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Programa Juvenil</h5>
+            </a>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <span class="font-bold">
+                Edades de 11 años en adelante
+              </span><br>
+              Capacitar al estudiante en distintos contextos
+              para desenvolverse con eficiencia en las oportunidades que existen actualmente en la industria de la
+              música. desempeñando papeles variados que incluyen:
+              Instrumentista, compositor, docente, arreglista, líder y poder continuar estudiando en el extranjero a
+              través de convenios internacionales con esta institución.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cursos libres -->
+        <div class="card m-4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <a [routerLink]="'registro'" class="no-underline">
+            <img class="rounded-t-lg max-h-80 w-full object-cover" src="assets/libres.jpg" alt="" />
+          </a>
+          <div class="p-4">
+            <a [routerLink]="'registro'" class="no-underline">
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Cursos libres</h5>
+            </a>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <span class="font-bold">
+                No hay límites de edad
+              </span><br>
+              Prepara al músico aficionado para el disfrute
+              de la práctica musical, individual y especialmente en grupo, de la que extraerá experiencias
+              significativas para su desarrollo personal socio-emocional, lo que contribuirá a su calidad de vida
+            </p>
+          </div>
+        </div>
+
+
+
+      </div>
+
+    </div>
+    <div>
+
+    </div>
+
+  </main>
+</body>
+
+</html>

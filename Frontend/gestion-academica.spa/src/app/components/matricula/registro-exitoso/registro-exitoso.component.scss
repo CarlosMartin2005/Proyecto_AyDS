@@ -1,0 +1,51 @@
+.card:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card svg {
+  fill: #A36750; /* Color específico para los íconos de contacto */
+}
+
+.card svg.icon-email {
+  fill: #A36750; /* Color específico para el ícono de correo electrónico */
+}
+
+.card svg.icon-phone {
+  fill: #A36750; /* Color específico para el ícono de teléfono */
+}
+
+.card svg.icon-address {
+  fill: #A36750; /* Color específico para el ícono de dirección */
+}
+
+.bg-occidente {
+  background-color: #A59287; /* Color específico para Occidente */
+}
+
+.bg-occidente-hover {
+  background-color: #99877d; /* Color hover para Occidente */
+}
+
+.bg-occidente-ring {
+  background-color: #A59287; /* Color ring para Occidente */
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+}
+
+.bg-bac {
+  background-color: #A59287; /* Color específico para BAC */
+}
+
+.bg-bac-hover {
+  background-color: #99877d; /* Color hover para BAC */
+}
+
+.bg-bac-ring {
+  background-color: #A59287; /* Color ring para BAC */
+}
+
