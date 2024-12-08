@@ -33,7 +33,8 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/material-icons/iconfont/material-icons.css"
+              "node_modules/material-icons/iconfont/material-icons.css",
+              "node_modules/@slickgrid-universal/common/dist/styles/css/slickgrid-theme-bootstrap.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

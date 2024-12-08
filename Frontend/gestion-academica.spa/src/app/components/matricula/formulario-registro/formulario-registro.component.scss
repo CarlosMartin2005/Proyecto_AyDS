@@ -12,3 +12,30 @@
 .programa-seleccionado {
   background-color: #D4AE8D; /* Color específico */
 }
+
+th {
+  background-color: #A56B4E;
+  color: white;
+  border-color: #A56B4E;
+  border-top: 1px solid #A56B4E;
+
+}
+
+td {
+  border-color: #A56B4E;
+  border: 1px solid #A56B4E;
+}
+
+.selected-row {
+  background-color: #d1d5db !important; /* Gris */
+}
+
+.programa-card {
+  display: flex;
+  justify-content: center;
+}
+
+.programa-card .block {
+  width: 100%;
+  max-width: 300px; /* Tamaño fijo cuando están pequeñas */
+}

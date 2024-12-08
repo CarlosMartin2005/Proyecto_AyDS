@@ -5,6 +5,11 @@
 @tailwind components;
 @tailwind utilities;
 
+// @use '@slickgrid-universal/common/dist/styles/sass/slickgrid-theme-bootstrap.scss' with (
+//   $cell-odd-background-color: lightyellow,
+//   $row-mouse-hover-color: lightgreen
+// );
+
 /* Import Bootstrap CSS */
 // @import 'bootstrap/dist/css/bootstrap.min.css';
 

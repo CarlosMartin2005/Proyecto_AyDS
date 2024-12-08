@@ -1,1 +1,210 @@
-<p>programas works!</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programas</title>
+</head>
+
+<body class="text-gray-800">
+  <main class="p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-2xl font-bold">Programas</h1>
+      <button *ngIf="!agregandoPrograma" (click)="agregarPrograma()"
+        class="btn-p bg-green-500 text-white rounded hover:bg-green-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 stroke-current" viewBox="0 0 16 16">
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+        </svg>
+      </button>
+    </div>
+    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden"
+      *ngIf="!agregandoPrograma && programas.length > 0">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="py-2 px-4 border-r">Nombre</th>
+          <th class="py-2 px-4">Descripción</th>
+          <th class="py-2 px-2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let programa of programasPaginados" (click)="seleccionarPrograma(programa)"
+          [class.selected-row]="programa === programaSeleccionado" class="cursor-pointer hover:bg-gray-100">
+          <td class="border-t py-2 px-4 truncate max-w-xs border-r">{{ programa.nombre }}</td>
+          <td class="border-t py-2 px-4 truncate max-w-xs">{{ programa.descripcion }}</td>
+          <td class="border-t py-2 px-2">
+            <button (click)="eliminarPrograma(programa); $event.stopPropagation()"
+              class="text-red-500 hover:text-red-700">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor"  viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!agregandoPrograma && programas.length > 0" class="flex justify-start mt-4">
+      <button *ngIf="programasPaginaActual > 1" (click)="anteriorPaginaProgramas()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Anterior</button>
+      <input *ngIf="Math.ceil(programas.length / elementosPorPagina) > 1" type="number" [(ngModel)]="programasPaginaActual" (change)="cambiarPaginaProgramas(programasPaginaActual)"
+        class="px-3 py-1 mx-1 border rounded w-16 text-center" min="1" [max]="Math.ceil(programas.length / elementosPorPagina)">
+      <button *ngIf="programasPaginaActual < Math.ceil(programas.length / elementosPorPagina)" (click)="siguientePaginaProgramas()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Siguiente</button>
+    </div>
+    <p *ngIf="!agregandoPrograma && programas.length === 0" class="text-center text-gray-500">No hay programas.</p>
+    <div *ngIf="agregandoPrograma" class="mt-4 p-4 bg-white shadow-md rounded-lg">
+      <h2 class="text-xl font-semibold mb-2">Agregar Programa</h2>
+      <label><strong>Nombre:</strong></label>
+      <input [(ngModel)]="nuevoPrograma.nombre" class="border rounded px-2 py-1 mb-2 w-full"
+        [class.border-red-500]="nuevoPrograma.nombre.trim() === ''">
+      <label><strong>Descripción:</strong></label>
+      <textarea [(ngModel)]="nuevoPrograma.descripcion" class="border rounded px-2 py-1 mb-2 w-full"></textarea>
+      <div class="flex justify-end">
+        <button (click)="guardarNuevoPrograma()"
+          class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+        <button (click)="cancelarAgregarPrograma()"
+          class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+      </div>
+    </div>
+    <div *ngIf="programaSeleccionado && !agregandoPrograma" class="mt-4 p-4 bg-white shadow-md rounded-lg">
+      <h2 class="text-xl font-semibold mb-2">Detalles del Programa</h2>
+      <div *ngIf="!editandoPrograma">
+        <p><strong>Nombre:</strong> {{ programaSeleccionado.nombre }}</p>
+        <p><strong>Descripción:</strong> {{ programaSeleccionado.descripcion }}</p>
+        <p><strong>Fecha de Creación:</strong> {{ programaSeleccionado.fechaCreacion }}</p>
+        <p><strong>Última Actualización:</strong> {{ programaSeleccionado.ultimaActualizacion }}</p>
+        <button (click)="editarPrograma()" class="btn-p p-2 mt-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 " fill="currentColor"
+            viewBox="0 0 16 16">
+            <path
+              d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+          </svg>
+        </button>
+      </div>
+      <div *ngIf="editandoPrograma">
+        <label><strong>Nombre:</strong></label>
+        <input [(ngModel)]="tempPrograma.nombre" class="border rounded px-2 py-1 mb-2 w-full"
+          [class.border-red-500]="tempPrograma.nombre.trim() === ''">
+        <label><strong>Descripción:</strong></label>
+        <textarea [(ngModel)]="tempPrograma.descripcion" class="border rounded px-2 py-1 mb-2 w-full"></textarea>
+        <p><strong>Fecha de Creación:</strong> {{ tempPrograma.fechaCreacion }}</p>
+        <p><strong>Última Actualización:</strong> {{ tempPrograma.ultimaActualizacion }}</p>
+        <div class="flex justify-end">
+          <button (click)="guardarPrograma()"
+            class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+          <button (click)="editandoPrograma = false"
+            class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+        </div>
+      </div>
+      <hr class="my-4">
+      <div class="flex justify-between items-center mt-4">
+        <h3 class="text-lg font-semibold">Cursos</h3>
+        <button *ngIf="!agregandoCurso" (click)="agregarCurso()"
+          class="btn-p bg-green-500 text-white rounded hover:bg-green-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 stroke-current" viewBox="0 0 16 16">
+            <path
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+          </svg>
+        </button>
+      </div>
+      <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden mt-2"
+        *ngIf="!agregandoCurso && programaSeleccionado.cursos.length > 0">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="py-2 px-4 border-r">Nombre</th>
+            <th class="py-2 px-4 border-r">Docente</th>
+            <th class="py-2 px-4">Horario</th>
+            <th class="py-2 px-2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let curso of cursosPaginados" (click)="seleccionarCurso(curso)"
+            [class.selected-row]="curso === cursoSeleccionado" class="cursor-pointer hover:bg-gray-100">
+            <td class="border-t py-2 px-4 border-r">{{ curso.nombre }}</td>
+            <td class="border-t py-2 px-4 border-r">{{ curso.docente }}</td>
+            <td class="border-t py-2 px-4">{{ curso.horario }}</td>
+            <td class="border-t py-2 px-2">
+              <button (click)="eliminarCurso(curso); $event.stopPropagation()"
+                class="text-red-500 hover:text-red-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor"  viewBox="0 0 16 16">
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="!agregandoCurso && programaSeleccionado.cursos.length > 0" class="flex justify-start mt-4">
+        <button *ngIf="cursosPaginaActual > 1" (click)="anteriorPaginaCursos()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Anterior</button>
+        <input *ngIf="Math.ceil(programaSeleccionado.cursos.length / elementosPorPagina) > 1" type="number" [(ngModel)]="cursosPaginaActual" (change)="cambiarPaginaCursos(cursosPaginaActual)"
+          class="px-3 py-1 mx-1 border rounded w-16 text-center" min="1" [max]="Math.ceil(programaSeleccionado.cursos.length / elementosPorPagina)">
+        <button *ngIf="cursosPaginaActual < Math.ceil(programaSeleccionado.cursos.length / elementosPorPagina)" (click)="siguientePaginaCursos()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Siguiente</button>
+      </div>
+      <p *ngIf="!agregandoCurso && programaSeleccionado.cursos.length === 0" class="text-center text-gray-500">No hay
+        cursos.</p>
+      <div *ngIf="agregandoCurso" class="mt-4 p-4 bg-white shadow-md rounded-lg">
+        <h3 class="text-lg font-semibold mb-2">Agregar Curso</h3>
+        <label><strong>Nombre:</strong></label>
+        <input [(ngModel)]="nuevoCurso.nombre" class="border rounded px-2 py-1 mb-2 w-full"
+          [class.border-red-500]="nuevoCurso.nombre.trim() === ''">
+        <label><strong>Docente:</strong></label>
+        <input [(ngModel)]="nuevoCurso.docente" class="border rounded px-2 py-1 mb-2 w-full" disabled>
+        <app-search-bar (rowSelected)="onRowSelected($event)" [datosExternos]="docentes"
+          [columnasMostrar]="docentesColumns"></app-search-bar>
+        <label><strong>Horario:</strong></label>
+        <input [(ngModel)]="nuevoCurso.horario" class="border rounded px-2 py-1 mb-2 w-full">
+        <label><strong>Descripción:</strong></label>
+        <textarea [(ngModel)]="nuevoCurso.descripcion" class="border rounded px-2 py-1 mb-2 w-full"></textarea>
+        <div class="flex justify-end">
+          <button (click)="guardarNuevoCurso()"
+            class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+          <button (click)="cancelarAgregarCurso()"
+            class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+        </div>
+      </div>
+      <div *ngIf="cursoSeleccionado && !agregandoCurso" class="mt-4 p-4 bg-white shadow-md rounded-lg">
+        <h3 class="text-lg font-semibold mb-2">Detalles del Curso</h3>
+        <div *ngIf="!editandoCurso">
+          <p><strong>Nombre:</strong> {{ cursoSeleccionado.nombre }}</p>
+          <p><strong>Descripción:</strong> {{ cursoSeleccionado.descripcion }}</p>
+          <p><strong>Docente:</strong> {{ cursoSeleccionado.docente }}</p>
+          <p><strong>Horario:</strong> {{ cursoSeleccionado.horario }}</p>
+          <p><strong>Fecha de Creación:</strong> {{ cursoSeleccionado.fechaCreacion }}</p>
+          <p><strong>Última Actualización:</strong> {{ cursoSeleccionado.ultimaActualizacion }}</p>
+          <button (click)="editarCurso()"
+            class="btn-p mt-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path
+              d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+          </svg>
+        </button>
+        </div>
+        <div *ngIf="editandoCurso">
+          <label><strong>Nombre:</strong></label>
+          <input [(ngModel)]="tempCurso.nombre" class="border rounded px-2 py-1 mb-2 w-full"
+            [class.border-red-500]="tempCurso.nombre.trim() === ''">
+          <label><strong>Docente:</strong></label>
+          <input [(ngModel)]="tempCurso.docente" class="border rounded px-2 py-1 mb-2 w-full" disabled>
+          <app-search-bar (rowSelected)="onRowSelectedEdit($event)" [datosExternos]="docentes"
+            [columnasMostrar]="docentesColumns"></app-search-bar>
+          <label><strong>Horario:</strong></label>
+          <input [(ngModel)]="tempCurso.horario" class="border rounded px-2 py-1 mb-2 w-full">
+          <label><strong>Descripción:</strong></label>
+          <textarea [(ngModel)]="tempCurso.descripcion" class="border rounded px-2 py-1 mb-2 w-full"></textarea>
+          <p><strong>Fecha de Creación:</strong> {{ tempCurso.fechaCreacion }}</p>
+          <p><strong>Última Actualización:</strong> {{ tempCurso.ultimaActualizacion }}</p>
+          <div class="flex justify-end">
+            <button (click)="guardarCurso()"
+              class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+            <button (click)="editandoCurso = false"
+              class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

@@ -3,12 +3,12 @@ table {
 }
 
 .fila:hover {
-  background-color: rgba(0, 0, 0, 0.2); // Cambiado a un color más oscuro
+  background-color: rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
 .input-btn {
-  background-color: #A56B4E !important; /* Quinto Color */
+  background-color: #A56B4E !important;
   color: white !important;
   border: none;
   padding: 5px 10px;
@@ -16,5 +16,19 @@ table {
 }
 
 .input-btn:hover {
-  background-color: #361F18 !important; /* Cuaternario */
+  background-color: #361F18 !important;
+}
+
+th {
+  background-color: #A56B4E;
+  color: white;
+  border-color: #A56B4E;
+}
+
+td {
+  border-color: #A56B4E;
+}
+
+.selected-row {
+  background-color: #d1d5db !important; /* Gris */
 }

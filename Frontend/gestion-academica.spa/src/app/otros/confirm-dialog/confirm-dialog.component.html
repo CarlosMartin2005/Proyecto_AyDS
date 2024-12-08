@@ -1,0 +1,11 @@
+<div class="bg-white p-6 rounded-lg shadow-lg text-center">
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor"  viewBox="0 0 16 16">
+    <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+  </svg>
+  <h2 class="text-xl font-semibold mb-2">{{data.title}}</h2>
+  <p class="text-gray-600 mb-6">{{data.message}}</p>
+  <div class="flex justify-center space-x-4 ">
+    <button class="btn-cancel bg-gray-300 text-gray-700 px-4 py-2 rounded" (click)="onNoClick()">Cancelar</button>
+    <button class="btn-p px-4 py-2 rounded" [mat-dialog-close]="true">Aceptar</button>
+  </div>
+</div>

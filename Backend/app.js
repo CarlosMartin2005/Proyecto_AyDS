@@ -5,7 +5,9 @@ import userRouter from './router/users.js';
 import authRouter from './router/auth.js';
 import matriculaRouter from './router/matricula.js';
 import reportesrouter from './router/reportes.js';
+import programaRouter from './router/programas.js';
 import 'dotenv/config';
+import docentesRouter from './router/docentes.js';
 import authMiddleware from './middlewares/authMiddleware.js';
 
 const app = express();
@@ -30,6 +32,8 @@ app.use('/auth', authMiddleware, (req, res) => {
 app.use('/reportes', reportesrouter);
 app.use('/reportes', authMiddleware, reportesrouter);
 app.use('/matricula', matriculaRouter);
+app.use('/programas', programaRouter);
+app.use('/docentes', docentesRouter);
 
 // Middleware para manejo de rutas inexistentes
 app.use((req, res) => {

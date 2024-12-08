@@ -9,7 +9,11 @@
           <div class="mt-2">
             <input type="text" formControlName="nombre" id="nombre" autocomplete="given-name"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 lg:text-lg xl:text-xl 2xl:text-2xl">
-            <div *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched" class="text-red-600">Nombre es requerido</div>
+            <div *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched" class="text-red-600">
+              <div *ngIf="registroForm.get('nombre')?.errors?.['required']">Nombre es requerido</div>
+              <div *ngIf="registroForm.get('nombre')?.errors?.['pattern']">Nombre solo puede contener letras</div>
+              <div *ngIf="registroForm.get('nombre')?.errors?.['minlength']">Nombre debe tener al menos 2 caracteres</div>
+            </div>
           </div>
         </div>
 
@@ -18,7 +22,10 @@
           <div class="mt-2">
             <input type="text" formControlName="apellido" id="apellido" autocomplete="family-name"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 lg:text-lg xl:text-xl 2xl:text-2xl">
-            <div *ngIf="registroForm.get('apellido')?.invalid && registroForm.get('apellido')?.touched" class="text-red-600">Apellidos son requeridos</div>
+            <div *ngIf="registroForm.get('apellido')?.invalid && registroForm.get('apellido')?.touched" class="text-red-600">
+              <div *ngIf="registroForm.get('apellido')?.errors?.['required']">Apellidos son requeridos</div>
+              <div *ngIf="registroForm.get('apellido')?.errors?.['pattern']">Apellidos solo pueden contener letras</div>
+            </div>
           </div>
         </div>
 
@@ -29,7 +36,7 @@
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 lg:text-lg xl:text-xl 2xl:text-2xl">
             <div *ngIf="registroForm.get('telefono')?.invalid && registroForm.get('telefono')?.touched" class="text-red-600">
               <div *ngIf="registroForm.get('telefono')?.errors?.['required']">Teléfono es requerido</div>
-              <div *ngIf="registroForm.get('telefono')?.errors?.['pattern']">Teléfono debe tener 10 dígitos</div>
+              <div *ngIf="registroForm.get('telefono')?.errors?.['pattern']">Teléfono debe tener 8 dígitos</div>
             </div>
           </div>
         </div>
@@ -39,47 +46,50 @@
           <div class="mt-2">
             <input type="text" formControlName="identidad" id="identidad" autocomplete="identidad"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 lg:text-lg xl:text-xl 2xl:text-2xl">
-            <div *ngIf="registroForm.get('identidad')?.invalid && registroForm.get('identidad')?.touched" class="text-red-600">Identidad es requerida</div>
+            <div *ngIf="registroForm.get('identidad')?.invalid && registroForm.get('identidad')?.touched" class="text-red-600">
+              <div *ngIf="registroForm.get('identidad')?.errors?.['required']">Identidad es requerida</div>
+              <div *ngIf="registroForm.get('identidad')?.errors?.['pattern']">Identidad debe ser hondureña y seguir el formato 0000-0000-00000</div>
+            </div>
           </div>
         </div>
 
-        <div class="col-span-full sm:col-span-3">
+        <!-- <div class="col-span-full sm:col-span-3">
           <label for="lugarNacimiento" class="block text-sm/6 font-medium text-gray-900">Lugar de
             Nacimiento</label>
           <div class="mt-2">
             <input type="text" formControlName="lugarNacimiento" id="lugarNacimiento" autocomplete="lugarNacimiento"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6  ">
-            <div *ngIf="registroForm.get('lugarNacimiento')?.invalid && registroForm.get('lugarNacimiento')?.touched" class="text-red-600">Lugar de Nacimiento es requerido</div>
           </div>
-        </div>
+        </div> -->
 
         <div class="sm:col-span-3">
           <label for="fechaNacimiento" class="block text-sm/6 font-medium text-gray-900">Fecha de Nacimiento:</label>
           <div class="mt-2">
             <input type="date" formControlName="fechaNacimiento" id="fechaNacimiento" autocomplete="bday"
               class="max-w-80 block w-full rounded-md bg-white px-3 py-1.5 text-sm text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 lg:text-lg xl:text-xl 2xl:text-2xl">
-            <div *ngIf="registroForm.get('fechaNacimiento')?.invalid && registroForm.get('fechaNacimiento')?.touched" class="text-red-600">Fecha de Nacimiento es requerida</div>
+            <div *ngIf="registroForm.get('fechaNacimiento')?.invalid && registroForm.get('fechaNacimiento')?.touched" class="text-red-600">
+              <div *ngIf="registroForm.get('fechaNacimiento')?.errors?.['required']">Fecha de Nacimiento es requerida</div>
+              <div *ngIf="registroForm.get('fechaNacimiento')?.errors?.['edadInvalida']">Debe tener al menos 4 años</div>
+            </div>
           </div>
         </div>
 
-        <div class="col-span-full">
+        <!-- <div class="col-span-full">
           <label for="direccion" class="block text-sm/6 font-medium text-gray-900">Dirección</label>
           <div class="mt-2">
             <input type="text" formControlName="direccion" id="direccion" autocomplete="direccion"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 lg:text-lg xl:text-xl 2xl:text-2xl">
-            <div *ngIf="registroForm.get('direccion')?.invalid && registroForm.get('direccion')?.touched" class="text-red-600">Dirección es requerida</div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="col-span-full">
+        <!-- <div class="col-span-full">
           <label for="institucionProcedencia" class="block text-sm/6 font-medium text-gray-900">Institución
             educativa de procedencia</label>
           <div class="mt-2">
             <input type="text" formControlName="institucionProcedencia" id="institucionProcedencia"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 lg:text-lg xl:text-xl 2xl:text-2xl">
-            <div *ngIf="registroForm.get('institucionProcedencia')?.invalid && registroForm.get('institucionProcedencia')?.touched" class="text-red-600">Institución educativa de procedencia es requerida</div>
           </div>
-        </div>
+        </div> -->
 
         <div class="sm:col-span-3">
           <label for="instrumento" class="block text-sm/6 font-medium text-gray-900">Instrumento:</label>
@@ -150,9 +160,9 @@
         </div>
 
         <div class="sm:col-span-6">
-          <label for="programas" class="block text-sm/6 font-medium text-gray-900">Programas:</label>
-          <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            <div *ngFor="let programa of programas" class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow"
+          <label for="programas" class="mx-auto w-full  text-sm/6 font-medium text-gray-900">Programas:</label>
+          <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+            <div *ngFor="let programa of programas" class="block mx-auto w-4/5 sm:max-w-sm p-6 border border-gray-200 rounded-lg shadow"
                  [ngClass]="{'programa-seleccionado': programa.seleccionado, 'bg-white': !programa.seleccionado}">
               <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ programa.nombre }}</h5>
               <p class="font-normal text-gray-700">{{ programa.descripcion }}</p>
@@ -177,23 +187,29 @@
 
         <div class="sm:col-span-6" *ngIf="cursosSeleccionados.length > 0">
           <label for="cursos" class="block text-sm/6 font-medium text-gray-900">Cursos:</label>
-          <div class="mt-2 overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
+          <div class="mt-2">
+            <table class="min-w-full bg-white shadow-md overflow-hidden ">
+              <thead class="bg-gray-200">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Curso</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Docente</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Horario</th>
+                  <th class="py-2 px-4">Nombre</th>
+                  <th class="py-2 px-4">Docente</th>
+                  <th class="py-2 px-4">Horario</th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr *ngFor="let curso of cursosSeleccionados" (click)="toggleSeleccionarCurso(curso)" [ngClass]="{'bg-gray-300': curso.seleccionado, 'hover:bg-gray-200': !curso.seleccionado}">
-                  <td class="px-6 py-4 whitespace-nowrap">{{ curso.nombre }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap">{{ curso.docente }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap">{{ curso.horario }}</td>
-                </tr>
-              </tbody>
             </table>
+            <div class="overflow-y-auto max-h-64">
+              <table class="min-w-full bg-white shadow-md overflow-hidden ">
+                <tbody>
+                  <tr *ngFor="let curso of cursosSeleccionados" (click)="toggleSeleccionarCurso(curso)"
+                      [ngClass]="{'bg-gray-300': curso.seleccionado, 'hover:bg-gray-100': !curso.seleccionado}"
+                      class="cursor-pointer">
+                    <td class=" py-2 px-4 ">{{ curso.nombre }}</td>
+                    <td class=" py-2 px-4 ">{{ curso.docente }}</td>
+                    <td class=" py-2 px-4">{{ curso.horario }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <div *ngIf="registroForm.get('cursos')?.invalid && registroForm.get('cursos')?.touched" class="text-red-600">Debe seleccionar al menos un curso</div>
         </div>

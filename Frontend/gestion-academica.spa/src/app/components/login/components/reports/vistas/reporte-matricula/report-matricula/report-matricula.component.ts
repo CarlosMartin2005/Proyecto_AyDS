@@ -63,6 +63,7 @@ export class ReportMatriculaComponent implements OnInit {
 
   ngOnInit() {
     this.loadAlumnos();
+    console.log('Alumnos en ngOnInit:', this.alumnos);
   }
 
   loadAlumnos() {
@@ -73,7 +74,7 @@ export class ReportMatriculaComponent implements OnInit {
             id: estudiante.id,
             nombre_completo: estudiante.nombres + ' ' + estudiante.apellidos,
             numero_identidad: estudiante.identidad,
-            programas: estudiante.programa.split(', ')
+            programas: estudiante.programa ? estudiante.programa.split(', ') : ['']
           };
         });
       },
@@ -115,12 +116,12 @@ export class ReportMatriculaComponent implements OnInit {
       console.log('Selected Alumno:', this.selectedAlumno);
       console.log('Selected Programa:', this.selectedPrograma);
       console.log('Cursos:', this.cursos);
-  
-      this.cursosFiltrados = this.cursos.filter(curso => 
-        curso.programa === this.selectedPrograma && 
+
+      this.cursosFiltrados = this.cursos.filter(curso =>
+        curso.programa === this.selectedPrograma &&
         curso.alumnos && curso.alumnos.split(',').includes(this.selectedAlumno.id)
       );
-  
+
       console.log('Cursos Filtrados:', this.cursosFiltrados);
     }
   }

@@ -17,16 +17,12 @@
   background-color: #D4AE8D;
 }
 
-th {
-  background-color: #A56B4E;
-  color: white;
-  border-color: #A56B4E;
+.btn-cancel {
+  background-color: #D3D3D3;
+  color: #4A4A4A;
+  transition: background-color 0.3s ease;
 }
 
-td {
-  border-color: #A56B4E;
-}
-
-.selected-row {
-  background-color: #d1d5db !important; /* Gris */
+.btn-cancel:hover {
+  background-color: #A9A9A9;
 }
