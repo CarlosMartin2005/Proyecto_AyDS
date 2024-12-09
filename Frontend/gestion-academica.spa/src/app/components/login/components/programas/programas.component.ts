@@ -255,30 +255,40 @@ export class ProgramasComponent {
   }
 
   eliminarCurso(curso: any) {
-    if (this.programaSeleccionado) {
-      this.programasService.deleteCursos(curso.id).subscribe((res: any) => {
-        console.log('Curso eliminado:', res);
-        this.snackBar.open('Curso Eliminado', 'Cerrar', {
-          duration: 3000,
-          verticalPosition: 'bottom',
-          horizontalPosition: 'right',
-          panelClass: ['mensage-exito']
-        });
-        this.programaSeleccionado.cursos = this.programaSeleccionado.cursos.filter((c: any) => c !== curso);
-        if (this.cursoSeleccionado === curso) {
-          this.cursoSeleccionado = null;
-        }
-      },
-        (error) => {
-          this.snackBar.open(error.error.message, 'Cerrar', {
-            duration: 10000,
-            panelClass: ["mensaje-error"],
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '290px',
+      data: {
+        title: 'Confirmar eliminación',
+        message: '¿Está seguro que desea eliminar el elemento?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.programasService.deleteCursos(curso.id).subscribe((res: any) => {
+          console.log('Curso eliminado:', res);
+          this.snackBar.open('Curso Eliminado', 'Cerrar', {
+            duration: 3000,
             verticalPosition: 'bottom',
-            horizontalPosition: 'right'
+            horizontalPosition: 'right',
+            panelClass: ['mensage-exito']
           });
-          console.error('Error al eliminar el curso:', error);
-        });
-    }
+          this.programaSeleccionado.cursos = this.programaSeleccionado.cursos.filter((c: any) => c !== curso);
+          if (this.cursoSeleccionado === curso) {
+            this.cursoSeleccionado = null;
+          }
+        },
+          (error) => {
+            this.snackBar.open(error.error.message, 'Cerrar', {
+              duration: 10000,
+              panelClass: ["mensaje-error"],
+              verticalPosition: 'bottom',
+              horizontalPosition: 'right'
+            });
+            console.error('Error al eliminar el curso:', error);
+          });
+      }
+    });
   }
 
   editarPrograma() {
@@ -535,4 +545,6 @@ export class ProgramasComponent {
     this.tempCurso.docente = row.nombre;
     this.tempCurso.docente_id = row.id;
   }
+
+
 }

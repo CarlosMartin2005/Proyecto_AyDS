@@ -4,9 +4,9 @@ const docentesRouter = Router();
 
 // Metodos de autentificacion
 docentesRouter.get('/', DocentesController.getDocentes);
-// docentesRouter.post('/add-docente', DocentesController.adddocente);
-// docentesRouter.post('/edit-docente', DocentesController.editdocente);
-// docentesRouter.delete('/delete-docente', DocentesController.deletedocente);
+docentesRouter.post('/add-docente', DocentesController.addDocente);
+docentesRouter.post('/edit-docente', DocentesController.editDocente);
+docentesRouter.delete('/delete-docente', DocentesController.deleteDocente);
 
 
 

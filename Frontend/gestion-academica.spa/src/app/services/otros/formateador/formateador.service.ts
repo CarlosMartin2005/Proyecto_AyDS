@@ -18,7 +18,7 @@ export class FormateadorService {
    * - Day (DD).
    * - Hours (HH).
    * - Minutes (MM).
-   * - Seconds (SS).
+   * - Date string in YYYY-MM-DD format.
    */
   convertirFechaMySQLaStandarWeb(fechaMySQL: string) {
     // Crear un objeto Date a partir de la cadena de fecha
@@ -34,9 +34,10 @@ export class FormateadorService {
     const minutos = String(fecha.getUTCMinutes()).padStart(2, '0');
 
     // Formatear la fecha y la hora
-    const fechaFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+    const fechaFormateada = `${dia}-${mes}-${anio} ${horas}:${minutos}`;
+    const SoloFecha = `${anio}-${mes}-${dia}`;
 
-    const arrayFecha = [fechaFormateada, anio, mes, dia, horas, minutos];
+    const arrayFecha = [fechaFormateada, anio, mes, dia, horas, minutos, SoloFecha];
 
     return arrayFecha;
   }

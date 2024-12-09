@@ -1,1 +1,244 @@
-<p>docentes works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docentes</title>
+</head>
+<body class="text-gray-800">
+  <main class="p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-2xl font-bold">Docentes</h1>
+      <button *ngIf="!agregandoDocente" (click)="agregarDocente()"
+        class="btn-p bg-green-500 text-white rounded hover:bg-green-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 stroke-current" viewBox="0 0 16 16">
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+        </svg>
+      </button>
+    </div>
+    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden"
+      *ngIf="!agregandoDocente && docentes.length > 0">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="py-2 px-4 border-r">Nombre</th>
+          <th class="py-2 px-4 border-r">Apellido</th>
+          <th class="py-2 px-4 border-r">Especialidad</th>
+          <th class="py-2 px-4 border-r">No. Cuenta</th>
+          <th class="py-2 px-4">Status</th>
+          <th class="py-2 px-2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let docente of docentesPaginados" (click)="seleccionarDocente(docente)"
+          [class.selected-row]="docente === docenteSeleccionado" class="cursor-pointer hover:bg-gray-100">
+          <td class="border-t py-2 px-4 border-r">{{ docente.nombre }}</td>
+          <td class="border-t py-2 px-4 border-r">{{ docente.apellido }}</td>
+          <td class="border-t py-2 px-4 border-r">{{ docente.especialidad }}</td>
+          <td class="border-t py-2 px-4 border-r">{{ docente.numeroCuenta }}</td>
+          <td class="border-t py-2 px-4">{{ docente.status }}</td>
+          <td class="border-t py-2 px-2">
+            <button (click)="eliminarDocente(docente); $event.stopPropagation()"
+              class="text-red-500 hover:text-red-700">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!agregandoDocente && docentes.length > 0" class="flex justify-start mt-4">
+      <button *ngIf="docentesPaginaActual > 1" (click)="anteriorPaginaDocentes()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Anterior</button>
+      <input *ngIf="Math.ceil(docentes.length / elementosPorPagina) > 1" type="number" [(ngModel)]="docentesPaginaActual" (change)="cambiarPaginaDocentes(docentesPaginaActual)"
+        class="px-3 py-1 mx-1 border rounded w-16 text-center" min="1" [max]="Math.ceil(docentes.length / elementosPorPagina)">
+      <button *ngIf="docentesPaginaActual < Math.ceil(docentes.length / elementosPorPagina)" (click)="siguientePaginaDocentes()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Siguiente</button>
+    </div>
+    <p *ngIf="!agregandoDocente && docentes.length === 0" class="text-center text-gray-500">No hay docentes.</p>
+    <div *ngIf="agregandoDocente" class="mt-4 p-4 bg-white shadow-md rounded-lg" [formGroup]="nuevoDocenteForm">
+      <h2 class="text-xl font-semibold mb-2">Agregar Docente</h2>
+      <label><strong>Nombre:</strong></label>
+      <input formControlName="nombre" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('nombre')!.invalid && nuevoDocenteForm.get('nombre')!.touched">
+      <div *ngIf="nuevoDocenteForm.get('nombre')!.invalid && nuevoDocenteForm.get('nombre')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="nuevoDocenteForm.get('nombre')!.errors?.['required']">El nombre es obligatorio</div>
+        <div *ngIf="nuevoDocenteForm.get('nombre')!.errors?.['minlength']">El nombre debe tener al menos 3 caracteres</div>
+      </div>
+      <label><strong>Apellido:</strong></label>
+      <input formControlName="apellido" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('apellido')!.invalid && nuevoDocenteForm.get('apellido')!.touched">
+      <div *ngIf="nuevoDocenteForm.get('apellido')!.invalid && nuevoDocenteForm.get('apellido')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="nuevoDocenteForm.get('apellido')!.errors?.['required']">El apellido es obligatorio</div>
+      </div>
+      <label><strong>Especialidad:</strong></label>
+      <input formControlName="especialidad" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('especialidad')!.invalid && nuevoDocenteForm.get('especialidad')!.touched">
+      <div *ngIf="nuevoDocenteForm.get('especialidad')!.invalid && nuevoDocenteForm.get('especialidad')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="nuevoDocenteForm.get('especialidad')!.errors?.['required']">La especialidad es obligatoria</div>
+      </div>
+      <label><strong>Identidad:</strong></label>
+      <input formControlName="identidad" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('identidad')!.invalid && nuevoDocenteForm.get('identidad')!.touched">
+      <div *ngIf="nuevoDocenteForm.get('identidad')!.invalid && nuevoDocenteForm.get('identidad')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="nuevoDocenteForm.get('identidad')!.errors?.['required']">La identidad es obligatoria</div>
+        <div *ngIf="nuevoDocenteForm.get('identidad')!.errors?.['pattern']">La identidad no es válida. Debe tener el formato 0000-0000-00000</div>
+      </div>
+      <label><strong>Teléfono:</strong></label>
+      <input formControlName="telefono" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('telefono')!.invalid && nuevoDocenteForm.get('telefono')!.touched">
+      <div *ngIf="nuevoDocenteForm.get('telefono')!.invalid && nuevoDocenteForm.get('telefono')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="nuevoDocenteForm.get('telefono')!.errors?.['required']">El teléfono es obligatorio</div>
+        <div *ngIf="nuevoDocenteForm.get('telefono')!.errors?.['pattern']">El teléfono debe tener 8 dígitos</div>
+      </div>
+      <label><strong>Dirección:</strong></label>
+      <input formControlName="direccion" class="border rounded px-2 py-1 mb-2 w-full">
+      <label><strong>Email:</strong></label>
+      <input formControlName="email" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('email')!.invalid && nuevoDocenteForm.get('email')!.touched">
+      <div *ngIf="nuevoDocenteForm.get('email')!.invalid && nuevoDocenteForm.get('email')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="nuevoDocenteForm.get('email')!.errors?.['required']">El email es obligatorio</div>
+        <div *ngIf="nuevoDocenteForm.get('email')!.errors?.['email']">El email no es válido</div>
+      </div>
+      <label><strong>Contraseña:</strong></label>
+      <input type="password" formControlName="contraseña" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('contraseña')!.invalid && nuevoDocenteForm.get('contraseña')!.touched">
+      <div *ngIf="nuevoDocenteForm.get('contraseña')!.invalid && nuevoDocenteForm.get('contraseña')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="nuevoDocenteForm.get('contraseña')!.errors?.['required']">La contraseña es obligatoria</div>
+        <div *ngIf="nuevoDocenteForm.get('contraseña')!.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
+      </div>
+      <label><strong>Fecha de Nacimiento:</strong></label>
+      <input type="date" formControlName="fechaNacimiento" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('fechaNacimiento')!.invalid && nuevoDocenteForm.get('fechaNacimiento')!.touched">
+      <div *ngIf="nuevoDocenteForm.get('fechaNacimiento')!.invalid && nuevoDocenteForm.get('fechaNacimiento')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="nuevoDocenteForm.get('fechaNacimiento')!.errors?.['required']">La fecha de nacimiento es obligatoria</div>
+        <div *ngIf="nuevoDocenteForm.get('fechaNacimiento')!.errors?.['edadMinima']">Debe tener al menos 18 años</div>
+      </div>
+      <div class="mt-4">
+        <label class="switch">
+          <input type="checkbox" formControlName="status">
+          <span class="slider"></span>
+        </label>
+        <span class="py-auto px-2 font-bold items-center">{{ nuevoDocenteForm.get('status')!.value ? 'Activo' : 'Inactivo' }}</span>
+      </div>
+      <div class="flex justify-end">
+        <button (click)="guardarNuevoDocente()"
+          class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+        <button (click)="cancelarAgregarDocente()"
+          class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+      </div>
+    </div>
+    <div *ngIf="docenteSeleccionado && !agregandoDocente" class="mt-4 p-4 bg-white shadow-md rounded-lg">
+      <h2 class="text-xl font-semibold mb-2">Detalles del Docente</h2>
+      <div *ngIf="!editandoDocente">
+        <p><strong>Nombre:</strong> {{ docenteSeleccionado.nombre }}</p>
+        <p><strong>Apellido:</strong> {{ docenteSeleccionado.apellido }}</p>
+        <p><strong>Edad:</strong> {{ calcularEdad(docenteSeleccionado.fechaNacimiento) }} años</p>
+        <p><strong>Email:</strong> {{ docenteSeleccionado.email }}</p>
+        <p><strong>Especialidad:</strong> {{ docenteSeleccionado.especialidad }}</p>
+        <p><strong>Status:</strong> {{ docenteSeleccionado.status }}</p>
+        <p><strong>Identidad:</strong> {{ docenteSeleccionado.identidad }}</p>
+        <p><strong>Teléfono:</strong> {{ docenteSeleccionado.telefono }}</p>
+        <p><strong>Dirección:</strong> {{ docenteSeleccionado.direccion }}</p>
+        <p><strong>Fecha de Creación:</strong> {{ formatearFecha(docenteSeleccionado.fechaCreacion, 'conHora')  }}</p>
+        <p><strong>Fecha de Modificación:</strong> {{ formatearFecha(docenteSeleccionado.ultimaActualizacion, 'conHora') }}</p>
+        <p><strong>Fecha de Nacimiento:</strong> {{ formatearFecha(docenteSeleccionado.fechaNacimiento) }}</p>
+        <button (click)="editarDocente()" class="btn-p p-2 mt-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 " fill="currentColor"
+            viewBox="0 0 16 16">
+            <path
+              d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+          </svg>
+        </button>
+      </div>
+      <div *ngIf="editandoDocente" class="mt-4 p-4 bg-white shadow-md rounded-lg" [formGroup]="editarDocenteForm">
+        <h2 class="text-xl font-semibold mb-2">Editar Docente</h2>
+        <label><strong>Nombre:</strong></label>
+        <input formControlName="nombre" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarDocenteForm.get('nombre')!.invalid && editarDocenteForm.get('nombre')!.touched">
+        <div *ngIf="editarDocenteForm.get('nombre')!.invalid && editarDocenteForm.get('nombre')!.touched" class="text-red-500 text-sm">
+          <div *ngIf="editarDocenteForm.get('nombre')!.errors?.['required']">El nombre es obligatorio</div>
+          <div *ngIf="editarDocenteForm.get('nombre')!.errors?.['minlength']">El nombre debe tener al menos 3 caracteres</div>
+        </div>
+        <label><strong>Apellido:</strong></label>
+        <input formControlName="apellido" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarDocenteForm.get('apellido')!.invalid && editarDocenteForm.get('apellido')!.touched">
+        <div *ngIf="editarDocenteForm.get('apellido')!.invalid && editarDocenteForm.get('apellido')!.touched" class="text-red-500 text-sm">
+          <div *ngIf="editarDocenteForm.get('apellido')!.errors?.['required']">El apellido es obligatorio</div>
+        </div>
+        <label><strong>Email:</strong></label>
+        <input formControlName="email" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarDocenteForm.get('email')!.invalid && editarDocenteForm.get('email')!.touched">
+        <div *ngIf="editarDocenteForm.get('email')!.invalid && editarDocenteForm.get('email')!.touched" class="text-red-500 text-sm">
+          <div *ngIf="editarDocenteForm.get('email')!.errors?.['required']">El email es obligatorio</div>
+          <div *ngIf="editarDocenteForm.get('email')!.errors?.['email']">El email no es válido</div>
+        </div>
+        <label><strong>Especialidad:</strong></label>
+        <input formControlName="especialidad" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarDocenteForm.get('especialidad')!.invalid && editarDocenteForm.get('especialidad')!.touched">
+        <div *ngIf="editarDocenteForm.get('especialidad')!.invalid && editarDocenteForm.get('especialidad')!.touched" class="text-red-500 text-sm">
+          <div *ngIf="editarDocenteForm.get('especialidad')!.errors?.['required']">La especialidad es obligatoria</div>
+        </div>
+        <label><strong>Identidad:</strong></label>
+        <input formControlName="identidad" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarDocenteForm.get('identidad')!.invalid && editarDocenteForm.get('identidad')!.touched">
+        <div *ngIf="editarDocenteForm.get('identidad')!.invalid && editarDocenteForm.get('identidad')!.touched" class="text-red-500 text-sm">
+          <div *ngIf="editarDocenteForm.get('identidad')!.errors?.['required']">La identidad es obligatoria</div>
+          <div *ngIf="editarDocenteForm.get('identidad')!.errors?.['pattern']">La identidad no es válida. Debe tener el formato 0000-0000-00000</div>
+        </div>
+        <label><strong>Teléfono:</strong></label>
+        <input formControlName="telefono" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarDocenteForm.get('telefono')!.invalid && editarDocenteForm.get('telefono')!.touched">
+        <div *ngIf="editarDocenteForm.get('telefono')!.invalid && editarDocenteForm.get('telefono')!.touched" class="text-red-500 text-sm">
+          <div *ngIf="editarDocenteForm.get('telefono')!.errors?.['required']">El teléfono es obligatorio</div>
+          <div *ngIf="editarDocenteForm.get('telefono')!.errors?.['pattern']">El teléfono debe tener 8 dígitos</div>
+        </div>
+        <label><strong>Dirección:</strong></label>
+        <input formControlName="direccion" class="border rounded px-2 py-1 mb-2 w-full">
+        <label><strong>Fecha de Nacimiento:</strong></label>
+        <input type="date" formControlName="fechaNacimiento" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarDocenteForm.get('fechaNacimiento')!.invalid && editarDocenteForm.get('fechaNacimiento')!.touched">
+        <div *ngIf="editarDocenteForm.get('fechaNacimiento')!.invalid && editarDocenteForm.get('fechaNacimiento')!.touched" class="text-red-500 text-sm">
+          <div *ngIf="editarDocenteForm.get('fechaNacimiento')!.errors?.['required']">La fecha de nacimiento es obligatoria</div>
+          <div *ngIf="editarDocenteForm.get('fechaNacimiento')!.errors?.['edadMinima']">Debe tener al menos 18 años</div>
+        </div>
+        <div class="mt-4">
+          <label class="switch">
+            <input type="checkbox" formControlName="status">
+            <span class="slider"></span>
+          </label>
+          <span class="py-auto px-2 font-bold items-center">{{ editarDocenteForm.get('status')!.value ? 'Activo' : 'Inactivo' }}</span>
+        </div>
+        <div class="flex justify-end">
+          <button (click)="guardarDocente()" class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+          <button (click)="editandoDocente = false" class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+        </div>
+      </div>
+      <hr class="my-4">
+      <div class="flex justify-between items-center mt-4">
+        <h3 class="text-lg font-semibold">Cursos</h3>
+      </div>
+      <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden mt-2"
+        *ngIf="docenteSeleccionado.cursos.length > 0">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="py-2 px-4 border-r">Nombre</th>
+            <th class="py-2 px-4 border-r">Descripción</th>
+            <th class="py-2 px-4">Horario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let curso of cursosPaginados" (click)="seleccionarCurso(curso)"
+            [class.selected-row]="curso === cursoSeleccionado" class="cursor-pointer hover:bg-gray-100">
+            <td class="border-t py-2 px-4 border-r">{{ curso.nombre }}</td>
+            <td class="border-t py-2 px-4 border-r">{{ curso.descripcion }}</td>
+            <td class="border-t py-2 px-4">{{ curso.horario }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="docenteSeleccionado.cursos.length > 0" class="flex justify-start mt-4">
+        <button *ngIf="cursosPaginaActual > 1" (click)="anteriorPaginaCursos()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Anterior</button>
+        <input *ngIf="Math.ceil(docenteSeleccionado.cursos.length / elementosPorPagina) > 1" type="number" [(ngModel)]="cursosPaginaActual" (change)="cambiarPaginaCursos(cursosPaginaActual)"
+          class="px-3 py-1 mx-1 border rounded w-16 text-center" min="1" [max]="Math.ceil(docenteSeleccionado.cursos.length / elementosPorPagina)">
+        <button *ngIf="cursosPaginaActual < Math.ceil(docenteSeleccionado.cursos.length / elementosPorPagina)" (click)="siguientePaginaCursos()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Siguiente</button>
+      </div>
+      <p *ngIf="docenteSeleccionado.cursos.length === 0" class="text-center text-gray-500">No hay cursos.</p>
+      <div *ngIf="cursoSeleccionado" class="mt-4 p-4 bg-white shadow-md rounded-lg">
+        <h3 class="text-lg font-semibold mb-2">Detalles del Curso</h3>
+        <div>
+          <p><strong>Nombre:</strong> {{ cursoSeleccionado.nombre }}</p>
+          <p><strong>Descripción:</strong> {{ cursoSeleccionado.descripcion }}</p>
+          <p><strong>Horario:</strong> {{ cursoSeleccionado.horario }}</p>
+          <p><strong>Fecha de Creación:</strong> {{ cursoSeleccionado.fechaCreacion }}</p>
+          <p><strong>Última Actualización:</strong> {{ cursoSeleccionado.ultimaActualizacion }}</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
