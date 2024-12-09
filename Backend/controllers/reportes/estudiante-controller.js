@@ -50,10 +50,19 @@ export class EstudianteController {
                         message: "Ocurrió un error al obtener los datos: " + error
                     });
                 }
+                // Reemplazar elementos nulos con un string vacío
+                const sanitizedResult = result.map(row => {
+                    for (let key in row) {
+                        if (row[key] === null) {
+                            row[key] = '';
+                        }
+                    }
+                    return row;
+                });
                 return res
                     .header('Content-Type', 'application/json')
                     .status(200)
-                    .json(result);
+                    .json(sanitizedResult);
             });
         } catch (error) {
             return res.status(400).json({
