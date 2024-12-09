@@ -5,11 +5,12 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Chart, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { DateRangePickerComponent } from '../date-range-picker/date-range-picker.component';
 
 @Component({
   selector: 'app-reporte-excelencia',
   standalone: true,
-  imports: [ButtonGoBackComponent, CommonModule, MatCardModule, HttpClientModule],
+  imports: [ButtonGoBackComponent, CommonModule, MatCardModule, HttpClientModule, DateRangePickerComponent],
   templateUrl: './reporte-excelencia.component.html',
   styleUrls: ['./reporte-excelencia.component.scss']
 })
@@ -21,6 +22,7 @@ export class ReporteExcelenciaComponent implements OnInit {
   colores = ['#A36750', '#DCC07C', '#A59287', '#361F18', '#A56B4E', '#D4AE8D']; // Colores para los estudiantes
 
   estudiantes: any[] = [];
+  chart: Chart | null = null; // Referencia al gráfico
 
   constructor(private http: HttpClient) {}
 
@@ -28,14 +30,24 @@ export class ReporteExcelenciaComponent implements OnInit {
     this.loadEstudiantes();
   }
 
-  loadEstudiantes() {
-    this.http.get('http://localhost:3000/reportes/excelencia').subscribe((data: any) => {
+  loadEstudiantes(startDate?: Date, endDate?: Date) {
+    let url = 'http://localhost:3000/reportes/excelencia';
+    if (startDate && endDate) {
+      url += `?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`;
+    }
+    this.http.get(url).subscribe((data: any) => {
       this.estudiantes = data.sort((a: any, b: any) => b.promedio - a.promedio).map((estudiante: any, index: number) => ({
         ...estudiante,
         color: this.colores[index % this.colores.length]
       }));
       this.generateChart();
     });
+  }
+
+  onDateRangeSelected(event: { startDate: Date | null, endDate: Date | null }) {
+    if (event.startDate && event.endDate) {
+      this.loadEstudiantes(event.startDate, event.endDate);
+    }
   }
 
   // Función para generar el gráfico de barras
@@ -45,7 +57,12 @@ export class ReporteExcelenciaComponent implements OnInit {
 
     const ctx = document.getElementById('progressChart') as HTMLCanvasElement;
 
-    new Chart(ctx, {
+    // Destruir el gráfico existente si existe
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    this.chart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: this.estudiantes.map(e => e.nombre),

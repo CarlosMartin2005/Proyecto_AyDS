@@ -2,6 +2,11 @@ import connection from '../../db/connection.js';
 
 export class ExcelenciaController {
     static async getEstudiantesExcelencia(req, res) {
+        const { startDate, endDate } = req.query;
+        let dateFilter = '';
+        if (startDate && endDate) {
+            dateFilter = `AND ac.fecha_matricula BETWEEN '${startDate}' AND '${endDate}'`;
+        }
         const consulta = `
             SELECT 
                 CONCAT(u.nombre, ' ', u.apellido) AS nombre,
@@ -13,6 +18,8 @@ export class ExcelenciaController {
                 alumnos a ON ac.alumno_id = a.id_usuario
             JOIN 
                 usuarios u ON a.id_usuario = u.id
+            WHERE 
+                1=1 ${dateFilter}
             GROUP BY 
                 ac.alumno_id, a.identidad
             HAVING 

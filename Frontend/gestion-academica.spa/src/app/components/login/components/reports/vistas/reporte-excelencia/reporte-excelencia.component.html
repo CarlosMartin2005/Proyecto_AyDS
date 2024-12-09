@@ -10,6 +10,7 @@
       <img src="../../assets/Nota-sol-logo-oroginal-Pequeña.png" class="logo" alt="Nota Musical">
     </div>
     <mat-card-content>
+      <app-date-range-picker (dateRangeSelected)="onDateRangeSelected($event)"></app-date-range-picker>
       <div class="report-grid py-10">
         <div class="info-column m-auto">
           <div class="info-item total">
