@@ -83,17 +83,6 @@ export class TableComponent implements OnInit {
     }
   }
 
-  abrirModal(element: any) {
-    // Lógica para abrir el modal
-  }
-
-  editar(element: any) {
-    // Lógica para editar el elemento
-  }
-
-  eliminar(element: any) {
-    // Lógica para eliminar el elemento
-  }
 
   getBadgeClass(element: any): string {
     return element.activo ? 'badge bg-success' : 'badge bg-danger';
@@ -116,41 +105,38 @@ export class TableComponent implements OnInit {
     });
 
     const pageWidth = doc.internal.pageSize.width;
-    const padding = 40; // Considera algo de espacio para padding
-    const availableWidth = pageWidth - padding * 2;
+    const pageHeight = doc.internal.pageSize.height;
+    const padding = 40;
+    const logoUrl = this.logoUrl;
+    const encabezadoColor = "#D69A77"; // Color del encabezado
+    const fontColor = "#000000"; // Negro para contraste
+
+    // Añadir el rectángulo de color al encabezado
+    doc.setFillColor(encabezadoColor);
+    doc.rect(padding, 20, pageWidth - padding * 2, 80, 'F');
+
+    // Añadir el logo en la parte superior izquierda dentro del rectángulo
+    doc.addImage(logoUrl, 'PNG', padding + 10, 30, 60, 60); // Ajusta el tamaño y la posición según sea necesario
+
+    // Título del conservatorio
+    doc.setFontSize(20);
+    doc.setTextColor(fontColor);
+    doc.text("Conservatorio Sampedrano de las Artes", padding + 80, 50, { align: 'left' });
+
+    // Subtítulo del reporte y fecha actual
+    doc.setFontSize(14);
+    const currentDate = new Date().toLocaleDateString();
+    doc.text(currentDate, pageWidth - padding - 10, 50, { align: 'right' });
+    doc.text(this.reportTitle, padding + 80, 80, { align: 'left' });
 
     // Priorizar columnas y excluir las no deseadas explícitamente
     const prioritizedColumns = this.columnConfig
       .filter(col => !['horario'].includes(col.key)) // Excluir 'horario'
       .sort((a, b) => a.priority - b.priority);
 
-    const columnWidths = prioritizedColumns.map(col => ({
-      ...col,
-      width: doc.getTextWidth(col.label) + 20
-    }));
-
-    let totalWidth = columnWidths.reduce((acc, col) => acc + col.width, 0);
-
-    // Asegurarnos de que siempre haya un logo
-    const logoUrl = this.logoUrl;
-
-    // Marca de agua
-    const pageHeight = doc.internal.pageSize.height;
-    doc.addImage(logoUrl, 'PNG', pageWidth / 4, pageHeight / 4, pageWidth / 2, pageHeight / 2, undefined, 'NONE');
-
-    // Título del conservatorio
-    doc.setFontSize(20);
-    doc.text("Conservatorio Sampedrano de las Artes", doc.internal.pageSize.width / 2, 30, { align: 'center' });
-
-    // Subtítulo del reporte y fecha actual
-    doc.setFontSize(14);
-    const currentDate = new Date().toLocaleDateString();
-    doc.text(this.reportTitle, 14, 50);
-    doc.text(currentDate, doc.internal.pageSize.width - 14, 50, { align: 'right' });
-
     // Generar la tabla con ajuste automático de columnas y texto envolvente
     autoTable(doc, {
-      startY: 70,
+      startY: 120,
       head: [prioritizedColumns.map(col => col.label)],
       body: this.data.map(row => prioritizedColumns.map(col => {
         if (col.key === 'fechaNacimiento') {
@@ -161,30 +147,41 @@ export class TableComponent implements OnInit {
       })),
       theme: 'grid',
       styles: {
-        textColor: [54, 31, 24], // Cuaternario para texto
-        fontSize: 10, // Tamaño de fuente reducido
+        textColor: [54, 31, 24],
+        fontSize: 10,
         cellPadding: 2,
-        overflow: 'linebreak', // Ajuste de texto envolvente
-        minCellHeight: 20, // Altura mínima de las celdas
+        overflow: 'linebreak',
+        minCellHeight: 20,
+        valign: 'middle',
+        halign: 'center'
       },
       headStyles: {
-        fillColor: [163, 103, 80], // Cuaternario para el encabezado
-        textColor: [255, 255, 255] // Blanco para el texto del encabezado
+        fillColor: [163, 103, 80],
+        textColor: [255, 255, 255]
       },
       alternateRowStyles: {
-        fillColor: [239, 239, 239] // Nuevo Color Terciario
+        fillColor: [239, 239, 239]
       },
-      tableLineColor: [54, 31, 24], // Cuaternario para bordes de la tabla
+      tableLineColor: [54, 31, 24],
       tableLineWidth: 0.75,
       columnStyles: {
-        // Ajustar el ancho de las columnas según sea necesario
-        0: { cellWidth: 'auto' }, // La primera columna se ajustará automáticamente
-        1: { cellWidth: 'auto' }, // La segunda columna se ajustará automáticamente
-        // Puedes agregar más ajustes de columna según sea necesario
+        0: { cellWidth: 'auto' },
+        1: { cellWidth: 'auto' }
       }
     });
+
+    // Pie de página con número de página
+    const totalPages = doc.internal.pages.length - 1;
+
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFontSize(10);
+      doc.setTextColor("#000000"); // Color negro para el pie de página
+      doc.text(`Página ${i} de ${totalPages}`, pageWidth - padding, pageHeight - 30, { align: 'right' });
+    }
 
     // Abrir el PDF en una nueva pestaña
     window.open(doc.output('bloburl'));
   }
+
 }

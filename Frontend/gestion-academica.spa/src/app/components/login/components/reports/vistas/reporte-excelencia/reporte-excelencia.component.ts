@@ -17,6 +17,7 @@ export class ReporteExcelenciaComponent implements OnInit {
   currentDate = new Date().toLocaleDateString();
   reportTitle = 'Reporte de Excelencia Académica'; // Título del reporte
 
+  // Ajuste de colores según la paleta proporcionada
   colores = ['#fab174', '#f7b5a1', '#f3c1c9', '#f0c7f0', '#c7c7f0']; // Colores para los estudiantes
 
   estudiantes: any[] = [];
@@ -63,17 +64,16 @@ export class ReporteExcelenciaComponent implements OnInit {
           title: {
             display: true,
             text: "Estudiantes de excelencia académica",
-            color: '#000',
+            color: '#361F18', // Color del título
             padding: {
               bottom: 30
             }
           },
           legend: {
             display: false, // Ocultar la leyenda
-
           },
           datalabels: {
-            color: '#000', // Cambiar el color de las etiquetas de datos a negro
+            color: '#361F18', // Color de las etiquetas de datos
             anchor: 'end',
             align: 'end',
             font: {
@@ -89,13 +89,21 @@ export class ReporteExcelenciaComponent implements OnInit {
             beginAtZero: true,
             title: {
               display: true,
-              text: 'Promedio'
+              text: 'Promedio',
+              color: '#361F18' // Color del título del eje Y
+            },
+            ticks: {
+              color: '#361F18' // Color de los números del eje Y
             }
           },
           x: {
             title: {
               display: true,
-              text: 'Estudiantes'
+              text: 'Estudiantes',
+              color: '#361F18' // Color del título del eje X
+            },
+            ticks: {
+              color: '#361F18' // Color de los nombres de los estudiantes
             }
           }
         }

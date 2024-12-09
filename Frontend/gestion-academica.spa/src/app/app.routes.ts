@@ -87,10 +87,6 @@ export const routes: Routes = [
             loadComponent: () => import('./components/login/components/reports/vistas/reporte-estudiantes-curso/reporte-estudiantes-curso.component').then(m => m.ReporteEstudiantesCursoComponent)
           },
           {
-            path: 'matricula',
-            loadComponent: () => import('./components/login/components/reports/vistas/reporte-matricula/reporte-matricula.component').then(m => m.ReporteMatriculaComponent)
-          },
-          {
             path: 'rendimiento',
             loadComponent: () => import('./components/login/components/reports/vistas/reporte-rendimiento-estudiante/reporte-rendimiento-estudiante.component').then(m => m.ReporteRendimientoEstudianteComponent)
           },

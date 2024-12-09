@@ -63,7 +63,6 @@
 .report-grid {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Columna para espacio y columna para gráfica */
-  // gap: 16px;
   padding: 40px 20px;
   background-color: #EFEFEF; /* Fondo casi blanco similar al de la tabla */
   border-radius: 8px;
@@ -72,8 +71,7 @@
 .info-column {
   display: flex;
   flex-direction: column;
-  // gap: 16px;
-  justify-content: center; /* Cambiado de flex-start a center */
+  justify-content: center;
   align-items: center;
   margin: auto;
   height: 100%;
@@ -99,7 +97,6 @@
 
 .info-item.total {
   align-items: center;
-  // margin-bottom: 24px;
 }
 
 .info-item.aprobados-reprobados {
