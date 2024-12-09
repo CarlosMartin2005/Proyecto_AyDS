@@ -3,11 +3,12 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Chart, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { DateRangePickerComponent } from '../../date-range-picker/date-range-picker.component';
 
 @Component({
   selector: 'app-report-aprobado-reprobado',
   standalone: true,
-  imports: [MatCardModule, HttpClientModule],
+  imports: [MatCardModule, HttpClientModule, DateRangePickerComponent],
   templateUrl: './report-aprobado-reprobado.component.html',
   styleUrls: ['./report-aprobado-reprobado.component.scss']
 })
@@ -19,6 +20,7 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
   totalEstudiantes = 0;
   totalAprobados = 0;
   totalReprobados = 0;
+  chart: Chart | null = null; // Referencia al gráfico
 
   constructor(private http: HttpClient) {}
 
@@ -26,13 +28,23 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
     this.loadData();
   }
 
-  loadData() {
-    this.http.get('http://localhost:3000/reportes/aprobado-reprobado').subscribe((data: any) => {
+  loadData(startDate?: Date, endDate?: Date) {
+    let url = 'http://localhost:3000/reportes/aprobado-reprobado';
+    if (startDate && endDate) {
+      url += `?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`;
+    }
+    this.http.get(url).subscribe((data: any) => {
       this.totalEstudiantes = data.totalEstudiantes;
       this.totalAprobados = data.totalAprobados;
       this.totalReprobados = data.totalReprobados;
       this.renderChart();
     });
+  }
+
+  onDateRangeSelected(event: { startDate: Date | null, endDate: Date | null }) {
+    if (event.startDate && event.endDate) {
+      this.loadData(event.startDate, event.endDate);
+    }
   }
 
   // Cálculo de porcentajes
@@ -48,54 +60,53 @@ export class ReportAprobadoReprobadoComponent implements OnInit {
     Chart.register(...registerables, ChartDataLabels); // Registra todos los componentes necesarios, incluido el plugin
 
     const ctx = document.getElementById('progressChart') as HTMLCanvasElement;
-    new Chart(ctx, {
+
+    // Destruir el gráfico existente si existe
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    this.chart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Estudiantes'],
+        labels: ['Aprobados', 'Reprobados'],
         datasets: [
           {
-            label: 'Aprobados',
-            data: [this.approvedPercentage],
-            backgroundColor: '#DCC07C', // Nuevo color para aprobados
-            barThickness: 35, // Aumentar un poco más la altura de la barra
-            categoryPercentage: 1.0 // Mantener el ancho completo de la categoría
-          },
-          {
-            label: 'Reprobados',
-            data: [this.failedPercentage],
-            backgroundColor: '#A36750', // Nuevo color para reprobados
-            barThickness: 35, // Aumentar un poco más la altura de la barra
-            categoryPercentage: 1.0 // Mantener el ancho completo de la categoría
+            label: 'Estudiantes',
+            data: [this.approvedPercentage, this.failedPercentage],
+            backgroundColor: ['#DCC07C', '#A36750'], // Colores para aprobados y reprobados
+            barThickness: 150, // Aumentar el grosor de la barra
+            categoryPercentage: 0.3 // Ajustar el ancho de la categoría
           }
         ]
       },
       options: {
-        indexAxis: 'y',
         scales: {
-          x: {
+          y: {
             beginAtZero: true,
             max: 100,
-            stacked: true, // Hacer que las barras sean apiladas
             ticks: {
               callback: function(value) {
                 return value + '%';
               }
+            },
+            title: {
+              display: true,
+              text: 'Porcentaje',
+              color: '#361F18' // Color del título del eje Y
             }
           },
-          y: {
-            stacked: true, // Asegurarse de que las barras se apilen verticalmente
-            display: false // Ocultar el eje Y
+          x: {
+            title: {
+              display: true,
+              text: 'Estudiantes',
+              color: '#361F18' // Color del título del eje X
+            }
           }
         },
         plugins: {
           legend: {
-            display: true, // Mostrar la leyenda
-            position: 'top', // Posición de la leyenda en la parte superior
-            labels: {
-              usePointStyle: true, // Usar estilo de punto para la leyenda
-              boxWidth: 15, // Ancho del cuadro de color en la leyenda
-              padding: 20 // Espaciado adicional alrededor de las etiquetas de la leyenda
-            }
+            display: false // Ocultar la leyenda
           },
           tooltip: {
             callbacks: {

@@ -1,20 +1,23 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
 import { RadarChartComponent } from '../../../tools/radar-chart/radar-chart.component';
 import { ReporteRendimientoService } from '../../../../../../../services/reports/reporte-rendimiento/reporte-rendimiento.service';
 import { FormateadorService } from '../../../../../../../services/otros/formateador/formateador.service';
 import { SearchBarComponent } from '../../../../../../../otros/search-bar/search-bar.component';
 import { EstudiantesService } from '../../../../../../../services/estudiantes/estudiantes.service';
+import { DateRangePickerComponent } from '../../date-range-picker/date-range-picker.component';
 
 @Component({
   selector: 'app-rendimiento-del-estudiante',
   standalone: true,
-  imports: [MatCardModule, RadarChartComponent, SearchBarComponent],
+  imports: [CommonModule, MatCardModule, RadarChartComponent, SearchBarComponent, DateRangePickerComponent],
   templateUrl: './rendimiento-del-estudiante.component.html',
   styleUrls: ['./rendimiento-del-estudiante.component.scss']
 })
 export class RendimientoDelEstudianteComponent {
   estudiantes: any[] = [];
+  filteredEstudiantes: any[] = [];
   columnsNamesEstudiantes = {
     'nombre': 'Nombre',
     'identidad': 'Identidad',
@@ -40,9 +43,11 @@ export class RendimientoDelEstudianteComponent {
             identidad: estudiante.identidad,
             email: estudiante.email,
             curso: estudiante.curso,
-            programa: estudiante.programa
+            programa: estudiante.programa,
+            fecha_matricula: estudiante.fecha_matricula // Asegúrate de que esta propiedad exista
           };
         });
+        this.filteredEstudiantes = this.estudiantes; // Inicialmente mostrar todos los estudiantes
         console.log(this.estudiantes);
       },
       error: (error) => {
@@ -51,11 +56,9 @@ export class RendimientoDelEstudianteComponent {
     });
   }
 
-
   // Información del estudiante
   studentInfo = {
     nombreCompleto: 'Juan Pérez',
-    // numeroCuenta: '20220001',
     edad: 21,
     email: '',
     identidad: '0801-1999-12345'
@@ -82,13 +85,9 @@ export class RendimientoDelEstudianteComponent {
     return labels[value];
   }
 
-  dataChart(id: any) {
-    this.reporteRendimientoService.getInfo(id).subscribe(
+  dataChart(id: any, startDate?: Date, endDate?: Date) {
+    this.reporteRendimientoService.getInfo(id, startDate, endDate).subscribe(
       (data: any) => {
-        // this.studentInfo = data.estudiante;
-        // this.studentCharacteristics = data.caracteristicas;
-        // this.chartData = Object.values(this.studentCharacteristics);
-        // console.log(data);
         this.studentCharacteristics = {
           rendimientoAcademico: data.promedio_rendimiento_academico,
           manejoInstrumentos: data.promedio_manejo_instrumentos,
@@ -107,7 +106,6 @@ export class RendimientoDelEstudianteComponent {
           identidad: data.identidad
         }
 
-
         this.updateChart(); // Llama a la función para actualizar la gráfica
       });
   }
@@ -124,11 +122,24 @@ export class RendimientoDelEstudianteComponent {
     console.log('Fila seleccionada:', row.id);
     this.estudianteSeleccionado = row.id;
     this.dataChart(this.estudianteSeleccionado);
-
-    // Aquí puedes manejar la fila seleccionada como desees
   }
 
   mostrarCard(): boolean {
     return this.estudianteSeleccionado ? true : false;
+  }
+
+  onDateRangeSelected(event: { startDate: Date | null, endDate: Date | null }) {
+    const { startDate, endDate } = event;
+    if (startDate && endDate) {
+      this.filteredEstudiantes = this.estudiantes.filter(estudiante => {
+        if (!estudiante.fecha_matricula) {
+          return false;
+        }
+        const fechaMatricula = new Date(estudiante.fecha_matricula);
+        return fechaMatricula >= startDate && fechaMatricula <= endDate;
+      });
+    } else {
+      this.filteredEstudiantes = this.estudiantes; // Mostrar todos los estudiantes si no hay rango de fechas seleccionado
+    }
   }
 }

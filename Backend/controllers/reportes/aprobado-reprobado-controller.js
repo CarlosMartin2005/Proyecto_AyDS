@@ -2,6 +2,11 @@ import connection from '../../db/connection.js';
 
 export class AprobadoReprobadoController {
     static async getAprobadoReprobado(req, res) {
+        const { startDate, endDate } = req.query;
+        let dateFilter = '';
+        if (startDate && endDate) {
+            dateFilter = `AND ac.fecha_matricula BETWEEN '${startDate}' AND '${endDate}'`;
+        }
         const consulta = `
             SELECT 
                 COUNT(DISTINCT ac.alumno_id) AS totalEstudiantes,
@@ -9,6 +14,8 @@ export class AprobadoReprobadoController {
                 COUNT(DISTINCT CASE WHEN ac.nota < 60 THEN ac.alumno_id ELSE NULL END) AS totalReprobados
             FROM 
                 alumnos_cursos ac
+            WHERE 
+                1=1 ${dateFilter}
         `;
         try {
             connection.query(consulta, (error, result) => {

@@ -8,6 +8,7 @@
     <img src="../../assets/Nota-sol-logo-oroginal-Pequeña.png" class="logo" alt="Nota Musical">
   </div>
   <mat-card-content>
+    <app-date-range-picker (dateRangeSelected)="onDateRangeSelected($event)"></app-date-range-picker>
     <div class="report-grid">
       <div class="info-column">
         <div class="info-item total">

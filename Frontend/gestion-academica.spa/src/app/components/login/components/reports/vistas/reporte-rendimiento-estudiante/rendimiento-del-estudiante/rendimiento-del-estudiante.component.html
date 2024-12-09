@@ -1,4 +1,4 @@
-<app-search-bar [datosExternos]="estudiantes" [columnasMostrar]="columnsNamesEstudiantes" (rowSelected)="onRowSelected($event)"></app-search-bar>
+<app-search-bar [datosExternos]="filteredEstudiantes" [columnasMostrar]="columnsNamesEstudiantes" (rowSelected)="onRowSelected($event)"></app-search-bar>
 
 <mat-card>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
@@ -10,14 +10,15 @@
     <img src="../../assets/Nota-sol-logo-oroginal-Pequeña.png" class="logo" alt="Nota Musical">
   </div>
   <mat-card-content>
+    <app-date-range-picker (dateRangeSelected)="onDateRangeSelected($event)"></app-date-range-picker>
     <div class="report-grid">
-      @if(mostrarCard()){
+      <div *ngIf="mostrarCard(); else noSelection">
         <div class="info-column">
           <div class="info-item">
             <p><strong>Nombre Completo:</strong> {{ studentInfo.nombreCompleto }}</p>
             <p><strong>Identidad:</strong> {{ studentInfo.identidad }}</p>
             <p><strong>Edad:</strong> {{ studentInfo.edad }}</p>
-            <p><strong>email:</strong> {{ studentInfo.email }}</p>
+            <p><strong>Email:</strong> {{ studentInfo.email }}</p>
           </div>
           <div class="info-item">
             <h3>Características que forman al estudiante:</h3>
@@ -33,13 +34,12 @@
             <app-radar-chart [data]="chartData" [labels]="chartLabels"></app-radar-chart>
           </div>
         </div>
-      } @else {
+      </div>
+      <ng-template #noSelection>
         <div class="m-auto p-20">
           <h3 class="font-bold">Seleccione un estudiante para ver su rendimiento</h3>
-
         </div>
-      }
-
+      </ng-template>
     </div>
   </mat-card-content>
 </mat-card>
