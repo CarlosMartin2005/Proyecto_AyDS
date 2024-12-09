@@ -18,7 +18,7 @@ export class ReporteExcelenciaComponent implements OnInit {
   reportTitle = 'Reporte de Excelencia Académica'; // Título del reporte
 
   // Ajuste de colores según la paleta proporcionada
-  colores = ['#fab174', '#f7b5a1', '#f3c1c9', '#f0c7f0', '#c7c7f0']; // Colores para los estudiantes
+  colores = ['#A36750', '#DCC07C', '#A59287', '#361F18', '#A56B4E', '#D4AE8D']; // Colores para los estudiantes
 
   estudiantes: any[] = [];
 
