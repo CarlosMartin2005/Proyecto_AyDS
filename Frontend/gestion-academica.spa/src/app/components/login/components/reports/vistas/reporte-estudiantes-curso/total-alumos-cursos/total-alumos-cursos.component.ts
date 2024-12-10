@@ -1,47 +1,44 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { PieChartComponent } from '../../../tools/pie-chart/pie-chart.component';
+import { BarChartComponent } from '../../../tools/bar-chart-component/bar-chart-component.component';
 import { ReporteAlumnoPorCyPService } from '../../../../../../../services/reports/reporte-alumno-por-cy-p.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-total-alumnos-cursos',
   standalone: true,
-  imports: [MatCardModule, PieChartComponent, CommonModule],
+  imports: [MatCardModule, BarChartComponent, CommonModule],
   templateUrl: './total-alumos-cursos.component.html',
   styleUrls: ['./total-alumos-cursos.component.scss']
 })
 export class TotalAlumnosCursosComponent {
-  @ViewChild(PieChartComponent) pieChartComponent!: PieChartComponent;
+  @ViewChild(BarChartComponent) barChartComponent!: BarChartComponent;
 
   currentDate = new Date().toLocaleDateString();
   reportTitle = 'Reporte de Estudiantes por Curso';
 
-  // Datos para la gráfica de pastel
-  chartData: any[] = []
-  chartLabels: any[] = []
-  chartId = 'pieChartCursos';
-  data: any[] = []
+  chartData: number[] = [];
+  chartLabels: string[] = [];
+  chartId = 'barChartCursos';
+  data: any[] = [];
 
   constructor(private reporteAlumnoInfo: ReporteAlumnoPorCyPService) {
-    this.dataChart()
+    this.dataChart();
   }
 
   updateChart(): void {
-    if (this.pieChartComponent) {
-      this.pieChartComponent.renderChart();
+    if (this.barChartComponent) {
+      this.barChartComponent.renderChart();
     }
   }
 
-  dataChart(){
+  dataChart(): void {
     this.reporteAlumnoInfo.getInfo().subscribe(
       (data: any) => {
-        data.cursos.forEach((curso: any) => {
-          this.chartData.push(curso.cantidad_alumno);
-          this.chartLabels.push(curso.nombre);
-        });
+        this.chartData = data.cursos.map((curso: any) => curso.cantidad_alumno);
+        this.chartLabels = data.cursos.map((curso: any) => curso.nombre);
         this.data = data.cursos;
-        this.updateChart(); // Llama a la función para actualizar la gráfica
+        this.updateChart();
       });
   }
 }
