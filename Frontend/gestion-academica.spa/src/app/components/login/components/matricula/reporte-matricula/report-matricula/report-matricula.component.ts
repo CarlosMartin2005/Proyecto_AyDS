@@ -10,7 +10,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { EstudiantesService } from '../../../../../../services/estudiantes/estudiantes.service';
 import { SearchBarComponent } from '../../../../../../otros/search-bar/search-bar.component';
-
+import { DateRangePickerComponent } from '../../../../../../components/login/components/reports/vistas/date-range-picker/date-range-picker.component';
 
 @Component({
   selector: 'app-report-matricula',
@@ -23,7 +23,8 @@ import { SearchBarComponent } from '../../../../../../otros/search-bar/search-ba
     MatBadgeModule,
     MatIconModule,
     MatCardModule,
-    SearchBarComponent
+    SearchBarComponent,
+    DateRangePickerComponent
   ],
   templateUrl: './report-matricula.component.html',
   styleUrls: ['./report-matricula.component.scss'],
@@ -56,6 +57,9 @@ export class ReportMatriculaComponent implements OnInit {
     { key: 'programas', label: 'Programas' }
   ];
 
+  startDate: Date | null = null;
+  endDate: Date | null = null;
+
   constructor(private http: HttpClient,
     private estudiantesService: EstudiantesService
   ) {}
@@ -64,8 +68,8 @@ export class ReportMatriculaComponent implements OnInit {
     this.loadAlumnos();
   }
 
-  loadAlumnos() {
-    this.estudiantesService.getEstudiantes().subscribe({
+  loadAlumnos(searchQuery?: string) {
+    this.estudiantesService.getEstudiantes(searchQuery).subscribe({
       next: (data: any) => {
         this.alumnos = data.map((estudiante: any, index: number) => {
           return {
@@ -80,6 +84,10 @@ export class ReportMatriculaComponent implements OnInit {
         console.error('Error al cargar los datos de estudiantes:', error);
       }
     });
+  }
+
+  onSearch(query: string) {
+    this.loadAlumnos(query);
   }
 
   loadProgramas() {
@@ -121,6 +129,34 @@ export class ReportMatriculaComponent implements OnInit {
       );
 
       console.log('Cursos Filtrados:', this.cursosFiltrados);
+    }
+  }
+
+  onDateRangeSelected(event: { startDate: Date | null, endDate: Date | null }) {
+    this.startDate = event.startDate;
+    this.endDate = event.endDate;
+    this.filterByDate();
+  }
+
+  filterByDate() {
+    if (this.startDate && this.endDate) {
+      const start = this.startDate.toISOString().split('T')[0];
+      const end = this.endDate.toISOString().split('T')[0];
+      this.http.get(`http://localhost:3000/reportes/estudiantes?startDate=${start}&endDate=${end}`).subscribe({
+        next: (data: any) => {
+          this.alumnos = data.map((estudiante: any, index: number) => {
+            return {
+              id: estudiante.id,
+              nombre_completo: estudiante.nombres + ' ' + estudiante.apellidos,
+              numero_identidad: estudiante.identidad,
+              programas: estudiante.programa.split(', ')
+            };
+          });
+        },
+        error: (error) => {
+          console.error('Error al cargar los datos de estudiantes:', error);
+        }
+      });
     }
   }
 

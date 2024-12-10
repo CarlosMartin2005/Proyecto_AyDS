@@ -1,0 +1,8 @@
+::ng-deep .snackbar-error {
+    background-color: #A59287 !important;
+    color: white !important;
+}
+  
+::ng-deep .snackbar-error .mat-simple-snackbar-action {
+    color: red !important;
+}

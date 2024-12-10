@@ -10,7 +10,11 @@ export class EstudiantesService {
 
   constructor(private http: HttpClient) { }
 
-  getEstudiantes() {
-    return this.http.get(`${this.apiUrl}/reportes/estudiantes`)
+  getEstudiantes(searchQuery?: string) {
+    let url = `${this.apiUrl}/reportes/estudiantes`;
+    if (searchQuery) {
+      url += `?search=${searchQuery}`;
+    }
+    return this.http.get(url);
   }
 }

@@ -14,18 +14,18 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent implements OnInit, OnChanges {
-  Math = Math; // Agregar esta línea
+  Math = Math;
   @Input() datosExternos: any[] = [];
-  @Input() columnasMostrar: { [key: string]: string } = {}; // Nueva propiedad
-  @Output() rowSelected = new EventEmitter<any>(); // Nueva propiedad
+  @Input() columnasMostrar: { [key: string]: string } = {};
+  @Output() rowSelected = new EventEmitter<any>();
 
   datos: any[] = [];
   dataSource: any;
-  columnas: string[] = []; // Mover columnas aquí
+  columnas: string[] = [];
   elementosPorPagina: number = 5;
   paginaActual: number = 1;
   datosPaginados: any[] = [];
-  selectedRow: any = null; // Agregar esta línea
+  selectedRow: any = null;
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.datosExternos.length ? this.datosExternos : this.datos);
@@ -46,14 +46,24 @@ export class SearchBarComponent implements OnInit, OnChanges {
   }
 
   filtrar(event: Event) {
-    const filtro = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filtro.trim().toLowerCase();
+    const filtro = (event.target as HTMLInputElement).value.toLowerCase();
+    const datosFiltrados = this.datosExternos.filter(dato => 
+      Object.values(dato).some(val => {
+        if (val !== null && val !== undefined) {
+          return val.toString().toLowerCase().includes(filtro);
+        }
+        return false;
+      })
+    );
+    this.paginaActual = 1; // Reiniciar a la primera página
+    this.datosPaginados = datosFiltrados.slice(0, this.elementosPorPagina);
   }
 
   clearInput(event: Event) {
-    event.preventDefault(); // Añadir esta línea
+    event.preventDefault();
     this.dataSource.filter = '';
     (document.getElementById('default-search') as HTMLInputElement).value = '';
+    this.paginarDatos();
   }
 
   mostarTabla(): boolean {
@@ -62,9 +72,9 @@ export class SearchBarComponent implements OnInit, OnChanges {
 
   onRowClicked(row: any) {
     console.log(row);
-    this.selectedRow = row; // Agregar esta línea
-    this.rowSelected.emit(row); // Emitir la fila seleccionada
-    this.clearInput(new Event('click')); // Borrar el contenido del input
+    this.selectedRow = row;
+    this.rowSelected.emit(row);
+    this.clearInput(new Event('click'));
   }
 
   getColumnName(column: string): string {
