@@ -135,17 +135,28 @@ export class ReportMatriculaComponent implements OnInit {
     });
 
     const pageWidth = doc.internal.pageSize.width;
-    const padding = 40; // Considera algo de espacio para padding
-    const availableWidth = pageWidth - padding * 2;
-    const logoUrl = '../../../../../../assets/logo.png';
-
-    // Marca de agua
     const pageHeight = doc.internal.pageSize.height;
-    doc.addImage(logoUrl, 'PNG', pageWidth / 4, pageHeight / 4, pageWidth / 2, pageHeight / 2, undefined, 'NONE');
+    const padding = 40; // Considera algo de espacio para padding
+    const logoUrl = '../../../../../../assets/logo.png';
+    const encabezadoColor = "#D69A77"; // Color del encabezado
+    const fontColor = "#000000"; // Negro para contraste
+
+    // Añadir el rectángulo de color al encabezado
+    doc.setFillColor(encabezadoColor);
+    doc.rect(padding, 20, pageWidth - padding * 2, 80, 'F');
+
+    // Añadir el logo en la parte superior izquierda dentro del rectángulo
+    doc.addImage(logoUrl, 'PNG', padding + 10, 30, 60, 60); // Ajusta el tamaño y la posición según sea necesario
 
     // Título del conservatorio
     doc.setFontSize(20);
-    doc.text("Conservatorio Sampedrano de las Artes", doc.internal.pageSize.width / 2, 30, { align: 'center' });
+    doc.setTextColor(fontColor);
+    doc.text("Conservatorio Sampedrano de las Artes", padding + 80, 50, { align: 'left' });
+
+    // Fecha actual
+    doc.setFontSize(14);
+    const currentDate = new Date().toLocaleDateString();
+    doc.text(currentDate, pageWidth - padding - 10, 50, { align: 'right' });
 
     if (this.selectedAlumno) {
       const MatriculaReportColumnsWithoutDate = this.MatriculaReportColumns.filter(col => col.key !== 'fecha');
@@ -153,15 +164,15 @@ export class ReportMatriculaComponent implements OnInit {
       // Generar la tabla apilada sin celdas internas
       const stackedTableBody = MatriculaReportColumnsWithoutDate.map(col => [`${col.label}:`, this.selectedAlumno[col.key]]);
 
-      // Renderizar el encabezado de la tabla con el título y la fecha
+      // Renderizar el encabezado de la tabla con el título
       autoTable(doc, {
-        startY: 60,
-        head: [[this.reportTitle, new Date().toLocaleDateString()]],
+        startY: 120,
+        head: [[this.reportTitle]],
         body: [],
         theme: 'grid',
         styles: {
           textColor: [54, 31, 24],
-          fontSize: 12, // Disminuir el tamaño de fuente del título y la fecha
+          fontSize: 12, // Disminuir el tamaño de fuente del título
           cellPadding: 2,
           overflow: 'linebreak',
           minCellHeight: 20,
@@ -174,8 +185,7 @@ export class ReportMatriculaComponent implements OnInit {
           valign: 'middle', // Alinear verticalmente el texto
         },
         columnStyles: {
-          0: { halign: 'left' },
-          1: { halign: 'right' } // Alinear la fecha a la derecha
+          0: { halign: 'left' }
         },
         tableLineColor: [54, 31, 24],
         tableLineWidth: 0.75,
@@ -184,7 +194,7 @@ export class ReportMatriculaComponent implements OnInit {
 
       // Ajustar el espaciado entre claves y valores y desplazar hacia abajo
       const lineHeight = 14;
-      let currentY = 100; // Desplazar unos píxeles más abajo
+      let currentY = 160; // Desplazar unos píxeles más abajo
       stackedTableBody.forEach(row => {
         const [key, value] = row;
         if (key && value) { // Asegurarse de que key y value no sean indefinidos o nulos
@@ -197,7 +207,7 @@ export class ReportMatriculaComponent implements OnInit {
 
       const stackedTableHeight = currentY + 10; // Añadir margen inferior
 
-      // Tabla de detalles
+      // Tabla de detalles sin título 'Consulta de Matrícula'
       const detailColumns = ['Curso', 'Docente', 'Horario'];
       const detailRows = this.cursosFiltrados.map(curso => [curso.nombre, curso.docente, curso.horario]);
 
@@ -232,7 +242,7 @@ export class ReportMatriculaComponent implements OnInit {
 
     // Abrir el PDF en una nueva pestaña
     window.open(doc.output('bloburl'));
-  }
+}
 
   onRowSelected(row: any) {
     this.selectedAlumno = row;
