@@ -23,7 +23,7 @@ export class ExcelenciaController {
             GROUP BY 
                 ac.alumno_id, a.identidad
             HAVING 
-                COUNT(DISTINCT ac.curso_id) > 1 AND promedio >= 9
+                COUNT(DISTINCT ac.curso_id) > 0 AND promedio >= 90
             ORDER BY 
                 promedio DESC
             LIMIT 5
