@@ -305,25 +305,24 @@ export class EstudiantesComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Aquí deberías llamar al servicio para eliminar el estudiante
-        // this.estudiantesService.deleteEstudiante(estudiante.id).subscribe(() => {
-        this.estudiantes = this.estudiantes.filter((e: any) => e.id !== estudiante.id);
-        this.estudianteSeleccionado = null;
-        this.snackBar.open('Estudiante Eliminado', 'Cerrar', {
-          duration: 3000,
-          verticalPosition: 'bottom',
-          horizontalPosition: 'right',
-          panelClass: ['mensage-exito']
+        this.estudiantesService.deleteEstudiante(estudiante.id).subscribe(() => {
+          this.estudiantes = this.estudiantes.filter((e: any) => e.id !== estudiante.id);
+          this.estudianteSeleccionado = null;
+          this.snackBar.open('Estudiante Eliminado', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+            panelClass: ['mensage-exito']
+          });
+          this.loadData();
+        }, (error: any) => {
+          this.snackBar.open('Error al eliminar estudiante ' + error.error.message, 'Cerrar', {
+            duration: 10000,
+            panelClass: ["mensaje-error"],
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right'
+          });
         });
-        // },
-        // (error: any) => {
-        //   this.snackBar.open('Error al eliminar estudiante ' + error.error.message, 'Cerrar', {
-        //     duration: 10000,
-        //     panelClass: ["mensaje-error"],
-        //     verticalPosition: 'bottom',
-        //     horizontalPosition: 'right'
-        //   });
-        // });
       }
     });
   }
@@ -579,5 +578,17 @@ export class EstudiantesComponent {
       this.cursosPaginaActual--;
       this.paginarCursos();
     }
+  }
+
+  formatearFecha(fecha: string, tipo: string = '') {
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const fechaArray: any = this.formateadorService.convertirFechaMySQLaStandarWeb(fecha)
+
+    let fechaFormateada = fechaArray[3] + ' de ' + meses[parseInt(fechaArray[2]) - 1] + ' de ' + fechaArray[1];
+
+    if(tipo === 'conHora') {
+      fechaFormateada += ' a las ' + this.formateadorService.convertirFechaMySQLaStandarWeb(fecha)[4] + ':' + this.formateadorService.convertirFechaMySQLaStandarWeb(fecha)[5];
+    }
+    return fechaFormateada;
   }
 }

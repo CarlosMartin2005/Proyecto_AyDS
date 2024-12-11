@@ -30,7 +30,7 @@ export class EstudiantesService {
     return this.http.post(`${this.apiUrl}/estudiantes/edit-matricula`, data);
   }
 
-  deleteDocente(data: any) {
+  deleteEstudiante(data: any) {
     const body = { ['id']: data }
     return this.http.delete(`${this.apiUrl}/estudiantes/delete-estudiante`, { body })
   }

@@ -9,7 +9,7 @@
         <th class="py-2 px-4 border-r">Apellidos</th>
         <th class="py-2 px-4 border-r">Número de Cuenta</th>
         <th class="py-2 px-4 border-r">Email</th>
-        <th class="py-2 px-4">Status</th>
+        <th class="py-2 px-4">Estado</th>
         <th class="py-2 px-2"></th>
       </tr>
     </thead>
@@ -46,12 +46,12 @@
       <p><strong>Apellidos:</strong> {{ estudianteSeleccionado.apellidos }}</p>
       <p><strong>Email:</strong> {{ estudianteSeleccionado.email }}</p>
       <p><strong>Identidad:</strong> {{ estudianteSeleccionado.identidad }}</p>
-      <p><strong>Fecha de Nacimiento:</strong> {{ estudianteSeleccionado.fecha_de_nacimiento }}</p>
+      <p><strong>Fecha de Nacimiento:</strong> {{ formatearFecha(estudianteSeleccionado.fecha_de_nacimiento) }}</p>
       <p><strong>Edad:</strong> {{ calcularEdad(estudianteSeleccionado.fecha_de_nacimiento) }} años</p>
-      <p><strong>Status:</strong> {{ estudianteSeleccionado.status === 'A' ? 'Activo' : 'Inactivo' }}</p>
+      <p><strong>Estado:</strong> {{ estudianteSeleccionado.status === 'A' ? 'Activo' : 'Inactivo' }}</p>
       <p><strong>Número de Cuenta:</strong> {{ estudianteSeleccionado.numeroCuenta }}</p>
-      <p><strong>Fecha de Creación:</strong> {{ estudianteSeleccionado.fecha_creacion }}</p>
-      <p><strong>Fecha de Matrícula:</strong> {{ estudianteSeleccionado.fecha_matricula }}</p>
+      <p><strong>Fecha de Creación:</strong> {{ formatearFecha(estudianteSeleccionado.fecha_creacion) }}</p>
+      <p><strong>Fecha de Matrícula:</strong> {{ formatearFecha(estudianteSeleccionado.fecha_matricula) }}</p>
       <button (click)="editarEstudiante()" class="btn-p p-2 mt-2 bg-blue-500 text-white rounded hover:bg-blue-700">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 " fill="currentColor" viewBox="0 0 16 16">
           <path
@@ -191,17 +191,17 @@
       <p><strong>Nombre:</strong> {{ cursoSeleccionado.nombre }}</p>
       <p><strong>Descripción:</strong> {{ cursoSeleccionado.descripcion }}</p>
       <p><strong>Horario:</strong> {{ cursoSeleccionado.horario }}</p>
-      <p><strong>Fecha de Creación:</strong> {{ cursoSeleccionado.fecha_creacion }}</p>
-      <p><strong>Fecha de Fin:</strong> {{ cursoSeleccionado.fecha_fin }}</p>
+      <p><strong>Fecha de Creación:</strong> {{ formatearFecha(cursoSeleccionado.fecha_creacion) }}</p>
+      <p><strong>Fecha de Fin:</strong> {{ formatearFecha(cursoSeleccionado.fecha_fin) }}</p>
       <hr class="my-4">
       <h3 class="text-lg font-semibold mb-2">Detalles del Docente</h3>
       <p><strong>Nombres:</strong> {{ docenteSeleccionado.nombres }}</p>
       <p><strong>Apellidos:</strong> {{ docenteSeleccionado.apellidos }}</p>
       <p><strong>Email:</strong> {{ docenteSeleccionado.email }}</p>
       <p><strong>Identidad:</strong> {{ docenteSeleccionado.identidad }}</p>
-      <p><strong>Fecha de Nacimiento:</strong> {{ docenteSeleccionado.fecha_de_nacimiento }}</p>
+      <p><strong>Fecha de Nacimiento:</strong> {{ formatearFecha(docenteSeleccionado.fecha_de_nacimiento) }}</p>
       <p><strong>Edad:</strong> {{ calcularEdad(docenteSeleccionado.fecha_de_nacimiento) }} años</p>
-      <p><strong>Status:</strong> {{ docenteSeleccionado.status === 'A' ? 'Activo' : 'Inactivo' }}</p>
+      <p><strong>Estado:</strong> {{ docenteSeleccionado.status === 'A' ? 'Activo' : 'Inactivo' }}</p>
     </div>
   </div>
 </main>

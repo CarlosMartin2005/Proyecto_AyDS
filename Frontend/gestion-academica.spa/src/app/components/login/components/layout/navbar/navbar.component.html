@@ -26,7 +26,7 @@
     <!-- Incio del NavBar -->
     <ul class="px-1 space-y-2 font-medium">
       <li>
-        <a [routerLink]="'inicio'" [ngClass]="{'select-button': isActive('inicio')}" title="Ir a Inicio"
+        <a [routerLink]="'inicio'" routerLinkActive="select-button" title="Ir a Inicio"
           class="items-start p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white"
           [ngClass]="{'w-8 h-8': isCollapsed}" aria-hidden="true" fill="currentColor"  viewBox="0 0 16 16">
@@ -37,7 +37,7 @@
       </li>
       <!-- Matricula -->
       <li>
-        <a [routerLink]="'matricula'" [ngClass]="{'select-button': isActive('matricula')}" title="Ir a Matricula"
+        <a [routerLink]="'matricula'" routerLinkActive="select-button" title="Ir a Matricula"
           class=" items-start p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           [ngClass]="{'items-start': isCollapsed}">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white"
@@ -50,7 +50,7 @@
 
       <!-- Estudiantes -->
       <li>
-        <a [routerLink]="'estudiantes'" [ngClass]="{'select-button': isActive('estudiantes')}" title="Ir a Estudiantes"
+        <a [routerLink]="'estudiantes'" routerLinkActive="select-button" title="Ir a Estudiantes"
           class=" items-start p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           [ngClass]="{'items-start': isCollapsed}">
           <svg xmlns="http://www.w3.org/2000/svg"class="w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white"
@@ -64,7 +64,7 @@
 
       <!-- Docentes -->
       <li>
-        <a [routerLink]="'docentes'" [ngClass]="{'select-button': isActive('docentes')}" title="Ir a Docentes"
+        <a [routerLink]="'docentes'" routerLinkActive="select-button" title="Ir a Docentes"
           class=" items-start p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           [ngClass]="{'items-start': isCollapsed}">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white"
@@ -78,7 +78,7 @@
 
       <!-- Programas -->
       <li>
-        <a [routerLink]="'programas'" [ngClass]="{'select-button': isActive('programas')}" title="Ir a Programas"
+        <a [routerLink]="'programas'" routerLinkActive="select-button" title="Ir a Programas"
           class=" items-start p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           [ngClass]="{'items-start': isCollapsed}">
           <svg xmlns="http://www.w3.org/2000/svg"class="w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white"
@@ -92,7 +92,7 @@
       <!-- Reportes -->
 
       <li>
-        <a [routerLink]="'reportes'" [ngClass]="{'select-button': isActive('reportes')}" title="Ir a Reportes"
+        <a [routerLink]="'reportes'" routerLinkActive="select-button" title="Ir a Reportes"
           class=" items-start p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           [ngClass]="{'items-start': isCollapsed}">
           <svg class="w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white"

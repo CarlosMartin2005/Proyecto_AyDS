@@ -7,6 +7,7 @@ import { DocentesService } from '../../../../services/docentes/docentes.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent } from '../../../../otros/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FormateadorService } from '../../../../services/otros/formateador/formateador.service';
 @Component({
   selector: 'app-programas',
   standalone: true,
@@ -17,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class ProgramasComponent {
   Math = Math; // Agregar esta línea
 
-  constructor(private programasService: ProgramasService, private docentesServices: DocentesService, private snackBar: MatSnackBar, public dialog: MatDialog) {
+  constructor(private programasService: ProgramasService, private docentesServices: DocentesService, private snackBar: MatSnackBar, public dialog: MatDialog, private formateador: FormateadorService) {
     this.docentesServices.getDocentes().subscribe((res: any) => {
       this.docentes = res.map((docente: any) => {
         return {
@@ -239,7 +240,7 @@ export class ProgramasComponent {
             this.programaSeleccionado = null;
             this.cursoSeleccionado = null;
           }
-          this.loadProgramas();
+          location.reload()
         },
           (error) => {
             this.snackBar.open(error.error.message, 'Cerrar', {
@@ -277,6 +278,7 @@ export class ProgramasComponent {
           if (this.cursoSeleccionado === curso) {
             this.cursoSeleccionado = null;
           }
+          location.reload()
         },
           (error) => {
             this.snackBar.open(error.error.message, 'Cerrar', {
@@ -329,6 +331,7 @@ export class ProgramasComponent {
               horizontalPosition: 'right',
               panelClass: ['mensage-exito']
             });
+            location.reload()
           },
             (error) => {
               this.snackBar.open(error.error.message, 'Cerrar', {
@@ -384,6 +387,7 @@ export class ProgramasComponent {
             });
             Object.assign(this.cursoSeleccionado, this.tempCurso);
             this.editandoCurso = false;
+            location.reload()
           },
             (error) => {
               this.snackBar.open(error.error.message, 'Cerrar', {
@@ -443,6 +447,7 @@ export class ProgramasComponent {
             this.loadProgramas();
             this.nuevoPrograma = { nombre: '', descripcion: '' };
             this.agregandoPrograma = false;
+            location.reload()
           },
             (error) => {
               this.snackBar.open(error.error.message, 'Cerrar', {
@@ -508,6 +513,7 @@ export class ProgramasComponent {
               this.loadProgramas();
               this.nuevoCurso = { nombre: '', descripcion: '', docente: 'Busque un docente', horario: '' };
               this.agregandoCurso = false;
+              location.reload()
             },
               (error) => {
                 this.snackBar.open(error.error.message, 'Cerrar', {
@@ -518,6 +524,7 @@ export class ProgramasComponent {
                 });
                 console.error('Error al agregar el curso:', error);
               });
+
           } else {
             this.snackBar.open('El nombre del curso no puede estar vacío', 'Cerrar', {
               duration: 3000,
@@ -544,6 +551,18 @@ export class ProgramasComponent {
   onRowSelectedEdit(row: any) {
     this.tempCurso.docente = row.nombre;
     this.tempCurso.docente_id = row.id;
+  }
+
+  formatearFecha(fecha: string, tipo: string = '') {
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const fechaArray: any = this.formateador.convertirFechaMySQLaStandarWeb(fecha)
+
+    let fechaFormateada = fechaArray[3] + ' de ' + meses[parseInt(fechaArray[2]) - 1] + ' de ' + fechaArray[1];
+
+    if(tipo === 'conHora') {
+      fechaFormateada += ' a las ' + this.formateador.convertirFechaMySQLaStandarWeb(fecha)[4] + ':' + this.formateador.convertirFechaMySQLaStandarWeb(fecha)[5];
+    }
+    return fechaFormateada;
   }
 
 
