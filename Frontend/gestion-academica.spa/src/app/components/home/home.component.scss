@@ -1,0 +1,87 @@
+.home-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #FFFFFF;
+    color: #3C1B12;
+}
+  
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+  
+.logo {
+    width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+}
+  
+h1 {
+    font-size: 2.5em;
+    color: #B55F3E;
+}
+  
+h2 {
+    font-size: 2em;
+    color: #B8653B;
+    margin-top: 20px;
+}
+  
+.about, .mission-vision, .values, .culture {
+    margin-bottom: 20px;
+}
+  
+.mission-vision {
+    display: flex;
+    justify-content: space-around;
+    text-align: left;
+}
+  
+.mission, .vision {
+    width: 45%;
+}
+  
+.values ul {
+    list-style-type: none;
+    padding: 0;
+}
+  
+.values li {
+    background-color: #B55F3E;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    color: #3C1B12;
+}
+  
+p {
+    color: #3C1B12;
+    line-height: 1.6;
+}
+  
+section {
+    border: 1px solid #AD9180;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #E3AD7E;
+}
+  
+header {
+    background-color: #AD9180;
+    padding: 15px;
+    border-radius: 10px;
+}
+  
+header h1 {
+    margin: 0;
+}
+  
+header img {
+    border-radius: 50%;
+    border: 2px solid #B55F3E;
+}
