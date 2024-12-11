@@ -62,30 +62,30 @@
     <div *ngIf="editandoEstudiante" class="mt-4 p-4 bg-white shadow-md rounded-lg" [formGroup]="editarEstudianteForm">
       <h2 class="text-xl font-semibold mb-2">Editar Estudiante</h2>
       <label><strong>Nombres:</strong></label>
-      <input formControlName="nombres" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarEstudianteForm.get('nombres')!.invalid && editarEstudianteForm.get('nombres')!.touched">
+      <input formControlName="nombres" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Juan" [class.border-red-500]="editarEstudianteForm.get('nombres')!.invalid && editarEstudianteForm.get('nombres')!.touched">
       <div *ngIf="editarEstudianteForm.get('nombres')!.invalid && editarEstudianteForm.get('nombres')!.touched" class="text-red-500 text-sm">
         <div *ngIf="editarEstudianteForm.get('nombres')!.errors?.['required']">El nombre es obligatorio</div>
         <div *ngIf="editarEstudianteForm.get('nombres')!.errors?.['minlength']">El nombre debe tener al menos 3 caracteres</div>
       </div>
       <label><strong>Apellidos:</strong></label>
-      <input formControlName="apellidos" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarEstudianteForm.get('apellidos')!.invalid && editarEstudianteForm.get('apellidos')!.touched">
+      <input formControlName="apellidos" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Pérez" [class.border-red-500]="editarEstudianteForm.get('apellidos')!.invalid && editarEstudianteForm.get('apellidos')!.touched">
       <div *ngIf="editarEstudianteForm.get('apellidos')!.invalid && editarEstudianteForm.get('apellidos')!.touched" class="text-red-500 text-sm">
         <div *ngIf="editarEstudianteForm.get('apellidos')!.errors?.['required']">El apellido es obligatorio</div>
       </div>
       <label><strong>Email:</strong></label>
-      <input formControlName="email" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarEstudianteForm.get('email')!.invalid && editarEstudianteForm.get('email')!.touched">
+      <input formControlName="email" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: juan.perez@example.com" [class.border-red-500]="editarEstudianteForm.get('email')!.invalid && editarEstudianteForm.get('email')!.touched">
       <div *ngIf="editarEstudianteForm.get('email')!.invalid && editarEstudianteForm.get('email')!.touched" class="text-red-500 text-sm">
         <div *ngIf="editarEstudianteForm.get('email')!.errors?.['required']">El email es obligatorio</div>
         <div *ngIf="editarEstudianteForm.get('email')!.errors?.['email']">El email no es válido</div>
       </div>
       <label><strong>Identidad:</strong></label>
-      <input formControlName="identidad" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarEstudianteForm.get('identidad')!.invalid && editarEstudianteForm.get('identidad')!.touched">
+      <input formControlName="identidad" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: 0801-1990-12345" [class.border-red-500]="editarEstudianteForm.get('identidad')!.invalid && editarEstudianteForm.get('identidad')!.touched">
       <div *ngIf="editarEstudianteForm.get('identidad')!.invalid && editarEstudianteForm.get('identidad')!.touched" class="text-red-500 text-sm">
         <div *ngIf="editarEstudianteForm.get('identidad')!.errors?.['required']">La identidad es obligatoria</div>
         <div *ngIf="editarEstudianteForm.get('identidad')!.errors?.['pattern']">La identidad no es válida. Debe tener el formato 0000-0000-00000</div>
       </div>
       <label><strong>Fecha de Nacimiento:</strong></label>
-      <input type="date" formControlName="fecha_de_nacimiento" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarEstudianteForm.get('fecha_de_nacimiento')!.invalid && editarEstudianteForm.get('fecha_de_nacimiento')!.touched">
+      <input type="date" formControlName="fecha_de_nacimiento" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: 2000-01-01" [class.border-red-500]="editarEstudianteForm.get('fecha_de_nacimiento')!.invalid && editarEstudianteForm.get('fecha_de_nacimiento')!.touched">
       <div *ngIf="editarEstudianteForm.get('fecha_de_nacimiento')!.invalid && editarEstudianteForm.get('fecha_de_nacimiento')!.touched" class="text-red-500 text-sm">
         <div *ngIf="editarEstudianteForm.get('fecha_de_nacimiento')!.errors?.['required']">La fecha de nacimiento es obligatoria</div>
       </div>

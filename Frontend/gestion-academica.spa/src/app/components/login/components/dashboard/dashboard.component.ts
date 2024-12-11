@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+  nombre: any;
+
+  constructor() {
+    this.nombre = localStorage.getItem('nombre');
+  }
 
 }

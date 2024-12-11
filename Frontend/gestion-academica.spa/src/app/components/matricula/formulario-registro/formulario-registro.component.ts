@@ -105,7 +105,7 @@ export class FormularioRegistroComponent {
       direccion: [''],
       institucionProcedencia: [''],
       instrumento: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, this.emailValidator]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       terms: [false, Validators.requiredTrue],
@@ -135,6 +135,13 @@ export class FormularioRegistroComponent {
     const edadMinima = 4;
     const edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
     return edad >= edadMinima ? null : { edadInvalida: true };
+  }
+
+  emailValidator(control: any) {
+    const email = control.value;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const endsWithCom = email.endsWith('.com');
+    return emailPattern.test(email) && endsWithCom ? null : { invalidEmail: true };
   }
 
   onSubmit() {

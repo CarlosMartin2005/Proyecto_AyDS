@@ -55,10 +55,10 @@
     <div *ngIf="agregandoPrograma" class="mt-4 p-4 bg-white shadow-md rounded-lg">
       <h2 class="text-xl font-semibold mb-2">Agregar Programa</h2>
       <label><strong>Nombre:</strong></label>
-      <input [(ngModel)]="nuevoPrograma.nombre" class="border rounded px-2 py-1 mb-2 w-full"
+      <input [(ngModel)]="nuevoPrograma.nombre" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Programa de Guitarra"
         [class.border-red-500]="nuevoPrograma.nombre.trim() === ''">
       <label><strong>Descripción:</strong></label>
-      <textarea [(ngModel)]="nuevoPrograma.descripcion" class="border rounded px-2 py-1 mb-2 w-full"></textarea>
+      <textarea [(ngModel)]="nuevoPrograma.descripcion" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Descripción del programa"></textarea>
       <div class="flex justify-end space-x-4">
         <button (click)="guardarNuevoPrograma()"
           class="btn-p mt-2 px-4 py-2 rounded  ">Guardar</button>
@@ -83,10 +83,10 @@
       </div>
       <div *ngIf="editandoPrograma">
         <label><strong>Nombre:</strong></label>
-        <input [(ngModel)]="tempPrograma.nombre" class="border rounded px-2 py-1 mb-2 w-full"
+        <input [(ngModel)]="tempPrograma.nombre" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Programa de Matemáticas"
           [class.border-red-500]="tempPrograma.nombre.trim() === ''">
         <label><strong>Descripción:</strong></label>
-        <textarea [(ngModel)]="tempPrograma.descripcion" class="border rounded px-2 py-1 mb-2 w-full"></textarea>
+        <textarea [(ngModel)]="tempPrograma.descripcion" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Descripción del programa"></textarea>
         <p><strong>Fecha de Creación:</strong> {{ tempPrograma.fechaCreacion }}</p>
         <p><strong>Última Actualización:</strong> {{ tempPrograma.ultimaActualizacion }}</p>
         <div class="flex justify-end">
@@ -146,16 +146,16 @@
       <div *ngIf="agregandoCurso" class="mt-4 p-4 bg-white shadow-md rounded-lg">
         <h3 class="text-lg font-semibold mb-2">Agregar Curso</h3>
         <label><strong>Nombre:</strong></label>
-        <input [(ngModel)]="nuevoCurso.nombre" class="border rounded px-2 py-1 mb-2 w-full"
+        <input [(ngModel)]="nuevoCurso.nombre" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Guitarra Clásica Básico"
           [class.border-red-500]="nuevoCurso.nombre.trim() === ''">
         <label><strong>Docente:</strong></label>
-        <input [(ngModel)]="nuevoCurso.docente" class="border rounded px-2 py-1 mb-2 w-full" disabled>
+        <input [(ngModel)]="nuevoCurso.docente" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Seleccione el docente" disabled>
         <app-search-bar (rowSelected)="onRowSelected($event)" [datosExternos]="docentes"
           [columnasMostrar]="docentesColumns"></app-search-bar>
         <label><strong>Horario:</strong></label>
-        <input [(ngModel)]="nuevoCurso.horario" class="border rounded px-2 py-1 mb-2 w-full">
+        <input [(ngModel)]="nuevoCurso.horario" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Lunes y Miércoles 10:00 - 12:00">
         <label><strong>Descripción:</strong></label>
-        <textarea [(ngModel)]="nuevoCurso.descripcion" class="border rounded px-2 py-1 mb-2 w-full"></textarea>
+        <textarea [(ngModel)]="nuevoCurso.descripcion" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Descripción del curso"></textarea>
         <div class="flex justify-end">
           <button (click)="guardarNuevoCurso()"
             class="btn-p mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
@@ -183,16 +183,16 @@
         </div>
         <div *ngIf="editandoCurso">
           <label><strong>Nombre:</strong></label>
-          <input [(ngModel)]="tempCurso.nombre" class="border rounded px-2 py-1 mb-2 w-full"
+          <input [(ngModel)]="tempCurso.nombre" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Curso de Álgebra"
             [class.border-red-500]="tempCurso.nombre.trim() === ''">
           <label><strong>Docente:</strong></label>
-          <input [(ngModel)]="tempCurso.docente" class="border rounded px-2 py-1 mb-2 w-full" disabled>
+          <input [(ngModel)]="tempCurso.docente" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Seleccione el docente" disabled>
           <app-search-bar (rowSelected)="onRowSelectedEdit($event)" [datosExternos]="docentes"
             [columnasMostrar]="docentesColumns"></app-search-bar>
           <label><strong>Horario:</strong></label>
-          <input [(ngModel)]="tempCurso.horario" class="border rounded px-2 py-1 mb-2 w-full">
+          <input [(ngModel)]="tempCurso.horario" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Lunes y Miércoles 10:00 - 12:00">
           <label><strong>Descripción:</strong></label>
-          <textarea [(ngModel)]="tempCurso.descripcion" class="border rounded px-2 py-1 mb-2 w-full"></textarea>
+          <textarea [(ngModel)]="tempCurso.descripcion" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Descripción del curso"></textarea>
           <p><strong>Fecha de Creación:</strong> {{ tempCurso.fechaCreacion }}</p>
           <p><strong>Última Actualización:</strong> {{ tempCurso.ultimaActualizacion }}</p>
           <div class="flex justify-end">

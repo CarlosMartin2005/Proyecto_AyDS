@@ -59,49 +59,57 @@
     <div *ngIf="agregandoDocente" class="mt-4 p-4 bg-white shadow-md rounded-lg" [formGroup]="nuevoDocenteForm">
       <h2 class="text-xl font-semibold mb-2">Agregar Docente</h2>
       <label><strong>Nombre:</strong></label>
-      <input formControlName="nombre" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('nombre')!.invalid && nuevoDocenteForm.get('nombre')!.touched">
+      <input formControlName="nombre" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Juan"
+        [class.border-red-500]="nuevoDocenteForm.get('nombre')!.invalid && nuevoDocenteForm.get('nombre')!.touched">
       <div *ngIf="nuevoDocenteForm.get('nombre')!.invalid && nuevoDocenteForm.get('nombre')!.touched" class="text-red-500 text-sm">
         <div *ngIf="nuevoDocenteForm.get('nombre')!.errors?.['required']">El nombre es obligatorio</div>
         <div *ngIf="nuevoDocenteForm.get('nombre')!.errors?.['minlength']">El nombre debe tener al menos 3 caracteres</div>
       </div>
       <label><strong>Apellido:</strong></label>
-      <input formControlName="apellido" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('apellido')!.invalid && nuevoDocenteForm.get('apellido')!.touched">
+      <input formControlName="apellido" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Pérez"
+        [class.border-red-500]="nuevoDocenteForm.get('apellido')!.invalid && nuevoDocenteForm.get('apellido')!.touched">
       <div *ngIf="nuevoDocenteForm.get('apellido')!.invalid && nuevoDocenteForm.get('apellido')!.touched" class="text-red-500 text-sm">
         <div *ngIf="nuevoDocenteForm.get('apellido')!.errors?.['required']">El apellido es obligatorio</div>
       </div>
       <label><strong>Especialidad:</strong></label>
-      <input formControlName="especialidad" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('especialidad')!.invalid && nuevoDocenteForm.get('especialidad')!.touched">
+      <input formControlName="especialidad" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Guitarra"
+        [class.border-red-500]="nuevoDocenteForm.get('especialidad')!.invalid && nuevoDocenteForm.get('especialidad')!.touched">
       <div *ngIf="nuevoDocenteForm.get('especialidad')!.invalid && nuevoDocenteForm.get('especialidad')!.touched" class="text-red-500 text-sm">
         <div *ngIf="nuevoDocenteForm.get('especialidad')!.errors?.['required']">La especialidad es obligatoria</div>
       </div>
       <label><strong>Identidad:</strong></label>
-      <input formControlName="identidad" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('identidad')!.invalid && nuevoDocenteForm.get('identidad')!.touched">
+      <input formControlName="identidad" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: 0801-1990-12345"
+        [class.border-red-500]="nuevoDocenteForm.get('identidad')!.invalid && nuevoDocenteForm.get('identidad')!.touched">
       <div *ngIf="nuevoDocenteForm.get('identidad')!.invalid && nuevoDocenteForm.get('identidad')!.touched" class="text-red-500 text-sm">
         <div *ngIf="nuevoDocenteForm.get('identidad')!.errors?.['required']">La identidad es obligatoria</div>
         <div *ngIf="nuevoDocenteForm.get('identidad')!.errors?.['pattern']">La identidad no es válida. Debe tener el formato 0000-0000-00000</div>
       </div>
       <label><strong>Teléfono:</strong></label>
-      <input formControlName="telefono" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('telefono')!.invalid && nuevoDocenteForm.get('telefono')!.touched">
+      <input formControlName="telefono" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: 98765432"
+        [class.border-red-500]="nuevoDocenteForm.get('telefono')!.invalid && nuevoDocenteForm.get('telefono')!.touched">
       <div *ngIf="nuevoDocenteForm.get('telefono')!.invalid && nuevoDocenteForm.get('telefono')!.touched" class="text-red-500 text-sm">
         <div *ngIf="nuevoDocenteForm.get('telefono')!.errors?.['required']">El teléfono es obligatorio</div>
         <div *ngIf="nuevoDocenteForm.get('telefono')!.errors?.['pattern']">El teléfono debe tener 8 dígitos</div>
       </div>
       <label><strong>Dirección:</strong></label>
-      <input formControlName="direccion" class="border rounded px-2 py-1 mb-2 w-full">
+      <input formControlName="direccion" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Calle 123, Ciudad">
       <label><strong>Email:</strong></label>
-      <input formControlName="email" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('email')!.invalid && nuevoDocenteForm.get('email')!.touched">
+      <input formControlName="email" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: juan.perez@example.com"
+        [class.border-red-500]="nuevoDocenteForm.get('email')!.invalid && nuevoDocenteForm.get('email')!.touched">
       <div *ngIf="nuevoDocenteForm.get('email')!.invalid && nuevoDocenteForm.get('email')!.touched" class="text-red-500 text-sm">
         <div *ngIf="nuevoDocenteForm.get('email')!.errors?.['required']">El email es obligatorio</div>
         <div *ngIf="nuevoDocenteForm.get('email')!.errors?.['email']">El email no es válido</div>
       </div>
       <label><strong>Contraseña:</strong></label>
-      <input type="password" formControlName="contraseña" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('contraseña')!.invalid && nuevoDocenteForm.get('contraseña')!.touched">
+      <input type="password" formControlName="contraseña" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: Contraseña1234"
+        [class.border-red-500]="nuevoDocenteForm.get('contraseña')!.invalid && nuevoDocenteForm.get('contraseña')!.touched">
       <div *ngIf="nuevoDocenteForm.get('contraseña')!.invalid && nuevoDocenteForm.get('contraseña')!.touched" class="text-red-500 text-sm">
         <div *ngIf="nuevoDocenteForm.get('contraseña')!.errors?.['required']">La contraseña es obligatoria</div>
         <div *ngIf="nuevoDocenteForm.get('contraseña')!.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
       </div>
       <label><strong>Fecha de Nacimiento:</strong></label>
-      <input type="date" formControlName="fechaNacimiento" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="nuevoDocenteForm.get('fechaNacimiento')!.invalid && nuevoDocenteForm.get('fechaNacimiento')!.touched">
+      <input type="date" formControlName="fechaNacimiento" class="border rounded px-2 py-1 mb-2 w-full" placeholder="Ej: 2000-01-01"
+        [class.border-red-500]="nuevoDocenteForm.get('fechaNacimiento')!.invalid && nuevoDocenteForm.get('fechaNacimiento')!.touched">
       <div *ngIf="nuevoDocenteForm.get('fechaNacimiento')!.invalid && nuevoDocenteForm.get('fechaNacimiento')!.touched" class="text-red-500 text-sm">
         <div *ngIf="nuevoDocenteForm.get('fechaNacimiento')!.errors?.['required']">La fecha de nacimiento es obligatoria</div>
         <div *ngIf="nuevoDocenteForm.get('fechaNacimiento')!.errors?.['edadMinima']">Debe tener al menos 18 años</div>
@@ -234,8 +242,8 @@
           <p><strong>Nombre:</strong> {{ cursoSeleccionado.nombre }}</p>
           <p><strong>Descripción:</strong> {{ cursoSeleccionado.descripcion }}</p>
           <p><strong>Horario:</strong> {{ cursoSeleccionado.horario }}</p>
-          <p><strong>Fecha de Creación:</strong> {{ cursoSeleccionado.fechaCreacion }}</p>
-          <p><strong>Última Actualización:</strong> {{ cursoSeleccionado.ultimaActualizacion }}</p>
+          <p><strong>Fecha de Creación:</strong> {{ formatearFecha(cursoSeleccionado.fechaCreacion) }}</p>
+          <p><strong>Última Actualización:</strong> {{ formatearFecha(cursoSeleccionado.ultimaActualizacion) }}</p>
         </div>
       </div>
     </div>
