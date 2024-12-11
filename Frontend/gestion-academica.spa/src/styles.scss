@@ -118,4 +118,35 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 
+// Botones aceptar y cancelar o guardar y cancelar
+.btn-p {
+  background-color: #A56B4E;
+  border: none;
+  color: white;
+  // padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
 
+.btn-p:hover {
+  background-color: #D4AE8D;
+}
+
+.btn-cancel {
+  background-color: #D3D3D3;
+  color: #4A4A4A;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  border-radius: 6px;
+  margin: 2px 2px;
+}
+
+.btn-cancel:hover {
+  background-color: #A9A9A9;
+}

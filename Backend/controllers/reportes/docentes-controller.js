@@ -9,6 +9,9 @@ export class DocentesController {
                 u.nombre AS nombres, 
                 u.apellido AS apellidos, 
                 u.email, 
+                u.numeroCuenta,
+                u.identidad,
+                u.fecha_nacimiento AS fecha_de_nacimiento,
                 u.status,
                 d.especialidad, 
                 GROUP_CONCAT(c.nombre SEPARATOR ', ') AS cursos

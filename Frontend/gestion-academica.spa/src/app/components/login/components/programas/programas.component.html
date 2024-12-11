@@ -59,11 +59,11 @@
         [class.border-red-500]="nuevoPrograma.nombre.trim() === ''">
       <label><strong>Descripción:</strong></label>
       <textarea [(ngModel)]="nuevoPrograma.descripcion" class="border rounded px-2 py-1 mb-2 w-full"></textarea>
-      <div class="flex justify-end">
+      <div class="flex justify-end space-x-4">
         <button (click)="guardarNuevoPrograma()"
-          class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+          class="btn-p mt-2 px-4 py-2 rounded  ">Guardar</button>
         <button (click)="cancelarAgregarPrograma()"
-          class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+          class="btn-cancel mt-2 px-4 py-2 rounded ">Cancelar</button>
       </div>
     </div>
     <div *ngIf="programaSeleccionado && !agregandoPrograma" class="mt-4 p-4 bg-white shadow-md rounded-lg">
@@ -91,9 +91,9 @@
         <p><strong>Última Actualización:</strong> {{ tempPrograma.ultimaActualizacion }}</p>
         <div class="flex justify-end">
           <button (click)="guardarPrograma()"
-            class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+            class="btn-p mt-2 px-4 py-2 rounded  ">Guardar</button>
           <button (click)="editandoPrograma = false"
-            class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+            class="btn-cancel mt-2 px-4 py-2 rounded ">Cancelar</button>
         </div>
       </div>
       <hr class="my-4">
@@ -158,9 +158,9 @@
         <textarea [(ngModel)]="nuevoCurso.descripcion" class="border rounded px-2 py-1 mb-2 w-full"></textarea>
         <div class="flex justify-end">
           <button (click)="guardarNuevoCurso()"
-            class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+            class="btn-p mt-2 px-4 py-2 rounded  ">Guardar</button>
           <button (click)="cancelarAgregarCurso()"
-            class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+            class="btn-cancel mt-2 px-4 py-2 rounded ">Cancelar</button>
         </div>
       </div>
       <div *ngIf="cursoSeleccionado && !agregandoCurso" class="mt-4 p-4 bg-white shadow-md rounded-lg">
@@ -197,9 +197,9 @@
           <p><strong>Última Actualización:</strong> {{ tempCurso.ultimaActualizacion }}</p>
           <div class="flex justify-end">
             <button (click)="guardarCurso()"
-              class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+              class="btn-p mt-2 px-4 py-2 rounded  ">Guardar</button>
             <button (click)="editandoCurso = false"
-              class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+              class="btn-cancel mt-2 px-4 py-2 rounded ">Cancelar</button>
           </div>
         </div>
       </div>

@@ -148,7 +148,7 @@ export class TableComponent implements OnInit {
       theme: 'grid',
       styles: {
         textColor: [54, 31, 24],
-        fontSize: 10,
+        fontSize: 8, // Tamaño del texto reducido
         cellPadding: 2,
         overflow: 'linebreak',
         minCellHeight: 20,

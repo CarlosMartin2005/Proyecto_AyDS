@@ -9,6 +9,7 @@ export class EstudianteController {
                 u.nombre AS nombres, 
                 u.apellido AS apellidos, 
                 u.email, 
+                u.numeroCuenta,
                 a.identidad, 
                 a.fecha_nacimiento AS fecha_de_nacimiento, 
                 GROUP_CONCAT(DISTINCT p.nombre SEPARATOR ', ') AS programa, 

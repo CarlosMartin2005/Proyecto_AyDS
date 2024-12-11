@@ -1,5 +1,5 @@
 <app-date-range-picker (dateRangeSelected)="onDateRangeSelected($event)"></app-date-range-picker>
-<button mat-raised-button color="primary" (click)="filterByDate()">Filtrar</button>
+<button mat-raised-button color="btn-p"  (click)="filterByDate()">Filtrar</button>
 <app-search-bar [datosExternos]="alumnos" [columnasMostrar]="columsNamesAlumnos" (rowSelected)="onRowSelected($event)"></app-search-bar>
 <div class="card-header d-flex justify-content-between align-items-center">
   <span class="current-date">{{ currentDate }}</span>

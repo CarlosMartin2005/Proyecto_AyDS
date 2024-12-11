@@ -14,12 +14,12 @@ import { DateRangePickerComponent } from '../date-range-picker/date-range-picker
 })
 export class ReporteDocentesComponent implements OnInit {
   userReportColumns = [
-    { key: 'index', label: 'Indice' },
-    { key: 'nombres', label: 'Nombres' },
-    { key: 'apellidos', label: 'Apellidos' },
+    { key: 'index', label: 'No.' },
+    { key: 'nombreCompleto', label: 'Nombre' },
+    // { key: 'apellidos', label: 'Apellidos' },
     { key: 'email', label: 'Correo' },
     { key: 'especialidad', label: 'Curso Impartido' },
-    { key: 'activo', label: 'Estado' },
+    { key: 'numeroCuenta', label: 'Numero de Cuenta' },
   ];
 
   docentes: any[] = [];
@@ -36,6 +36,7 @@ export class ReporteDocentesComponent implements OnInit {
     this.http.get('http://localhost:3000/reportes/docentes').subscribe((data: any) => {
       this.docentes = data.map((docente: any, index: number) => {
         return {
+          nombreCompleto: `${docente.nombres} ${docente.apellidos}`,
           index: index + 1,
           ...docente,
           activo: docente.status === 'A' ? 'Activo' : 'Inactivo'

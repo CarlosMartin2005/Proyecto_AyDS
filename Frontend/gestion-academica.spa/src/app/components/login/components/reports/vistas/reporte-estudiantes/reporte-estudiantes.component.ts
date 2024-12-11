@@ -15,14 +15,15 @@ import { DateRangePickerComponent } from '../date-range-picker/date-range-picker
 })
 export class ReporteEstudiantesComponent implements OnInit {
   userReportColumns = [
-    { key: 'index', label: 'Indice' },
-    { key: 'nombres', label: 'Nombres' },
-    { key: 'apellidos', label: 'Apellidos' },
+    { key: 'index', label: 'No.' },
+    { key: 'nombreCompleto', label: 'Nombre' },
+    // { key: 'apellidos', label: 'Apellidos' },
     { key: 'identidad', label: 'Identidad' },
     { key: 'fecha_de_nacimiento', label: 'Fecha de nacimiento' },
     { key: 'email', label: 'Correo' },
     // { key: 'programa', label: 'Programas' },
     { key: 'curso', label: 'Cursos' },
+    { key: 'numeroCuenta', label: 'Numero de Cuenta' },
     // { key: 'horario', label: 'Horario' },
     // { key: 'activo', label: 'Estado' },
   ];
@@ -44,6 +45,7 @@ export class ReporteEstudiantesComponent implements OnInit {
           const fecha = this.formateador.convertirFechaMySQLaStandarWeb(estudiante.fecha_de_nacimiento)
           const fechaFormateada = fecha[3] + '/' + fecha[2] + '/' + fecha[1];
           return {
+            nombreCompleto: `${estudiante.nombres} ${estudiante.apellidos}`,
             index: index + 1,
             ...estudiante,
             activo: estudiante.activo === 'A' ? 'Activo' : 'Inactivo',

@@ -38,11 +38,11 @@ export class ReportsComponent {
       title: 'Reporte de Estudiantes por Programas y Curso',
       ruta: 'estudiantes-curso'
     },
-    {
-      image: 'assets/icons-reports/matricula.png',
-      title: 'Reporte de Matrícula',
-      ruta: 'matricula'
-    },
+    // {
+    //   image: 'assets/icons-reports/matricula.png',
+    //   title: 'Reporte de Matrícula',
+    //   ruta: 'matricula'
+    // },
     {
       image: 'assets/icons-reports/rendimiento.png',
       title: 'Reporte de Rendimiento del Estudiante',

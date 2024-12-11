@@ -97,8 +97,8 @@
         <span class="py-auto px-2 font-bold items-center">{{ editarEstudianteForm.get('status')!.value ? 'Activo' : 'Inactivo' }}</span>
       </div>
       <div class="flex justify-end">
-        <button (click)="guardarEstudiante()" class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
-        <button (click)="editandoEstudiante = false" class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+        <button (click)="guardarEstudiante()" class="btn-p mt-2 px-4 py-2 rounded  ">Guardar</button>
+        <button (click)="editandoEstudiante = false" class="btn-cancel mt-2 px-4 py-2 rounded ">Cancelar</button>
       </div>
     </div>
     <hr class="my-4">
@@ -158,8 +158,8 @@
         </div>
       </div>
       <div class="flex justify-end">
-        <button (click)="guardarMatricula()" class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
-        <button (click)="editandoMatricula = false" class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+        <button (click)="guardarMatricula()" class="btn-p mt-2 px-4 py-2 rounded  ">Guardar</button>
+        <button (click)="editandoMatricula = false" class="btn-cancel mt-2 px-4 py-2 rounded ">Cancelar</button>
       </div>
     </div>
     <h3 class="text-lg font-semibold">Cursos</h3>
