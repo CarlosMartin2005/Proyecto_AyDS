@@ -96,8 +96,8 @@ export class FormularioRegistroComponent {
 
   constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router, private matriculaService: MatriculaService) {
     this.registroForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/), Validators.minLength(2)]],
-      apellido: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]+$/), Validators.minLength(2)]],
+      apellido: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]+$/)]],
       telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
       identidad: ['', [Validators.required, Validators.pattern(/^[0-1][0-8][0-9]{2}-[0-9]{4}-[0-9]{5}$/)]],
       fechaNacimiento: ['', [Validators.required, this.fechaNacimientoValidator]],
