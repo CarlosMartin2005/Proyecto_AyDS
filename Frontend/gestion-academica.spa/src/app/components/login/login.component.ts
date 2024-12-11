@@ -45,7 +45,25 @@ export class LoginComponent {
           panelClass: ['mensage-exito']
         });
         this.successMessage = 'Inicio de sesión exitoso';
-        this.router.navigate(['/campus/inicio']);
+        console.log(response.data);
+        if (response.data.status === 'I') {
+          this.router.navigate(['/cuenta']);
+          return;
+        }
+        else {
+          if(response.data.rol === 'Alumno') {
+            this.router.navigate(['/campus-estudiantes/inicio']);
+            return;
+          }
+          if(response.data.rol === 'Docente') {
+            this.router.navigate(['/campus-docentes/inicio']);
+            return;
+          }
+          else {
+            this.router.navigate(['/campus/inicio']);
+            return;
+          }
+        }
       },
       (error) => {
         this.snackBar.open(error.error.message, 'Cerrar', {

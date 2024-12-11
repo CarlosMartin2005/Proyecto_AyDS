@@ -8,6 +8,7 @@ export class RendimientoEstudianteController {
         if (startDate && endDate) {
             dateFilter = `AND r.fecha BETWEEN '${startDate}' AND '${endDate}'`;
         }
+        console.log(dateFilter);
 
         const query = `
         SELECT 
@@ -44,7 +45,8 @@ export class RendimientoEstudianteController {
                 if (results && results.length === 0) {
                     return res.status(404).json({
                         error: true,
-                        message: "Alumno no encontrado"
+                        message: "Alumno no encontrado",
+                        results: results
                     });
                 }
 

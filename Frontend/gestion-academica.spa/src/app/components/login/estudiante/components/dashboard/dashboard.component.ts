@@ -13,5 +13,4 @@ export class DashboardComponent {
   constructor() {
     this.nombre = localStorage.getItem('nombre') + ' ' + localStorage.getItem('apellido');
   }
-
 }

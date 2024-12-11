@@ -31,6 +31,10 @@ export const routes: Routes = [
       {
         path: 'login',
         loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)
+      },
+      {
+        path: 'cuenta',
+        loadComponent: () => import('./components/login/cuenta-inactiva/cuenta-inactiva.component').then(m => m.CuentaInactivaComponent)
       }
     ]
   },
@@ -39,6 +43,10 @@ export const routes: Routes = [
     path: 'campus',
     loadComponent: () => import('./components/login/components/layout/navbar/navbar.component').then(m => m.NavbarComponent),
     children: [
+      {
+        path: 'perfil',
+        loadComponent: () => import('./components/login/components/profile/profile.component').then(m => m.ProfileComponent)
+      },
       {
         path: 'inicio',
         loadComponent: () => import('./components/login/components/dashboard/dashboard.component').then(m => m.DashboardComponent)
@@ -101,5 +109,60 @@ export const routes: Routes = [
         ]
       },
     ]
+  },
+
+  // Rutas para el campus de estudiantes
+
+  {
+    path: 'campus-estudiantes',
+    loadComponent: () => import('./components/login/estudiante/components/layout/navbar/navbar.component').then(m => m.NavbarComponent),
+    children: [
+      {
+        path: 'inicio',
+        loadComponent: () => import('./components/login/estudiante/components/dashboard/dashboard.component').then(m => m.DashboardComponent)
+      },
+      {
+        path: 'matricula',
+        loadComponent: () => import('./components/login/estudiante/components/matricula/matricula.component').then(m => m.MatriculaComponent)
+      },
+      {
+        path: 'cursos',
+        loadComponent: () => import('./components/login/estudiante/components/cursos/cursos.component').then(m => m.CursosComponent)
+      },
+      {
+        path: 'perfil',
+        loadComponent: () => import('./components/login/estudiante/components/profile/profile.component').then(m => m.ProfileComponent)
+      }
+    ]
+  },
+
+  // Rutas para el campus de docentes
+
+  {
+    path: 'campus-docentes',
+    loadComponent: () => import('./components/login/docente/components/layout/navbar/navbar.component').then(m => m.NavbarComponent),
+    children: [
+      {
+        path: 'inicio',
+        loadComponent: () => import('./components/login/docente/components/dashboard/dashboard.component').then(m => m.DashboardComponent)
+      },
+      {
+        path: 'estudiantes',
+        loadComponent: () => import('./components/login/docente/components/estudiantes/estudiantes.component').then(m => m.EstudiantesComponent)
+      },
+      {
+        path: 'cursos',
+        loadComponent: () => import('./components/login/docente/components/cursos-impartidos/cursos-impartidos.component').then(m => m.CursosImpartidosComponent)
+      },
+      {
+        path: 'reportes',
+        loadComponent: () => import('./components/login/docente/components/reports/reports.component').then(m => m.ReportsComponent)
+      },
+      {
+        path: 'perfil',
+        loadComponent: () => import('./components/login/docente/components/profile/profile.component').then(m => m.ProfileComponent)
+      }
+    ]
   }
+
 ];
