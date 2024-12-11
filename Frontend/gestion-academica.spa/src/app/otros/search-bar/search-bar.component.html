@@ -12,7 +12,7 @@
     </div>
   </form>
 
-  <div *ngIf="mostarTabla()">
+  <div *ngIf="mostarTabla()" class="overflow-y-auto max-h-96">
     <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
       <thead class="bg-gray-200">
         <tr>
@@ -26,10 +26,10 @@
       </tbody>
     </table>
   </div>
-  <div *ngIf="mostarTabla()" class="flex justify-start mt-4">
+  <!-- <div *ngIf="mostarTabla()" class="flex justify-start mt-4">
     <button *ngIf="paginaActual > 1" (click)="anteriorPagina()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Anterior</button>
     <input *ngIf="Math.ceil(datosExternos.length / elementosPorPagina) > 1" type="number" [(ngModel)]="paginaActual" (change)="cambiarPagina(paginaActual)"
       class="px-3 py-1 mx-1 border rounded w-16 text-center" min="1" [max]="Math.ceil(datosExternos.length / elementosPorPagina)">
     <button *ngIf="paginaActual < Math.ceil(datosExternos.length / elementosPorPagina)" (click)="siguientePagina()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Siguiente</button>
-  </div>
+  </div> -->
 </div>

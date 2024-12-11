@@ -17,4 +17,21 @@ export class EstudiantesService {
     }
     return this.http.get(url);
   }
+
+  getEstudiantesInfo() {
+    return this.http.get(`${this.apiUrl}/estudiantes`)
+  }
+
+  updateEstudiante(data: any) {
+    return this.http.post(`${this.apiUrl}/estudiantes/edit-estudiante`, data);
+  }
+
+  updateMatricula(data: any) {
+    return this.http.post(`${this.apiUrl}/estudiantes/edit-matricula`, data);
+  }
+
+  deleteDocente(data: any) {
+    const body = { ['id']: data }
+    return this.http.delete(`${this.apiUrl}/estudiantes/delete-estudiante`, { body })
+  }
 }

@@ -239,7 +239,7 @@ export class ProgramasComponent {
             this.programaSeleccionado = null;
             this.cursoSeleccionado = null;
           }
-
+          this.loadProgramas();
         },
           (error) => {
             this.snackBar.open(error.error.message, 'Cerrar', {

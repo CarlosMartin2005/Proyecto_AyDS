@@ -22,8 +22,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
   datos: any[] = [];
   dataSource: any;
   columnas: string[] = [];
-  elementosPorPagina: number = 5;
-  paginaActual: number = 1;
+  // elementosPorPagina: number = 5;
+  // paginaActual: number = 1;
   datosPaginados: any[] = [];
   selectedRow: any = null;
 
@@ -32,7 +32,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
     if (this.datosExternos.length) {
       this.columnas = Object.keys(this.datosExternos[0]).filter(column => column !== 'id');
     }
-    this.paginarDatos();
+    // this.paginarDatos();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -42,28 +42,21 @@ export class SearchBarComponent implements OnInit, OnChanges {
         this.columnas = Object.keys(this.datosExternos[0]).filter(column => column !== 'id');
       }
     }
-    this.paginarDatos();
+    // this.paginarDatos();
   }
 
   filtrar(event: Event) {
-    const filtro = (event.target as HTMLInputElement).value.toLowerCase();
-    const datosFiltrados = this.datosExternos.filter(dato => 
-      Object.values(dato).some(val => {
-        if (val !== null && val !== undefined) {
-          return val.toString().toLowerCase().includes(filtro);
-        }
-        return false;
-      })
+    const filtro = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.datosPaginados = this.datosExternos.filter(dato =>
+      Object.values(dato).some((val: any) => val.toString().toLowerCase().includes(filtro))
     );
-    this.paginaActual = 1; // Reiniciar a la primera página
-    this.datosPaginados = datosFiltrados.slice(0, this.elementosPorPagina);
   }
 
   clearInput(event: Event) {
     event.preventDefault();
     this.dataSource.filter = '';
     (document.getElementById('default-search') as HTMLInputElement).value = '';
-    this.paginarDatos();
+    // this.paginarDatos();
   }
 
   mostarTabla(): boolean {
@@ -81,30 +74,30 @@ export class SearchBarComponent implements OnInit, OnChanges {
     return this.columnasMostrar[column] || column;
   }
 
-  paginarDatos() {
-    const inicio = (this.paginaActual - 1) * this.elementosPorPagina;
-    const fin = inicio + this.elementosPorPagina;
-    this.datosPaginados = this.datosExternos.slice(inicio, fin);
-  }
+  // paginarDatos() {
+  //   const inicio = (this.paginaActual - 1) * this.elementosPorPagina;
+  //   const fin = inicio + this.elementosPorPagina;
+  //   this.datosPaginados = this.datosExternos.slice(inicio, fin);
+  // }
 
-  cambiarPagina(pagina: number) {
-    if (pagina > 0 && pagina <= Math.ceil(this.datosExternos.length / this.elementosPorPagina)) {
-      this.paginaActual = pagina;
-      this.paginarDatos();
-    }
-  }
+  // cambiarPagina(pagina: number) {
+  //   if (pagina > 0 && pagina <= Math.ceil(this.datosExternos.length / this.elementosPorPagina)) {
+  //     this.paginaActual = pagina;
+  //     this.paginarDatos();
+  //   }
+  // }
 
-  siguientePagina() {
-    if (this.paginaActual < Math.ceil(this.datosExternos.length / this.elementosPorPagina)) {
-      this.paginaActual++;
-      this.paginarDatos();
-    }
-  }
+  // siguientePagina() {
+  //   if (this.paginaActual < Math.ceil(this.datosExternos.length / this.elementosPorPagina)) {
+  //     this.paginaActual++;
+  //     this.paginarDatos();
+  //   }
+  // }
 
-  anteriorPagina() {
-    if (this.paginaActual > 1) {
-      this.paginaActual--;
-      this.paginarDatos();
-    }
-  }
+  // anteriorPagina() {
+  //   if (this.paginaActual > 1) {
+  //     this.paginaActual--;
+  //     this.paginarDatos();
+  //   }
+  // }
 }

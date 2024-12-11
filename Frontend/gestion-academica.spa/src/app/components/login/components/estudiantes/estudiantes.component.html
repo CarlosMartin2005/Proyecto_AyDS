@@ -1,1 +1,207 @@
-<p>estudiantes works!</p>
+<main class="p-6">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-bold">Estudiantes</h1>
+  </div>
+  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="py-2 px-4 border-r">Nombres</th>
+        <th class="py-2 px-4 border-r">Apellidos</th>
+        <th class="py-2 px-4 border-r">Número de Cuenta</th>
+        <th class="py-2 px-4 border-r">Email</th>
+        <th class="py-2 px-4">Status</th>
+        <th class="py-2 px-2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estudiante of estudiantesPaginados" (click)="seleccionarEstudiante(estudiante)"
+        [class.selected-row]="estudiante === estudianteSeleccionado" class="cursor-pointer hover:bg-gray-100">
+        <td class="border-t py-2 px-4 border-r">{{ estudiante.nombres }}</td>
+        <td class="border-t py-2 px-4 border-r">{{ estudiante.apellidos }}</td>
+        <td class="border-t py-2 px-4 border-r">{{ estudiante.numeroCuenta }}</td>
+        <td class="border-t py-2 px-4 border-r">{{ estudiante.email }}</td>
+        <td class="border-t py-2 px-4">{{ estudiante.status === 'A' ? 'Activo' : 'Inactivo' }}</td>
+        <td class="border-t py-2 px-2">
+          <button (click)="eliminarEstudiante(estudiante); $event.stopPropagation()"
+            class="text-red-500 hover:text-red-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+              <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+            </svg>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="flex justify-start mt-4">
+    <button *ngIf="estudiantesPaginaActual > 1" (click)="anteriorPaginaEstudiantes()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Anterior</button>
+    <input *ngIf="Math.ceil(estudiantes.length / elementosPorPagina) > 1" type="number" [(ngModel)]="estudiantesPaginaActual" (change)="cambiarPaginaEstudiantes(estudiantesPaginaActual)"
+      class="px-3 py-1 mx-1 border rounded w-16 text-center" min="1" [max]="Math.ceil(estudiantes.length / elementosPorPagina)">
+    <button *ngIf="estudiantesPaginaActual < Math.ceil(estudiantes.length / elementosPorPagina)" (click)="siguientePaginaEstudiantes()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Siguiente</button>
+  </div>
+  <div *ngIf="estudianteSeleccionado" class="mt-4 p-4 bg-white shadow-md rounded-lg">
+    <h2 class="text-xl font-semibold mb-2">Detalles del Estudiante</h2>
+    <div *ngIf="!editandoEstudiante">
+      <p><strong>Nombres:</strong> {{ estudianteSeleccionado.nombres }}</p>
+      <p><strong>Apellidos:</strong> {{ estudianteSeleccionado.apellidos }}</p>
+      <p><strong>Email:</strong> {{ estudianteSeleccionado.email }}</p>
+      <p><strong>Identidad:</strong> {{ estudianteSeleccionado.identidad }}</p>
+      <p><strong>Fecha de Nacimiento:</strong> {{ estudianteSeleccionado.fecha_de_nacimiento }}</p>
+      <p><strong>Edad:</strong> {{ calcularEdad(estudianteSeleccionado.fecha_de_nacimiento) }} años</p>
+      <p><strong>Status:</strong> {{ estudianteSeleccionado.status === 'A' ? 'Activo' : 'Inactivo' }}</p>
+      <p><strong>Número de Cuenta:</strong> {{ estudianteSeleccionado.numeroCuenta }}</p>
+      <p><strong>Fecha de Creación:</strong> {{ estudianteSeleccionado.fecha_creacion }}</p>
+      <p><strong>Fecha de Matrícula:</strong> {{ estudianteSeleccionado.fecha_matricula }}</p>
+      <button (click)="editarEstudiante()" class="btn-p p-2 mt-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 " fill="currentColor" viewBox="0 0 16 16">
+          <path
+            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+        </svg>
+      </button>
+    </div>
+    <div *ngIf="editandoEstudiante" class="mt-4 p-4 bg-white shadow-md rounded-lg" [formGroup]="editarEstudianteForm">
+      <h2 class="text-xl font-semibold mb-2">Editar Estudiante</h2>
+      <label><strong>Nombres:</strong></label>
+      <input formControlName="nombres" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarEstudianteForm.get('nombres')!.invalid && editarEstudianteForm.get('nombres')!.touched">
+      <div *ngIf="editarEstudianteForm.get('nombres')!.invalid && editarEstudianteForm.get('nombres')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="editarEstudianteForm.get('nombres')!.errors?.['required']">El nombre es obligatorio</div>
+        <div *ngIf="editarEstudianteForm.get('nombres')!.errors?.['minlength']">El nombre debe tener al menos 3 caracteres</div>
+      </div>
+      <label><strong>Apellidos:</strong></label>
+      <input formControlName="apellidos" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarEstudianteForm.get('apellidos')!.invalid && editarEstudianteForm.get('apellidos')!.touched">
+      <div *ngIf="editarEstudianteForm.get('apellidos')!.invalid && editarEstudianteForm.get('apellidos')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="editarEstudianteForm.get('apellidos')!.errors?.['required']">El apellido es obligatorio</div>
+      </div>
+      <label><strong>Email:</strong></label>
+      <input formControlName="email" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarEstudianteForm.get('email')!.invalid && editarEstudianteForm.get('email')!.touched">
+      <div *ngIf="editarEstudianteForm.get('email')!.invalid && editarEstudianteForm.get('email')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="editarEstudianteForm.get('email')!.errors?.['required']">El email es obligatorio</div>
+        <div *ngIf="editarEstudianteForm.get('email')!.errors?.['email']">El email no es válido</div>
+      </div>
+      <label><strong>Identidad:</strong></label>
+      <input formControlName="identidad" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarEstudianteForm.get('identidad')!.invalid && editarEstudianteForm.get('identidad')!.touched">
+      <div *ngIf="editarEstudianteForm.get('identidad')!.invalid && editarEstudianteForm.get('identidad')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="editarEstudianteForm.get('identidad')!.errors?.['required']">La identidad es obligatoria</div>
+        <div *ngIf="editarEstudianteForm.get('identidad')!.errors?.['pattern']">La identidad no es válida. Debe tener el formato 0000-0000-00000</div>
+      </div>
+      <label><strong>Fecha de Nacimiento:</strong></label>
+      <input type="date" formControlName="fecha_de_nacimiento" class="border rounded px-2 py-1 mb-2 w-full" [class.border-red-500]="editarEstudianteForm.get('fecha_de_nacimiento')!.invalid && editarEstudianteForm.get('fecha_de_nacimiento')!.touched">
+      <div *ngIf="editarEstudianteForm.get('fecha_de_nacimiento')!.invalid && editarEstudianteForm.get('fecha_de_nacimiento')!.touched" class="text-red-500 text-sm">
+        <div *ngIf="editarEstudianteForm.get('fecha_de_nacimiento')!.errors?.['required']">La fecha de nacimiento es obligatoria</div>
+      </div>
+      <div class="mt-4">
+        <label class="switch">
+          <input type="checkbox" formControlName="status">
+          <span class="slider"></span>
+        </label>
+        <span class="py-auto px-2 font-bold items-center">{{ editarEstudianteForm.get('status')!.value ? 'Activo' : 'Inactivo' }}</span>
+      </div>
+      <div class="flex justify-end">
+        <button (click)="guardarEstudiante()" class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+        <button (click)="editandoEstudiante = false" class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+      </div>
+    </div>
+    <hr class="my-4">
+    <h3 class="text-lg font-semibold">Matrícula</h3>
+    <div *ngIf="!editandoMatricula">
+      <button (click)="editarMatricula()" class="btn-p p-2 mt-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 " fill="currentColor" viewBox="0 0 16 16">
+          <path
+            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+        </svg>
+      </button>
+      <label for="programas" class="block mb-2 text-sm font-medium text-gray-900">Programa:</label>
+      <select id="programas" [(ngModel)]="programaSeleccionado" (change)="cambiarPrograma()"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#A56B4E] focus:border-[#A56B4E] block w-full p-2.5">
+        <option *ngFor="let programa of estudianteSeleccionado.programas" [ngValue]="programa">{{ programa.nombre }}</option>
+      </select>
+    </div>
+    <div *ngIf="editandoMatricula" class="mt-4 p-4 bg-white shadow-md rounded-lg" [formGroup]="editarMatriculaForm">
+      <h2 class="text-xl font-semibold mb-2">Editar Matrícula</h2>
+      <label for="programa" class="block mb-2 text-sm font-medium text-gray-900">Programa:</label>
+      <select id="programa" formControlName="programa" (change)="onHorarioChange()" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#A56B4E] focus:border-[#A56B4E] block w-full p-2.5">
+        <option value="" disabled>Programas</option>
+        <option *ngFor="let programa of getSelectedProgramas()" [ngValue]="programa">{{ programa.nombre }}</option>
+      </select>
+      <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 programa-card">
+        <div *ngFor="let programa of programas" class="block mx-auto w-4/5 sm:max-w-sm p-6 border border-gray-200 rounded-lg shadow"
+             [ngClass]="{'programa-seleccionado': programa.seleccionado, 'bg-white': !programa.seleccionado}">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ programa.nombre }}</h5>
+          <p class="font-normal text-gray-700">{{ programa.descripcion }}</p>
+          <button (click)="toggleSeleccionarPrograma(programa)"
+                  class="custom-login-button mt-4 px-4 py-2 text-white bg-indigo-600 rounded-lg">
+            {{ programa.seleccionado ? 'Seleccionado' : 'Seleccionar' }}
+          </button>
+        </div>
+      </div>
+      <div *ngIf="editarMatriculaForm.get('programa')?.value && cursosSeleccionados.length > 0" class="mt-4">
+        <label for="cursos" class="block mb-2 text-sm font-medium text-gray-900">Cursos:</label>
+        <div class="overflow-y-auto max-h-64">
+          <table class="min-w-full bg-white shadow-md overflow-hidden">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="py-2 px-4 border-r">Nombre</th>
+                <th class="py-2 px-4 border-r">Docente</th>
+                <th class="py-2 px-4">Horario</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let curso of cursosSeleccionados" (click)="toggleSeleccionarCurso(curso)"
+                  [ngClass]="{'bg-gray-300': curso.seleccionado, 'hover:bg-gray-100': !curso.seleccionado}"
+                  class="cursor-pointer">
+                <td class="py-2 px-4 border-r">{{ curso.nombre }}</td>
+                <td class="py-2 px-4 border-r">{{ curso.docente }}</td>
+                <td class="py-2 px-4">{{ curso.horario }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="flex justify-end">
+        <button (click)="guardarMatricula()" class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 mr-2">Guardar</button>
+        <button (click)="editandoMatricula = false" class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Cancelar</button>
+      </div>
+    </div>
+    <h3 class="text-lg font-semibold">Cursos</h3>
+    <table *ngIf="programaSeleccionado" class="min-w-full bg-white shadow-md rounded-lg overflow-hidden mt-2">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="py-2 px-4 border-r">Nombre</th>
+          <th class="py-2 px-4 border-r">Horario</th>
+          <th class="py-2 px-4">Docente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let curso of cursosPaginados" (click)="seleccionarCurso(curso)"
+          [class.selected-row]="curso === cursoSeleccionado" class="cursor-pointer hover:bg-gray-100">
+          <td class="border-t py-2 px-4 border-r">{{ curso.nombre }}</td>
+          <td class="border-t py-2 px-4 border-r">{{ curso.horario }}</td>
+          <td class="border-t py-2 px-4">{{ obtenerNombreDocente(curso.docente_id) }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex justify-start mt-4">
+      <button *ngIf="cursosPaginaActual > 1" (click)="anteriorPaginaCursos()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Anterior</button>
+      <input *ngIf="Math.ceil(programaSeleccionado.cursos.length / elementosPorPagina) > 1" type="number" [(ngModel)]="cursosPaginaActual" (change)="cambiarPaginaCursos(cursosPaginaActual)"
+        class="px-3 py-1 mx-1 border rounded w-16 text-center" min="1" [max]="Math.ceil(programaSeleccionado.cursos.length / elementosPorPagina)">
+      <button *ngIf="cursosPaginaActual < Math.ceil(programaSeleccionado.cursos.length / elementosPorPagina)" (click)="siguientePaginaCursos()" class="px-3 py-1 mx-1 border rounded hover:bg-[#A56B4E] hover:text-white">Siguiente</button>
+    </div>
+    <div *ngIf="cursoSeleccionado" class="mt-4 p-4 bg-white shadow-md rounded-lg">
+      <h3 class="text-lg font-semibold mb-2">Detalles del Curso</h3>
+      <p><strong>Nombre:</strong> {{ cursoSeleccionado.nombre }}</p>
+      <p><strong>Descripción:</strong> {{ cursoSeleccionado.descripcion }}</p>
+      <p><strong>Horario:</strong> {{ cursoSeleccionado.horario }}</p>
+      <p><strong>Fecha de Creación:</strong> {{ cursoSeleccionado.fecha_creacion }}</p>
+      <p><strong>Fecha de Fin:</strong> {{ cursoSeleccionado.fecha_fin }}</p>
+      <hr class="my-4">
+      <h3 class="text-lg font-semibold mb-2">Detalles del Docente</h3>
+      <p><strong>Nombres:</strong> {{ docenteSeleccionado.nombres }}</p>
+      <p><strong>Apellidos:</strong> {{ docenteSeleccionado.apellidos }}</p>
+      <p><strong>Email:</strong> {{ docenteSeleccionado.email }}</p>
+      <p><strong>Identidad:</strong> {{ docenteSeleccionado.identidad }}</p>
+      <p><strong>Fecha de Nacimiento:</strong> {{ docenteSeleccionado.fecha_de_nacimiento }}</p>
+      <p><strong>Edad:</strong> {{ calcularEdad(docenteSeleccionado.fecha_de_nacimiento) }} años</p>
+      <p><strong>Status:</strong> {{ docenteSeleccionado.status === 'A' ? 'Activo' : 'Inactivo' }}</p>
+    </div>
+  </div>
+</main>
